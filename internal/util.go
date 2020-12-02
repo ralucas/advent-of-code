@@ -3,6 +3,7 @@ package util
 import (
 	"io/ioutil"
 	"log"
+	"strconv"
 )
 
 func ReadFile(filepath string) string {
@@ -13,10 +14,14 @@ func ReadFile(filepath string) string {
 	return string(f)
 }
 
-func MapToInt(vs []string, f func(string) int) []int {
+func MapToInt(vs []string) []int {
 	vsm := make([]int, len(vs))
 	for i, v := range vs {
-		vsm[i] = f(v)
+		var err error
+		vsm[i], err = strconv.Atoi(v)
+		if err != nil {
+			log.Fatalf("Error processing map to int")
+		}
 	}
 	return vsm
 }

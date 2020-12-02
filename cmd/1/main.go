@@ -5,7 +5,6 @@ import (
 	"fmt"
 	util "github.com/ralucas/advent-of-code/internal"
 	"log"
-	"strconv"
 	"strings"
 )
 
@@ -15,13 +14,7 @@ func prepareData(filepath string) []int {
 		return s != ""
 	})
 
-	preparedData := util.MapToInt(inputArr, func (s string) int {
-		n, err := strconv.Atoi(s)
-		if err != nil {
-			log.Fatalf("%v", err)
-		}
-		return n
-	})
+	preparedData := util.MapToInt(inputArr)
 
 	return preparedData
 }
