@@ -44,7 +44,7 @@ func TestSetGetPos(t *testing.T) {
 
 func TestIsEqualToPosition(t *testing.T) {
 	type test struct {
-		input  []string
+		input []string
 		expect bool
 	}
 
@@ -69,11 +69,6 @@ func TestIsEqualToPosition(t *testing.T) {
 }
 
 func TestGetNextPosition(t *testing.T) {
-	type test struct {
-		input  []string
-		expect int
-	}
-
 	startState := SledState{
 		start: 0,
 		pos:   0,
@@ -81,17 +76,11 @@ func TestGetNextPosition(t *testing.T) {
 		right: 3,
 		down:  1,
 	}
-	tests := []test{
-		{input: []string{".", "#", "#", "#", "#", ".", ".", "#"}, expect: 3 },
-		{input: []string{".", "#", "#", "#", "#", ".", ".", "#"}, expect: 6 },
-		{input: []string{".", "#", "#", "#", "#", ".", ".", "#"}, expect: 1 },
-		{input: []string{".", "#", "#", "#", "#", ".", ".", "#"}, expect: 4 },
-		{input: []string{".", "#", "#", "#", "#", ".", ".", "#"}, expect: 7 },
-		{input: []string{".", "#", "#", "#", "#", ".", ".", "#"}, expect: 2 },
-	}
+
+	tests := []int{ 3, 6, 1, 4, 7, 2, }
 	for _, tt := range tests {
 		np := startState.NextPosition()
-		assert.Equal(t, tt.expect, np)
+		assert.Equal(t, tt, np)
 		startState.SetPos(np)
 	}
 }

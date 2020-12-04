@@ -68,12 +68,9 @@ func twoSumSorted(sData []int, target int) (int, int) {
 // Requires input array data to be sorted
 // Runtime O(n^2), space O(1)
 func threeSum(data []int, target int) (int, int, int) {
-	l := 0
-	r := len(data) - 1
-
 	for i := 0; i < len(data); i++ {
-		l = i + 1
-		r = len(data) - 1
+		l := i + 1
+		r := len(data) - 1
 		for l < r {
 			add3 := data[i] + data[l] + data[r]
 			if add3 == target {

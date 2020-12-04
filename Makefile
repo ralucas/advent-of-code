@@ -1,9 +1,16 @@
 # Simple Makefile for running tests
 CURRENT_DAY := $(shell date "+%d" | grep -o '[1-9]')
 
+.PHONY: all
+all: test run
+
 .PHONY: test
 test:
 	go test -v ./cmd/$(CURRENT_DAY)/
+
+.PHONY: test-all
+test-all:
+	go test -v ./...
 
 .PHONY: run
 run:
@@ -11,10 +18,8 @@ run:
 
 .PHONY: new
 new:
-	mkdir -p assets/$(CURRENT_DAY) && \
-		mkdir -p cmd/$(CURRENT_DAY) && \
+	mkdir assets/$(CURRENT_DAY) && \
+		mkdir cmd/$(CURRENT_DAY) && \
 		cp ~/Downloads/input.txt assets/$(CURRENT_DAY)/ && \
 		cp tools/boilerplate/* cmd/$(CURRENT_DAY)
 
-.PHONY: all
-all: test run

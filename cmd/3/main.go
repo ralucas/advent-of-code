@@ -6,13 +6,6 @@ import (
 	"strings"
 )
 
-type State interface {
-	NextPosition() int
-	GetPosition() int
-	SetPosition(int)
-	IsEqualToPosition([]string, string) bool
-}
-
 type SledState struct {
 	start int
 	pos int
