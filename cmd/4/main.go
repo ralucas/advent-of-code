@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	util "github.com/ralucas/advent-of-code/internal"
 	"log"
@@ -8,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 )
+
+var inputFile = flag.String("input", "", "Input file")
 
 type Passport struct {
 	byr int
@@ -200,7 +203,9 @@ func countValidPassportsStrict(vp []Passport) int {
 }
 
 func main() {
-	data := prepareData("assets/4/input.txt")
+	flag.Parse()
+	data := prepareData(*inputFile)
+
 	validPassportCount := countValidPassports(data)
 	fmt.Println("A -- Valid Passport Count:", validPassportCount)
 
