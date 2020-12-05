@@ -39,12 +39,24 @@ func MapToInt(vs []string) []int {
 
 func Filter(vs []string, f func(string) bool) []string {
 	vsm := make([]string, 0)
-	for _, v := range(vs) {
+	for _, v := range vs {
 		if f(v) {
 			vsm = append(vsm, v)
 		}
 	}
 	return vsm
+}
+
+func Every(vi []int, f func(int) bool) bool {
+	out := true
+
+	for _, v := range vi {
+		if !f(v) {
+			return false
+		}
+	}
+
+	return out
 }
 
 func QSort(vi []int) []int {

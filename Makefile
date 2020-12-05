@@ -2,7 +2,6 @@
 
 CURRENT_DAY := $(shell date "+%d" | grep -o '[1-9]')
 
-
 .PHONY: all
 all: test run
 
@@ -22,6 +21,7 @@ run:
 new:
 	mkdir assets/$(CURRENT_DAY) && \
 		mkdir cmd/$(CURRENT_DAY) && \
+		mkdir test/testdata/$(CURRENT_DAY) && \
 		cp ~/Downloads/input.txt assets/$(CURRENT_DAY)/ && \
-		cp tools/boilerplate/* cmd/$(CURRENT_DAY)
-
+		cp tools/boilerplate/* cmd/$(CURRENT_DAY) && \
+		touch test/testdata/$(CURRENT_DAY)/test_input.txt
