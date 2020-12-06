@@ -1,6 +1,6 @@
 # Simple Makefile for getting setup, testing, and running in a conventional manner
 
-CURRENT_DAY := $(shell date "+%d" | grep -o '[1-9]')
+CURRENT_DAY ?= $(shell date "+%d" | grep -o '[1-9]')
 
 .PHONY: all
 all: test run

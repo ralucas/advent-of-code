@@ -47,6 +47,29 @@ func Filter(vs []string, f func(string) bool) []string {
 	return vsm
 }
 
+func FilterInt(vi []int, f func(int) bool) []int {
+	vim := make([]int, 0)
+	for _, v := range vi {
+		if f(v) {
+			vim = append(vim, v)
+		}
+	}
+
+	return vim
+}
+
+func FindIntIndexes(vi []int, f func(int) bool) []int {
+	vim := make([]int, 0)
+
+	for i, v := range vi {
+		if f(v) {
+			vim = append(vim, i)
+		}
+	}
+
+	return vim
+}
+
 func Every(vi []int, f func(int) bool) bool {
 	out := true
 

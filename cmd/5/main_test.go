@@ -54,3 +54,31 @@ func TestMaxId(t *testing.T) {
 
 	assert.Equal(t, 820, maxId)
 }
+
+func TestNewPlane(t *testing.T) {
+	data := prepareData("../../test/testdata/5/test_input.txt")
+
+	p := NewPlane(data)
+
+	t.Run("has correct row count", func(t *testing.T) {
+		for i := 0; i < len(data); i++ {
+			assert.Equal(t, 1, p.rows[testInputExpects[i].row])
+		}
+	})
+
+	t.Run("has correct plane row and col", func(t *testing.T) {
+		for i := 0; i < len(data); i++ {
+			assert.Equal(t, 1, p.seating[testInputExpects[i].row][testInputExpects[i].col])
+		}
+	})
+}
+
+func TestFindAvailableSeats(t *testing.T) {
+	data := prepareData("../../test/testdata/5/test_input.txt")
+
+	totalSeats := 128 * 8
+
+	p := NewPlane(data)
+	as := findAvailableSeats(p)
+	assert.Equal(t, totalSeats - 4, len(as))
+}

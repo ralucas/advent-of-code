@@ -6,6 +6,7 @@ import (
 	util "github.com/ralucas/advent-of-code/internal"
 	"log"
 	"strings"
+	"sync"
 )
 
 var inputFile = flag.String("input", "", "Input file")
@@ -14,6 +15,11 @@ type BoardingPass struct {
 	row int
 	col int
 	id int
+}
+
+type Plane struct {
+	seating [][]int
+	rows []int
 }
 
 func prepareData(filepath string) [][]string {
@@ -42,6 +48,8 @@ func getCol(s []string) int {
 func getNum(min, max int, minL, maxL string, s []string) int {
 	for _, c := range s[:len(s)-1] {
 		if c != minL && c != maxL {
+			errMsg := fmt.Errorf("Bad string pass sent in, got %s", c)
+			log.Println(errMsg)
 			return -1
 		}
 		switch c {
@@ -87,25 +95,81 @@ func getHighestSeatID(ss [][]string) int {
 	return maxID
 }
 
-func findSeat(ss [][]string) BoardingPass {
-	plane := make([][]int, 127)
-	for i := range plane {
-		plane[i] = make([]int, 7)
+func NewPlane(ss [][]string) Plane {
+	plane := Plane{
+		seating: make([][]int, 128),
+		rows: make([]int, 128),
+	}
+	for i := range plane.seating {
+		plane.seating[i] = make([]int, 8)
 	}
 
-	rows := make([]int, 127)
+	// Setup wait group for par-for
+	wg := sync.WaitGroup{}
+
+	wg.Add(len(ss))
 
 	for _, s := range ss {
-		bp := toBoardingPass(s)
-		plane[bp.row][bp.col] = 1
+		go func(spass []string) {
+			bp := toBoardingPass(spass)
+			plane.seating[bp.row][bp.col] = 1
+			plane.rows[bp.row] += 1
+			wg.Done()
+		}(s)
 	}
 
-	// TODO: Check for empty seats
-	for i, row := range plane {
-		if util.Every(row, func(v int) bool { return v == 1 }) {
-			rows[i] = 1
+	wg.Wait()
+
+	return plane
+}
+
+func (p *Plane) Print() {
+	for i, row := range p.seating {
+		fmt.Println(i,":", row)
+	}
+}
+
+func findAvailableSeats(plane Plane) []BoardingPass {
+	possibleSeats := []BoardingPass{}
+
+	for i, row := range plane.seating {
+		if plane.rows[i] < 8 {
+			availableSeats := util.FindIntIndexes(row, func(v int) bool { return v == 0 })
+			if len(availableSeats) > 0 {
+				for _, as := range availableSeats {
+					bp := BoardingPass{
+						row: i,
+						col: as,
+						id:  (i * 8) + as,
+					}
+					possibleSeats = append(possibleSeats, bp)
+				}
+			}
 		}
 	}
+
+	return possibleSeats
+}
+
+func findSeat(ss [][]string) BoardingPass {
+	plane := NewPlane(ss)
+
+	availSeats := findAvailableSeats(plane)
+
+	var mySeat BoardingPass
+
+	for i, rc := range plane.rows {
+		if rc < 8 && rc > 1 && i != 0 && i != 127 {
+			for _, seat := range availSeats {
+				if seat.row != 0 && seat.row != 127 {
+					// After first match, let's call it the seat
+					return seat
+				}
+			}
+		}
+	}
+
+	return mySeat
 }
 
 func main() {
@@ -115,5 +179,8 @@ func main() {
 
 	maxID := getHighestSeatID(data)
 	fmt.Println("A -- Max ID:", maxID)
+
+	mySeat := findSeat(data)
+	fmt.Println("B -- Seat ID:", mySeat.id)
 }
 
