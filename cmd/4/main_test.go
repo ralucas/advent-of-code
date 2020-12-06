@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestPrepareData(t *testing.T) {
@@ -19,16 +20,16 @@ func TestPrepareData(t *testing.T) {
 
 	t.Run("is a matching passport", func(t *testing.T) {
 		testPass := Passport{
-			hgt: 176,
-			huom: "cm",
+			hgt:    176,
+			huom:   "cm",
 			og_hgt: "176cm",
-			iyr: 2013,
-			hcl: "#fffffd",
-			ecl: "amb",
-			byr: 2000,
-			eyr: 2034,
-			cid: "89",
-			pid: "934693255",
+			iyr:    2013,
+			hcl:    "#fffffd",
+			ecl:    "amb",
+			byr:    2000,
+			eyr:    2034,
+			cid:    "89",
+			pid:    "934693255",
 		}
 
 		assert.Equal(t, testPass, data[0])
@@ -36,15 +37,15 @@ func TestPrepareData(t *testing.T) {
 
 	t.Run("is another matching passport", func(t *testing.T) {
 		testPass := Passport{
-			iyr: 2010,
-			pid: "623705680",
-			ecl: "hzl",
-			hgt: 181,
-			huom: "cm",
+			iyr:    2010,
+			pid:    "623705680",
+			ecl:    "hzl",
+			hgt:    181,
+			huom:   "cm",
 			og_hgt: "181cm",
-			byr: 1980,
-			hcl: "#341e13",
-			eyr: 2028,
+			byr:    1980,
+			hcl:    "#341e13",
+			eyr:    2028,
 		}
 
 		assert.Equal(t, testPass, data[len(data)-1])
@@ -55,14 +56,14 @@ func TestIsValidPassport(t *testing.T) {
 
 	t.Run("is not a valid passport", func(t *testing.T) {
 		testPassports := []Passport{
-			{ pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test" },
-			{ iyr: 2010, ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test" },
-			{ iyr: 2010, pid: "623705680", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test" },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test" },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", hcl: "#341e13", eyr: 2028, cid: "test" },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, eyr: 2028, cid: "test" },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", cid: "test" },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", },
+			{pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test"},
+			{iyr: 2010, ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test"},
+			{iyr: 2010, pid: "623705680", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test"},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test"},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", hcl: "#341e13", eyr: 2028, cid: "test"},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, eyr: 2028, cid: "test"},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", cid: "test"},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13"},
 		}
 		for _, testPass := range testPassports {
 			assert.False(t, isValid(testPass))
@@ -71,8 +72,8 @@ func TestIsValidPassport(t *testing.T) {
 
 	t.Run("is a valid passport", func(t *testing.T) {
 		testPassports := []Passport{
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test" },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028 },
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test"},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028},
 		}
 		for _, testPass := range testPassports {
 			assert.True(t, isValid(testPass))
@@ -86,13 +87,13 @@ func TestIsValidHgt(t *testing.T) {
 		uom string
 	}
 	t.Run("invalid hgt", func(t *testing.T) {
-		testHgts:= []test {
-			{ hgt: 181 },
-			{ uom: "cm" },
-			{ hgt: 194, uom: "cm" },
-			{ hgt: 149, uom: "cm" },
-			{ hgt: 49, uom: "in" },
-			{ hgt: 80, uom: "in" },
+		testHgts := []test{
+			{hgt: 181},
+			{uom: "cm"},
+			{hgt: 194, uom: "cm"},
+			{hgt: 149, uom: "cm"},
+			{hgt: 49, uom: "in"},
+			{hgt: 80, uom: "in"},
 		}
 		for _, testHgt := range testHgts {
 			assert.False(t, isValidHgt(testHgt.hgt, testHgt.uom))
@@ -100,13 +101,13 @@ func TestIsValidHgt(t *testing.T) {
 	})
 
 	t.Run("valid hgt", func(t *testing.T) {
-		testHgts := []test {
-			{ hgt: 193, uom: "cm" },
-			{ hgt: 150, uom: "cm" },
-			{ hgt: 175, uom: "cm" },
-			{ hgt: 59, uom: "in" },
-			{ hgt: 76, uom: "in" },
-			{ hgt: 65, uom: "in" },
+		testHgts := []test{
+			{hgt: 193, uom: "cm"},
+			{hgt: 150, uom: "cm"},
+			{hgt: 175, uom: "cm"},
+			{hgt: 59, uom: "in"},
+			{hgt: 76, uom: "in"},
+			{hgt: 65, uom: "in"},
 		}
 		for _, testHgt := range testHgts {
 			assert.True(t, isValidHgt(testHgt.hgt, testHgt.uom))
@@ -116,7 +117,7 @@ func TestIsValidHgt(t *testing.T) {
 
 func TestIsValidEcl(t *testing.T) {
 	t.Run("invalid ecl", func(t *testing.T) {
-		tests := []string{ "", "has", "ame" }
+		tests := []string{"", "has", "ame"}
 		for _, test := range tests {
 			assert.False(t, isValidEcl(test))
 		}
@@ -197,34 +198,34 @@ func TestIsValidPassportStrict(t *testing.T) {
 
 	t.Run("is not a valid passport", func(t *testing.T) {
 		testPassports := []Passport{
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1919, hcl: "#341e13", eyr: 2028, cid: "test" },
-			{ iyr: 2009, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 2003, hcl: "#341e13", eyr: 2028, cid: "test" },
-			{ iyr: 2021, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test" },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2019, cid: "test" },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2031, cid: "test" },
-			{ iyr: 2010, pid: "23705680", hgt: 193, huom: "cm", byr: 1980, hcl: "341e138", eyr: 2028 },
-			{ iyr: 2010, ecl: "has", hgt: 193, huom: "cm", byr: 1980, hcl: "#341e1", eyr: 2028 },
-			{ iyr: 2010, pid: "0", ecl: "ame", hgt: 193, huom: "cm", byr: 1980, hcl: "#341g13", eyr: 2028 },
-			{ iyr: 2010, pid: "00000000", ecl: "ame", hgt: 193, huom: "cm", byr: 1980, eyr: 2028 },
-			{ iyr: 2010, pid: "12345678a", ecl: "ame", hgt: 193, huom: "cm", byr: 1980, hcl: "#341", eyr: 2028 },
-			{ iyr: 2010, pid: "623705680", hgt: 193, huom: "cm", byr: 1980, hcl: "341e138", eyr: 2028 },
-			{ iyr: 2010, pid: "623705680", ecl: "has", hgt: 193, huom: "cm", byr: 1980, hcl: "#341e1", eyr: 2028 },
-			{ iyr: 2010, pid: "623705680", ecl: "ame", hgt: 193, huom: "cm", byr: 1980, hcl: "#341g13", eyr: 2028 },
-			{ iyr: 2010, pid: "623705680", ecl: "ame", hgt: 193, huom: "cm", byr: 1980, eyr: 2028 },
-			{ iyr: 2010, pid: "623705680", ecl: "ame", hgt: 193, huom: "cm", byr: 1980, hcl: "#341", eyr: 2028 },
-			{ iyr: 2010, pid: "623705680", hgt: 193, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028 },
-			{ iyr: 2010, pid: "623705680", ecl: "has", hgt: 193, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028 },
-			{ iyr: 2010, pid: "623705680", ecl: "ame", hgt: 193, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028 },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test" },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028 },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 194, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028 },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 149, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028 },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 49, huom: "in", byr: 1980, hcl: "#341e13", eyr: 2028 },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 80, huom: "in", byr: 1980, hcl: "#341e13", eyr: 2028 },
-			{ eyr: 1972, cid: "100", hcl: "#18171d", ecl: "amb", hgt: 170, pid: "186cm" , iyr: 2018, byr: 1926 },
-			{ iyr: 2019, hcl: "#602927", eyr: 1967, hgt: 170, huom: "cm", ecl: "grn", pid: "012533040", byr: 1946 },
-			{ hcl: "dab227", iyr: 2012, ecl: "brn", hgt: 182, huom: "cm", pid: "021572410", eyr: 2020, byr: 1992, cid: "277" },
-			{ hgt: 59, huom: "cm", ecl: "zzz", eyr: 2038, hcl: "74454a", iyr: 2023, pid: "3556412378", byr: 2007 },
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1919, hcl: "#341e13", eyr: 2028, cid: "test"},
+			{iyr: 2009, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 2003, hcl: "#341e13", eyr: 2028, cid: "test"},
+			{iyr: 2021, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test"},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2019, cid: "test"},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2031, cid: "test"},
+			{iyr: 2010, pid: "23705680", hgt: 193, huom: "cm", byr: 1980, hcl: "341e138", eyr: 2028},
+			{iyr: 2010, ecl: "has", hgt: 193, huom: "cm", byr: 1980, hcl: "#341e1", eyr: 2028},
+			{iyr: 2010, pid: "0", ecl: "ame", hgt: 193, huom: "cm", byr: 1980, hcl: "#341g13", eyr: 2028},
+			{iyr: 2010, pid: "00000000", ecl: "ame", hgt: 193, huom: "cm", byr: 1980, eyr: 2028},
+			{iyr: 2010, pid: "12345678a", ecl: "ame", hgt: 193, huom: "cm", byr: 1980, hcl: "#341", eyr: 2028},
+			{iyr: 2010, pid: "623705680", hgt: 193, huom: "cm", byr: 1980, hcl: "341e138", eyr: 2028},
+			{iyr: 2010, pid: "623705680", ecl: "has", hgt: 193, huom: "cm", byr: 1980, hcl: "#341e1", eyr: 2028},
+			{iyr: 2010, pid: "623705680", ecl: "ame", hgt: 193, huom: "cm", byr: 1980, hcl: "#341g13", eyr: 2028},
+			{iyr: 2010, pid: "623705680", ecl: "ame", hgt: 193, huom: "cm", byr: 1980, eyr: 2028},
+			{iyr: 2010, pid: "623705680", ecl: "ame", hgt: 193, huom: "cm", byr: 1980, hcl: "#341", eyr: 2028},
+			{iyr: 2010, pid: "623705680", hgt: 193, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028},
+			{iyr: 2010, pid: "623705680", ecl: "has", hgt: 193, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028},
+			{iyr: 2010, pid: "623705680", ecl: "ame", hgt: 193, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test"},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 194, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 149, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 49, huom: "in", byr: 1980, hcl: "#341e13", eyr: 2028},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 80, huom: "in", byr: 1980, hcl: "#341e13", eyr: 2028},
+			{eyr: 1972, cid: "100", hcl: "#18171d", ecl: "amb", hgt: 170, pid: "186cm", iyr: 2018, byr: 1926},
+			{iyr: 2019, hcl: "#602927", eyr: 1967, hgt: 170, huom: "cm", ecl: "grn", pid: "012533040", byr: 1946},
+			{hcl: "dab227", iyr: 2012, ecl: "brn", hgt: 182, huom: "cm", pid: "021572410", eyr: 2020, byr: 1992, cid: "277"},
+			{hgt: 59, huom: "cm", ecl: "zzz", eyr: 2038, hcl: "74454a", iyr: 2023, pid: "3556412378", byr: 2007},
 		}
 		for _, testPass := range testPassports {
 			assert.False(t, isValidStrict(testPass))
@@ -233,12 +234,12 @@ func TestIsValidPassportStrict(t *testing.T) {
 
 	t.Run("is a valid passport", func(t *testing.T) {
 		testPassports := []Passport{
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", og_hgt: "181cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test" },
-			{ iyr: 2010, pid: "623705680", ecl: "hzl", og_hgt: "181cm", byr: 1980, hcl: "#341e13", eyr: 2028 },
-			{ pid: "087499704", og_hgt: "74in", ecl: "grn", iyr: 2012, eyr: 2030, byr: 1980, hcl: "#623a2f" },
-			{ eyr: 2029, ecl: "blu", cid: "129", byr: 1989, iyr: 2014, pid: "896056539", hcl: "#a97842", og_hgt: "165cm" },
-			{ hcl: "#888785", og_hgt: "164cm", byr: 2001, iyr: 2015, cid: "88", pid: "545766238", ecl: "hzl", eyr:2022 },
-			{ iyr: 2010, og_hgt: "158cm", hcl: "#b6652a", ecl: "blu", byr: 1944, eyr:2021, pid: "093154719" },
+			{iyr: 2010, pid: "623705680", ecl: "hzl", og_hgt: "181cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test"},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", og_hgt: "181cm", byr: 1980, hcl: "#341e13", eyr: 2028},
+			{pid: "087499704", og_hgt: "74in", ecl: "grn", iyr: 2012, eyr: 2030, byr: 1980, hcl: "#623a2f"},
+			{eyr: 2029, ecl: "blu", cid: "129", byr: 1989, iyr: 2014, pid: "896056539", hcl: "#a97842", og_hgt: "165cm"},
+			{hcl: "#888785", og_hgt: "164cm", byr: 2001, iyr: 2015, cid: "88", pid: "545766238", ecl: "hzl", eyr: 2022},
+			{iyr: 2010, og_hgt: "158cm", hcl: "#b6652a", ecl: "blu", byr: 1944, eyr: 2021, pid: "093154719"},
 		}
 		for _, testPass := range testPassports {
 			assert.True(t, isValidStrict(testPass), fmt.Sprintf("Failing Passport: %+v\n", testPass))

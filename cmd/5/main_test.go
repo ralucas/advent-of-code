@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var testInputExpects = []BoardingPass{
-	BoardingPass{ 44, 5, 357 },
-	BoardingPass{ 70, 7, 567 },
-	BoardingPass{ 14, 7, 119 },
-	BoardingPass{ 102, 4, 820 },
+	BoardingPass{44, 5, 357},
+	BoardingPass{70, 7, 567},
+	BoardingPass{14, 7, 119},
+	BoardingPass{102, 4, 820},
 }
 
 func TestPrepareData(t *testing.T) {
@@ -80,5 +81,5 @@ func TestFindAvailableSeats(t *testing.T) {
 
 	p := NewPlane(data)
 	as := findAvailableSeats(p)
-	assert.Equal(t, totalSeats - 4, len(as))
+	assert.Equal(t, totalSeats-4, len(as))
 }

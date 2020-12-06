@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
-	util "github.com/ralucas/advent-of-code/internal"
 	"strings"
+
+	util "github.com/ralucas/advent-of-code/internal"
 )
 
 type Password struct {
-	min int
-	max int
-	letter string
+	min      int
+	max      int
+	letter   string
 	password string
 }
 

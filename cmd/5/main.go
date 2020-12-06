@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	util "github.com/ralucas/advent-of-code/internal"
 	"log"
 	"strings"
 	"sync"
+
+	util "github.com/ralucas/advent-of-code/internal"
 )
 
 var inputFile = flag.String("input", "", "Input file")
@@ -14,12 +15,12 @@ var inputFile = flag.String("input", "", "Input file")
 type BoardingPass struct {
 	row int
 	col int
-	id int
+	id  int
 }
 
 type Plane struct {
 	seating [][]int
-	rows []int
+	rows    []int
 }
 
 func prepareData(filepath string) [][]string {
@@ -76,7 +77,7 @@ func toBoardingPass(s []string) BoardingPass {
 	bp := BoardingPass{
 		row: row,
 		col: col,
-		id: (row * 8) + col,
+		id:  (row * 8) + col,
 	}
 
 	return bp
@@ -85,7 +86,7 @@ func toBoardingPass(s []string) BoardingPass {
 func getHighestSeatID(ss [][]string) int {
 	var maxID int
 
-	for _, s := range(ss) {
+	for _, s := range ss {
 		bp := toBoardingPass(s)
 		if bp.id > maxID {
 			maxID = bp.id
@@ -98,7 +99,7 @@ func getHighestSeatID(ss [][]string) int {
 func NewPlane(ss [][]string) Plane {
 	plane := Plane{
 		seating: make([][]int, 128),
-		rows: make([]int, 128),
+		rows:    make([]int, 128),
 	}
 	for i := range plane.seating {
 		plane.seating[i] = make([]int, 8)
@@ -125,7 +126,7 @@ func NewPlane(ss [][]string) Plane {
 
 func (p *Plane) Print() {
 	for i, row := range p.seating {
-		fmt.Println(i,":", row)
+		fmt.Println(i, ":", row)
 	}
 }
 
@@ -160,9 +161,9 @@ func findSeat(ss [][]string) BoardingPass {
 
 	for _, seat := range availSeats {
 		if seat.row != 0 && seat.row != 127 {
-										// After first match, let's call it the seat
-										return seat
-										}
+			// After first match, let's call it the seat
+			return seat
+		}
 	}
 
 	return mySeat
@@ -179,4 +180,3 @@ func main() {
 	mySeat := findSeat(data)
 	fmt.Println("B -- Seat ID:", mySeat.id)
 }
-

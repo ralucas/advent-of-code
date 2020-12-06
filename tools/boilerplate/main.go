@@ -3,8 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	util "github.com/ralucas/advent-of-code/internal"
 	"log"
+
+	util "github.com/ralucas/advent-of-code/internal"
 )
 
 var inputFile = flag.String("input", "", "Input file")
@@ -26,4 +27,3 @@ func main() {
 
 	fmt.Printf("%+v", data)
 }
-

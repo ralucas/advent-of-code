@@ -3,14 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
-	util "github.com/ralucas/advent-of-code/internal"
 	"log"
 	"strings"
+
+	util "github.com/ralucas/advent-of-code/internal"
 )
 
 func prepareData(filepath string) []int {
 	inputString := util.ReadFile(filepath)
-	inputArr := util.Filter(strings.Split(inputString, "\n"), func (s string) bool {
+	inputArr := util.Filter(strings.Split(inputString, "\n"), func(s string) bool {
 		return s != ""
 	})
 
@@ -25,7 +26,7 @@ func prepareData(filepath string) []int {
 // If sorted, can reduce space to O(1), but needs
 // new algo
 func twoSum(data []int, target int) (int, int) {
-	i, j := 0, len(data) - 1
+	i, j := 0, len(data)-1
 	m := make(map[int]int)
 
 	for i < j {
@@ -47,7 +48,7 @@ func twoSum(data []int, target int) (int, int) {
 }
 
 func twoSumSorted(sData []int, target int) (int, int) {
-	l, r := 0, len(sData) - 1
+	l, r := 0, len(sData)-1
 
 	for l < r {
 		add2 := sData[l] + sData[r]
@@ -87,7 +88,6 @@ func threeSum(data []int, target int) (int, int, int) {
 	return -1, -1, -1
 }
 
-
 func main() {
 	data := prepareData("assets/1/input.txt")
 
@@ -98,7 +98,7 @@ func main() {
 		log.Fatalf("Couldn't find entries")
 	}
 	result := a * b
-	fmt.Println("Two Entry Result: ",  result)
+	fmt.Println("Two Entry Result: ", result)
 
 	sData := util.QSort(data)
 	c, d, e := threeSum(sData, *target)
@@ -107,5 +107,5 @@ func main() {
 	}
 	fmt.Println(c, d, e)
 	result2 := c * d * e
-	fmt.Println("Three Entry Result: ",  result2)
+	fmt.Println("Three Entry Result: ", result2)
 }

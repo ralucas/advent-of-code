@@ -3,26 +3,27 @@ package main
 import (
 	"flag"
 	"fmt"
-	util "github.com/ralucas/advent-of-code/internal"
 	"log"
 	"regexp"
 	"strconv"
 	"strings"
+
+	util "github.com/ralucas/advent-of-code/internal"
 )
 
 var inputFile = flag.String("input", "", "Input file")
 
 type Passport struct {
-	byr int
-	iyr int
-	eyr int
-	hgt int
-	huom string
+	byr    int
+	iyr    int
+	eyr    int
+	hgt    int
+	huom   string
 	og_hgt string
-	hcl string
-	ecl string
-	pid string
-	cid string
+	hcl    string
+	ecl    string
+	pid    string
+	cid    string
 }
 
 func prepareData(filepath string) []Passport {
@@ -166,7 +167,7 @@ func isValidHcl(hcl string) bool {
 // isValidEcl
 // ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
 func isValidEcl(ecl string) bool {
-	possibilities := []string{ "amb", "blu", "brn", "gry", "grn", "hzl", "oth" }
+	possibilities := []string{"amb", "blu", "brn", "gry", "grn", "hzl", "oth"}
 	for _, possible := range possibilities {
 		if ecl == possible {
 			return true

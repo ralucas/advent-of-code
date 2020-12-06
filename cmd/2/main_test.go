@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type Test struct {
-	input Password
+	input  Password
 	expect bool
 }
 
@@ -23,10 +24,10 @@ func TestPasswordValidate(t *testing.T) {
 }
 
 func TestPasswordValidByPos(t *testing.T) {
-	testPws:= []Test{
-		{ input: Password{1, 3, "a", "abcde"}, expect: true },
-		{ input: Password{1, 3, "b", "cdefg"}, expect: false },
-		{ input: Password{2, 9, "c", "ccccccccc"}, expect: false },
+	testPws := []Test{
+		{input: Password{1, 3, "a", "abcde"}, expect: true},
+		{input: Password{1, 3, "b", "cdefg"}, expect: false},
+		{input: Password{2, 9, "c", "ccccccccc"}, expect: false},
 	}
 	for _, tp := range testPws {
 		valid := isValidByPosition(tp.input)

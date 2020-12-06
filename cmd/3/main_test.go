@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	util "github.com/ralucas/advent-of-code/internal"
-	"github.com/stretchr/testify/assert"
 	"strconv"
 	"strings"
 	"testing"
+
+	util "github.com/ralucas/advent-of-code/internal"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestPrepareData(t *testing.T) {
@@ -17,7 +18,7 @@ func TestPrepareData(t *testing.T) {
 
 func TestSetGetPos(t *testing.T) {
 	type test struct {
-		input int
+		input  int
 		expect int
 	}
 
@@ -44,7 +45,7 @@ func TestSetGetPos(t *testing.T) {
 
 func TestIsEqualToPosition(t *testing.T) {
 	type test struct {
-		input []string
+		input  []string
 		expect bool
 	}
 
@@ -64,7 +65,7 @@ func TestIsEqualToPosition(t *testing.T) {
 	}
 	for _, tt := range tests {
 		assert.Equal(t, tt.expect, startState.IsEqualToPosition(tt.input, "#"))
-		startState.SetPos(1+startState.GetPos())
+		startState.SetPos(1 + startState.GetPos())
 	}
 }
 
@@ -77,7 +78,7 @@ func TestGetNextPosition(t *testing.T) {
 		down:  1,
 	}
 
-	tests := []int{ 3, 6, 1, 4, 7, 2, }
+	tests := []int{3, 6, 1, 4, 7, 2}
 	for _, tt := range tests {
 		np := startState.NextPosition()
 		assert.Equal(t, tt, np)
@@ -104,7 +105,7 @@ func TestIsTree(t *testing.T) {
 		ll := strings.Split(l[0], "")
 		lineLength = len(ll)
 		tests = append(tests, test{
-			input: ll,
+			input:  ll,
 			expect: b,
 		})
 	}
@@ -126,16 +127,16 @@ func TestIsTree(t *testing.T) {
 func TestMultiplesIsTree(t *testing.T) {
 	type test struct {
 		input  [][]string
-		slope []int
+		slope  []int
 		expect int
 	}
 
 	tests := []test{
-		{ input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{1, 1}, expect: 2 },
-		{ input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{3, 1}, expect: 7 },
-		{ input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{5, 1}, expect: 3 },
-		{ input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{7, 1}, expect: 4 },
-		{ input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{1, 2}, expect: 2 },
+		{input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{1, 1}, expect: 2},
+		{input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{3, 1}, expect: 7},
+		{input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{5, 1}, expect: 3},
+		{input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{7, 1}, expect: 4},
+		{input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{1, 2}, expect: 2},
 		//{ input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{20, 2}, expect: 4 },
 	}
 

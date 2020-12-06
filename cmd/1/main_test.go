@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
-	util "github.com/ralucas/advent-of-code/internal"
 	"math/rand"
 	"testing"
 	"time"
+
+	util "github.com/ralucas/advent-of-code/internal"
 	"github.com/stretchr/testify/assert"
 )
-
 
 func TestTwoSum(t *testing.T) {
 	data := prepareData("../../assets/1/input.txt")

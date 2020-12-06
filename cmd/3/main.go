@@ -2,16 +2,17 @@ package main
 
 import (
 	"fmt"
-	util "github.com/ralucas/advent-of-code/internal"
 	"strings"
+
+	util "github.com/ralucas/advent-of-code/internal"
 )
 
 type SledState struct {
 	start int
-	pos int
-	end int
+	pos   int
+	end   int
 	right int
-	down int
+	down  int
 }
 
 func prepareData(filepath string) [][]string {
@@ -55,9 +56,9 @@ func main() {
 
 	s := SledState{
 		start: 0,
-		end: len(data[0]) - 1,
+		end:   len(data[0]) - 1,
 		right: 3,
-		down: 1,
+		down:  1,
 	}
 
 	s.SetPos(s.start)
@@ -88,8 +89,8 @@ func main() {
 		ss := SledState{
 			start: 0,
 			right: slope[0],
-			down: slope[1],
-			end: len(data[0]) - 1,
+			down:  slope[1],
+			end:   len(data[0]) - 1,
 		}
 
 		ss.SetPos(ss.start)

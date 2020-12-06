@@ -8,7 +8,8 @@ import (
 )
 
 func ReadFile(filepath string) string {
-	f, err := ioutil.ReadFile(filepath); if err != nil {
+	f, err := ioutil.ReadFile(filepath)
+	if err != nil {
 		log.Fatalf("Error reading in file %v", err)
 	}
 
@@ -16,7 +17,8 @@ func ReadFile(filepath string) string {
 }
 
 func ReadFileToArray(filepath string, sep string) []string {
-	f, err := ioutil.ReadFile(filepath); if err != nil {
+	f, err := ioutil.ReadFile(filepath)
+	if err != nil {
 		log.Fatalf("Error reading in file %v", err)
 	}
 
@@ -106,7 +108,7 @@ func QSort(vi []int) []int {
 		if n < vi[pivot] {
 			a = append(a, n)
 		}
-		if n > vi[pivot]  {
+		if n > vi[pivot] {
 			b = append(b, n)
 		}
 	}
