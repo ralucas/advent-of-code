@@ -158,15 +158,11 @@ func findSeat(ss [][]string) BoardingPass {
 
 	var mySeat BoardingPass
 
-	for i, rc := range plane.rows {
-		if rc < 8 && rc > 1 && i != 0 && i != 127 {
-			for _, seat := range availSeats {
-				if seat.row != 0 && seat.row != 127 {
-					// After first match, let's call it the seat
-					return seat
-				}
-			}
-		}
+	for _, seat := range availSeats {
+		if seat.row != 0 && seat.row != 127 {
+										// After first match, let's call it the seat
+										return seat
+										}
 	}
 
 	return mySeat
