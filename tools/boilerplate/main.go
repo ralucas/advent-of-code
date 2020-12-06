@@ -20,7 +20,7 @@ func prepareData(filepath string) []string {
 }
 
 func main() {
-	fmt.Print("Day {Day # HERE}\n===========\n")
+	fmt.Print("Day %%DAY%%\n===========\n")
 	flag.Parse()
 	data := prepareData(*inputFile)
 

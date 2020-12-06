@@ -24,4 +24,5 @@ new:
 		mkdir test/testdata/$(CURRENT_DAY) && \
 		cp ~/Downloads/input.txt assets/$(CURRENT_DAY)/ && \
 		cp tools/boilerplate/* cmd/$(CURRENT_DAY) && \
+		gsed -i 's/%%DAY%%/$(CURRENT_DAY)/' cmd/$(CURRENT_DAY)/main.go && \
 		touch test/testdata/$(CURRENT_DAY)/test_input.txt
