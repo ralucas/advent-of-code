@@ -22,7 +22,7 @@ new:
 	mkdir assets/$(CURRENT_DAY) && \
 		mkdir cmd/$(CURRENT_DAY) && \
 		mkdir test/testdata/$(CURRENT_DAY) && \
-		cp ~/Downloads/input.txt assets/$(CURRENT_DAY)/ && \
+		mv ~/Downloads/input.txt assets/$(CURRENT_DAY)/input.txt && \
 		cp tools/boilerplate/* cmd/$(CURRENT_DAY) && \
 		gsed -i 's/%%DAY%%/$(CURRENT_DAY)/' cmd/$(CURRENT_DAY)/main.go && \
 		touch test/testdata/$(CURRENT_DAY)/test_input.txt
