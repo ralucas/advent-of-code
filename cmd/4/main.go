@@ -110,12 +110,12 @@ func isValidStrict(p Passport) bool {
 	validByr := p.byr >= 1920 && p.byr <= 2002
 	validIyr := p.iyr >= 2010 && p.iyr <= 2020
 	validEyr := p.eyr >= 2020 && p.eyr <= 2030
-	validOgHgt := isValidOgHgt(p.og_hgt)
+	validHgt := isValidHgt(p.hgt, p.huom)
 	validHcl := isValidHcl(p.hcl)
 	validEcl := isValidEcl(p.ecl)
 	validPid := isValidPid(p.pid)
 
-	result := validByr && validIyr && validEyr && validOgHgt &&
+	result := validByr && validIyr && validEyr && validHgt &&
 		validHcl && validEcl && validPid
 
 	return result
@@ -135,26 +135,6 @@ func isValidHgt(hgt int, uom string) bool {
 	}
 
 	return validHgt
-}
-
-func isValidOgHgt(ogHgt string) bool {
-	reUom := regexp.MustCompile(`(cm)|(in)`)
-	uom := string(reUom.Find([]byte(ogHgt)))
-	if uom == "" {
-		return false
-	}
-
-	reHgt := regexp.MustCompile(`\d{2,3}`)
-	if !reHgt.MatchString(ogHgt) {
-		return false
-	}
-
-	sHgt := string(reHgt.Find([]byte(ogHgt)))
-	hgt, err := strconv.Atoi(sHgt)
-	if err != nil {
-		log.Fatalf("%v", err)
-	}
-	return isValidHgt(hgt, uom)
 }
 
 // isValidHcl evaluates on:

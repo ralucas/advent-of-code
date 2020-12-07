@@ -11,7 +11,7 @@ test:
 
 .PHONY: test-all
 test-all:
-	go test -v ./...
+	go test ./...
 
 .PHONY: run
 run:
@@ -25,4 +25,5 @@ new:
 		mv ~/Downloads/input.txt assets/$(CURRENT_DAY)/input.txt && \
 		cp tools/boilerplate/* cmd/$(CURRENT_DAY) && \
 		gsed -i 's/%%DAY%%/$(CURRENT_DAY)/' cmd/$(CURRENT_DAY)/main.go && \
+		gsed -i 's/%%DAY%%/$(CURRENT_DAY)/' cmd/$(CURRENT_DAY)/main_test.go && \
 		touch test/testdata/$(CURRENT_DAY)/test_input.txt

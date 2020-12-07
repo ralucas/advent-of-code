@@ -234,12 +234,12 @@ func TestIsValidPassportStrict(t *testing.T) {
 
 	t.Run("is a valid passport", func(t *testing.T) {
 		testPassports := []Passport{
-			{iyr: 2010, pid: "623705680", ecl: "hzl", og_hgt: "181cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test"},
-			{iyr: 2010, pid: "623705680", ecl: "hzl", og_hgt: "181cm", byr: 1980, hcl: "#341e13", eyr: 2028},
-			{pid: "087499704", og_hgt: "74in", ecl: "grn", iyr: 2012, eyr: 2030, byr: 1980, hcl: "#623a2f"},
-			{eyr: 2029, ecl: "blu", cid: "129", byr: 1989, iyr: 2014, pid: "896056539", hcl: "#a97842", og_hgt: "165cm"},
-			{hcl: "#888785", og_hgt: "164cm", byr: 2001, iyr: 2015, cid: "88", pid: "545766238", ecl: "hzl", eyr: 2022},
-			{iyr: 2010, og_hgt: "158cm", hcl: "#b6652a", ecl: "blu", byr: 1944, eyr: 2021, pid: "093154719"},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", og_hgt: "181cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test"},
+			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", og_hgt: "181cm", byr: 1980, hcl: "#341e13", eyr: 2028},
+			{pid: "087499704", hgt: 74, huom: "in", og_hgt: "74in", ecl: "grn", iyr: 2012, eyr: 2030, byr: 1980, hcl: "#623a2f"},
+			{eyr: 2029, ecl: "blu", cid: "129", byr: 1989, iyr: 2014, pid: "896056539", hcl: "#a97842", hgt: 165, huom: "cm", og_hgt: "165cm"},
+			{hcl: "#888785", hgt: 164, huom: "cm", og_hgt: "164cm", byr: 2001, iyr: 2015, cid: "88", pid: "545766238", ecl: "hzl", eyr: 2022},
+			{iyr: 2010, hgt: 158, huom: "cm", og_hgt: "158cm", hcl: "#b6652a", ecl: "blu", byr: 1944, eyr: 2021, pid: "093154719"},
 		}
 		for _, testPass := range testPassports {
 			assert.True(t, isValidStrict(testPass), fmt.Sprintf("Failing Passport: %+v\n", testPass))

@@ -8,7 +8,7 @@ import (
 	util "github.com/ralucas/advent-of-code/internal"
 )
 
-var inputFile = flag.String("input", "", "Input file")
+var inputFile = flag.String("input", "assets/%%DAY%%/input.txt", "Input file")
 
 // TODO: Alter this for actual implementation
 func prepareData(filepath string) []string {
