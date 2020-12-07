@@ -60,9 +60,9 @@ func countParents(needle string, haystack map[string]map[string]int) (int, map[s
 		}
 	}
 
-	for k, _ := range parents {
+	for k := range parents {
 		curCount, curParents := countParents(k, haystack)
-		for cp, _ := range curParents {
+		for cp := range curParents {
 			if _, ok := parents[cp]; ok {
 				parents[cp] += 1
 				curCount -= 1
@@ -80,7 +80,7 @@ func countContains(needle string, haystack map[string]map[string]int) (int, map[
 	count := 0
 	contains := make(map[string]int)
 
-	valMap, _ := haystack[needle]
+	valMap := haystack[needle]
 
 	for k, v := range valMap {
 		contains[k] += v

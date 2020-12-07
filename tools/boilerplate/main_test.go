@@ -6,11 +6,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// TODO: Update this per implementation
+var data []string
+
+func init() {
+	// TODO: Uncomment and utilize
+	//data = prepareData("../../assets/%%DAY%%/test_input.txt")
+}
+
 func TestIsTrue(t *testing.T) {
 	assert.True(t, true)
 }
-
-//func TestPrepareData(t *testing.T) {
-//	data := prepareData("../../assets/%%DAY%%/test_input.txt")
-//	assert.NotNil(t, data)
-//}

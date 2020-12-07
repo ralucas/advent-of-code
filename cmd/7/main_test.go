@@ -7,8 +7,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+var data, data1 map[string]map[string]int
+
+func init() {
+	data = prepareData("../../test/testdata/7/test_input.txt")
+	data1 = prepareData("../../test/testdata/7/test_input1.txt")
+}
+
 func TestPrepareData(t *testing.T) {
-	data := prepareData("../../test/testdata/7/test_input.txt")
 
 	assert.NotNil(t, data)
 
@@ -53,19 +59,16 @@ func TestPrepareData(t *testing.T) {
 			val, ok := testMap[k]
 			assert.True(t, ok, fmt.Sprintf("Failed on %s", k))
 
-			if val != nil {
-				for vk := range val {
-					vkv, ok := val[vk]
-					assert.True(t, ok, fmt.Sprintf("Failed on %s[%s]", k, vk))
-					assert.Equal(t, testMap[k][vk], vkv, fmt.Sprintf("Failed on %s[%s] = %d", k, vk, vkv))
-				}
+			for vk := range val {
+				vkv, ok := val[vk]
+				assert.True(t, ok, fmt.Sprintf("Failed on %s[%s]", k, vk))
+				assert.Equal(t, testMap[k][vk], vkv, fmt.Sprintf("Failed on %s[%s] = %d", k, vk, vkv))
 			}
 		}
 	})
 }
 
 func TestCountParents(t *testing.T) {
-	data := prepareData("../../test/testdata/7/test_input.txt")
 	count, _ := countParents("shiny_gold", data)
 
 	assert.Equal(t, 4, count)
@@ -74,15 +77,13 @@ func TestCountParents(t *testing.T) {
 func TestCountContains(t *testing.T) {
 
 	t.Run("correctly counts the contains 1", func(t *testing.T) {
-		data := prepareData("../../test/testdata/7/test_input.txt")
 		count, _ := countContains("shiny_gold", data)
 
 		assert.Equal(t, 32, count)
 	})
 
 	t.Run("correctly counts the contains 2", func(t *testing.T) {
-		data := prepareData("../../test/testdata/7/test_input1.txt")
-		count, _ := countContains("shiny_gold", data)
+		count, _ := countContains("shiny_gold", data1)
 
 		assert.Equal(t, 126, count)
 	})
