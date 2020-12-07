@@ -7,11 +7,15 @@ all: test run
 
 .PHONY: test
 test:
-	go test -v ./cmd/$(CURRENT_DAY)/
+	go test -v -cover ./cmd/$(CURRENT_DAY)/
 
 .PHONY: test-all
 test-all:
-	go test ./...
+	go test -cover ./...
+
+.PHONY: test-util
+test-util:
+	go test -v -cover -bench=. ./internal/
 
 .PHONY: run
 run:

@@ -7,6 +7,7 @@ import (
 )
 
 // TODO: Update this per implementation
+//nolint
 var data []string
 
 func init() {
