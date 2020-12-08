@@ -65,8 +65,8 @@ func twoSumSorted(sData []int, target int) (int, int) {
 	return -1, -1
 }
 
-// threeSum takes array and target and returns the
-// first three numbers that add up to target.
+// threeSum takes array and target and finds
+// three numbers that add up to target.
 // Requires input array data to be sorted.
 // Runtime O(n^2), space O(1)
 func threeSum(data []int, target int) (int, int, int) {

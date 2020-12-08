@@ -12,7 +12,7 @@ var data []string
 
 func init() {
 	// TODO: Uncomment and utilize
-	//data = prepareData("../../assets/%%DAY%%/test_input.txt")
+	//data = prepareData("../../test/testdata/%%DAY%%/test_input.txt")
 }
 
 func TestIsTrue(t *testing.T) {

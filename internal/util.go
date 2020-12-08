@@ -121,3 +121,16 @@ func QSort(vi []int) []int {
 
 	return sorted
 }
+
+//func merge(a []int, b []int) []int {
+//
+//}
+//
+//func MergeSort(vi []int) []int {
+//	vlen := len(vi)
+//
+//	mid := vlen / 2
+//	a := vi[:mid]
+//	b := vi[mid:]
+//
+//}
