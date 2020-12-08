@@ -23,7 +23,6 @@ func prepareData(filepath string) []int {
 // twoSum takes an unsorted array and finds
 // the two numbers that add up to the target.
 // Runtime is O(n), space O(n).
-// twoSumSorted, can reduce space to O(1).
 func twoSum(data []int, target int) (int, int) {
 	i, j := 0, len(data)-1
 	m := make(map[int]int)
@@ -46,6 +45,9 @@ func twoSum(data []int, target int) (int, int) {
 	return -1, -1
 }
 
+// twoSumSorted takes an sorted array and finds
+// the two numbers that add up to the target.
+// Runtime is O(n), space O(1).
 func twoSumSorted(sData []int, target int) (int, int) {
 	l, r := 0, len(sData)-1
 
@@ -63,24 +65,16 @@ func twoSumSorted(sData []int, target int) (int, int) {
 	return -1, -1
 }
 
-// threeSum takes array and target and finds
-// three numbers that add up to target.
+// threeSum takes array and target and returns the
+// first three numbers that add up to target.
 // Requires input array data to be sorted.
 // Runtime O(n^2), space O(1)
 func threeSum(data []int, target int) (int, int, int) {
 	for i := 0; i < len(data); i++ {
-		l := i + 1
-		r := len(data) - 1
-		for l < r {
-			add3 := data[i] + data[l] + data[r]
-			if add3 == target {
-				return data[i], data[l], data[r]
-			}
-			if add3 > target {
-				r--
-			} else {
-				l++
-			}
+		b, c := twoSumSorted(data[i+1:], target-data[i])
+		add3 := data[i] + b + c
+		if add3 == target {
+			return data[i], b, c
 		}
 	}
 
