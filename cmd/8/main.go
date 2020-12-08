@@ -86,6 +86,7 @@ func runInstructions(instructions []Instruction) (int, int) {
 }
 
 // fixInstructions
+// runtime O(n^2)
 func fixInstructions(instructions []Instruction) int {
 	ilen := len(instructions)
 
