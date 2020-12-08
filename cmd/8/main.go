@@ -63,6 +63,7 @@ func runInstructions(instructions []Instruction) (int, int) {
 		visited[i] = 1
 
 		instruction := instructions[i]
+
 		switch instruction.op {
 		case "acc":
 			if instruction.sign == "+" {
@@ -90,25 +91,43 @@ func runInstructions(instructions []Instruction) (int, int) {
 func fixInstructions(instructions []Instruction) int {
 	ilen := len(instructions)
 
+	ch := make(chan int, ilen)
+
 	for i := 0; i < ilen; i++ {
-		op := instructions[i].op
-		if op == "nop" || op == "jmp" {
-			cpInst := make([]Instruction, ilen)
-			copy(cpInst, instructions)
-			if op == "nop" {
-				cpInst[i].op = "jmp"
+		operation := instructions[i].op
+
+		go func(idx int, op string, insts []Instruction) {
+			if op == "nop" || op == "jmp" {
+				// do copy here inside if stmt
+				cp := make([]Instruction, len(insts))
+				copy(cp, insts)
+
+				if op == "nop" {
+					cp[idx].op = "jmp"
+				} else {
+					cp[idx].op = "nop"
+				}
+
+				acc, exitcode := runInstructions(cp)
+				if exitcode == 0 {
+					ch <- acc
+				} else {
+					ch <- -1
+				}
 			} else {
-				cpInst[i].op = "nop"
+				ch <- -1
 			}
-
-			acc, exitcode := runInstructions(cpInst)
-			if exitcode == 0 {
-				return acc
-			}
-		}
-
+		}(i, operation, instructions)
 	}
 
+	for i := 0; i < ilen; i++ {
+		acc := <-ch
+		if acc != -1 {
+			return acc
+		}
+	}
+
+	defer close(ch)
 	return -1
 }
 
