@@ -2,70 +2,25 @@ package main
 
 import (
 	"fmt"
-	"strings"
 
-	util "github.com/ralucas/advent-of-code/internal"
+	day3 "github.com/ralucas/advent-of-code/pkg/3"
 )
-
-type SledState struct {
-	start int
-	pos   int
-	end   int
-	right int
-	down  int
-}
-
-func prepareData(filepath string) [][]string {
-	data := util.ReadFile(filepath)
-	var pData [][]string
-	splData := util.Filter(strings.Split(data, "\n"), func(in string) bool {
-		return in != ""
-	})
-	for _, line := range splData {
-		pData = append(pData, strings.Split(line, ""))
-	}
-
-	return pData
-}
-
-func (s *SledState) IsEqualToPosition(line []string, check string) bool {
-	return line[s.pos] == check
-}
-
-func (s *SledState) NextPosition() int {
-	nextPos := s.right + s.pos
-	if nextPos > s.end {
-		nextPos = nextPos - s.end - 1
-	}
-
-	return nextPos
-}
-
-func (s *SledState) SetPos(pos int) {
-	s.pos = pos
-}
-
-func (s *SledState) GetPos() int {
-	return s.pos
-}
 
 func main() {
 	fmt.Println("Running AOC #3...")
 
-	data := prepareData("assets/3/input.txt")
+	data := day3.PrepareData("assets/3/input.txt")
 
-	s := SledState{
-		start: 0,
-		end:   len(data[0]) - 1,
-		right: 3,
-		down:  1,
+	s := day3.SledState{
+		Start: 0,
+		End:   len(data[0]) - 1,
+		Right: 3,
+		Down:  1,
 	}
-
-	s.SetPos(s.start)
 
 	treeCount := 0
 
-	for i := 0; i < len(data); i += s.down {
+	for i := 0; i < len(data); i += s.Down {
 		if s.IsEqualToPosition(data[i], "#") {
 			treeCount += 1
 		}
@@ -86,16 +41,16 @@ func main() {
 	total := 1
 
 	for k, slope := range slopes {
-		ss := SledState{
-			start: 0,
-			right: slope[0],
-			down:  slope[1],
-			end:   len(data[0]) - 1,
+		ss := day3.SledState{
+			Start: 0,
+			Right: slope[0],
+			Down:  slope[1],
+			End:   len(data[0]) - 1,
 		}
 
-		ss.SetPos(ss.start)
+		ss.SetPos(ss.Start)
 
-		for i := 0; i < len(data); i += ss.down {
+		for i := 0; i < len(data); i += ss.Down {
 			if ss.IsEqualToPosition(data[i], "#") {
 				treeCounts[k] += 1
 			}

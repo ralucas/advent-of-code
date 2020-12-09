@@ -1,4 +1,4 @@
-package main
+package day3
 
 import (
 	"fmt"
@@ -6,12 +6,12 @@ import (
 	"strings"
 	"testing"
 
-	util "github.com/ralucas/advent-of-code/internal"
+	"github.com/ralucas/advent-of-code/pkg/util"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestPrepareData(t *testing.T) {
-	d := prepareData("../../assets/3/input.txt")
+	d := PrepareData("../../assets/3/input.txt")
 	assert.Equal(t, 323, len(d))
 	assert.IsType(t, d[0], []string{})
 }
@@ -23,11 +23,11 @@ func TestSetGetPos(t *testing.T) {
 	}
 
 	startState := SledState{
-		start: 0,
-		pos:   0,
-		end:   4,
-		right: 3,
-		down:  1,
+		Start: 0,
+		Pos:   0,
+		End:   4,
+		Right: 3,
+		Down:  1,
 	}
 	tests := []test{
 		{input: 5, expect: 5},
@@ -50,11 +50,11 @@ func TestIsEqualToPosition(t *testing.T) {
 	}
 
 	startState := SledState{
-		start: 0,
-		pos:   0,
-		end:   4,
-		right: 3,
-		down:  1,
+		Start: 0,
+		Pos:   0,
+		End:   4,
+		Right: 3,
+		Down:  1,
 	}
 	tests := []test{
 		{input: []string{".", "#", "#", "#", "#"}, expect: false},
@@ -71,11 +71,11 @@ func TestIsEqualToPosition(t *testing.T) {
 
 func TestGetNextPosition(t *testing.T) {
 	startState := SledState{
-		start: 0,
-		pos:   0,
-		end:   len([]string{".", "#", "#", "#", "#", ".", ".", "#"}) - 1,
-		right: 3,
-		down:  1,
+		Start: 0,
+		Pos:   0,
+		End:   len([]string{".", "#", "#", "#", "#", ".", ".", "#"}) - 1,
+		Right: 3,
+		Down:  1,
 	}
 
 	tests := []int{3, 6, 1, 4, 7, 2}
@@ -111,11 +111,11 @@ func TestIsTree(t *testing.T) {
 	}
 
 	startState := SledState{
-		start: 0,
-		pos:   0,
-		end:   lineLength - 1,
-		right: 3,
-		down:  1,
+		Start: 0,
+		Pos:   0,
+		End:   lineLength - 1,
+		Right: 3,
+		Down:  1,
 	}
 	for i, tt := range tests {
 		b := startState.IsEqualToPosition(tt.input, "#")
@@ -132,33 +132,33 @@ func TestMultiplesIsTree(t *testing.T) {
 	}
 
 	tests := []test{
-		{input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{1, 1}, expect: 2},
-		{input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{3, 1}, expect: 7},
-		{input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{5, 1}, expect: 3},
-		{input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{7, 1}, expect: 4},
-		{input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{1, 2}, expect: 2},
-		//{ input: prepareData("../../test/testdata/3/test-input2.txt"), slope: []int{20, 2}, expect: 4 },
+		{input: PrepareData("../../test/testdata/3/test-input2.txt"), slope: []int{1, 1}, expect: 2},
+		{input: PrepareData("../../test/testdata/3/test-input2.txt"), slope: []int{3, 1}, expect: 7},
+		{input: PrepareData("../../test/testdata/3/test-input2.txt"), slope: []int{5, 1}, expect: 3},
+		{input: PrepareData("../../test/testdata/3/test-input2.txt"), slope: []int{7, 1}, expect: 4},
+		{input: PrepareData("../../test/testdata/3/test-input2.txt"), slope: []int{1, 2}, expect: 2},
 	}
 
 	total := 1
 	for i, tt := range tests {
 		startState := SledState{
-			start: 0,
-			pos:   0,
-			end:   len(tt.input[0]) - 1,
-			right: tt.slope[0],
-			down:  tt.slope[1],
+			Start: 0,
+			Pos:   0,
+			End:   len(tt.input[0]) - 1,
+			Right: tt.slope[0],
+			Down:  tt.slope[1],
 		}
 
 		treeCount := 0
-		for j := 0; j < len(tt.input); j += startState.down {
+		for j := 0; j < len(tt.input); j += startState.Down {
 			if startState.IsEqualToPosition(tt.input[j], "#") {
 				treeCount += 1
 			}
 			startState.SetPos(startState.NextPosition())
 		}
 		total *= treeCount
-		assert.Equal(t, tt.expect, treeCount, fmt.Sprintf("Failed on input %d, with right %d and down %d", i, startState.right, startState.down))
+		assert.Equal(t, tt.expect, treeCount,
+			fmt.Sprintf("Failed on input %d, with right %d and down %d", i, startState.Right, startState.Down))
 	}
 	assert.Equal(t, 336, total)
 }

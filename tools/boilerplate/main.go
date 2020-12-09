@@ -3,27 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
-
-	util "github.com/ralucas/advent-of-code/internal"
+	//dayDAYX "github.com/ralucas/advent-of-code/pkg/DAYX"
 )
 
-var inputFile = flag.String("input", "assets/%%DAY%%/input.txt", "Input file")
-
-// TODO: Alter this for actual implementation
-func prepareData(filepath string) []string {
-	if filepath == "" {
-		log.Fatalf("Missing input file")
-	}
-	data := util.ReadFileToArray(filepath, "\n")
-
-	return data
-}
+var inputFile = flag.String("input", "assets/DAYX/input.txt", "Input file")
 
 func main() {
-	fmt.Print("Day %%DAY%%\n===========\n")
+	fmt.Print("Day DAYX\n===========\n")
 	flag.Parse()
-	data := prepareData(*inputFile)
-
-	fmt.Printf("%+v", data)
+	//data := dayDAYX.PrepareData(*inputFile)
 }

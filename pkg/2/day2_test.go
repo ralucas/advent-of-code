@@ -1,4 +1,4 @@
-package main
+package day2
 
 import (
 	"testing"
@@ -12,14 +12,14 @@ type Test struct {
 }
 
 func TestPrepareData(t *testing.T) {
-	data := prepareData("../../assets/2/input.txt")
+	data := PrepareData("../../assets/2/input.txt")
 	assert.IsType(t, data[1], Password{})
 	assert.True(t, len(data) > 10)
 }
 
 func TestPasswordValidate(t *testing.T) {
 	testPw := Password{1, 3, "a", "abcde"}
-	valid := isValid(testPw)
+	valid := IsValid(testPw)
 	assert.True(t, valid)
 }
 
@@ -30,7 +30,7 @@ func TestPasswordValidByPos(t *testing.T) {
 		{input: Password{2, 9, "c", "ccccccccc"}, expect: false},
 	}
 	for _, tp := range testPws {
-		valid := isValidByPosition(tp.input)
+		valid := IsValidByPosition(tp.input)
 		assert.Equal(t, valid, tp.expect)
 	}
 }

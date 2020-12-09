@@ -1,4 +1,4 @@
-package one
+package day1
 
 import (
 	"fmt"
@@ -6,12 +6,12 @@ import (
 	"testing"
 	"time"
 
-	util "github.com/ralucas/advent-of-code/internal"
+	util "github.com/ralucas/advent-of-code/pkg/util"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestTwoSum(t *testing.T) {
-	data := prepareData("../../assets/1/input.txt")
+	data := PrepareData("../../assets/1/input.txt")
 	dlen := len(data)
 
 	x, y := 0, 0
@@ -32,7 +32,7 @@ func TestTwoSum(t *testing.T) {
 }
 
 func TestTwoSumSorted(t *testing.T) {
-	data := prepareData("../../assets/1/input.txt")
+	data := PrepareData("../../assets/1/input.txt")
 	sData := util.QSort(data)
 	dlen := len(data)
 
@@ -48,13 +48,13 @@ func TestTwoSumSorted(t *testing.T) {
 			}
 		}
 		targ := data[x] + data[y]
-		a, b := twoSumSorted(sData, targ)
+		a, b := TwoSumSorted(sData, targ)
 		assert.Equal(t, targ, a+b, fmt.Sprintf("got %d + %d, expected %d + %d = %d", a, b, x, y, targ))
 	}
 }
 
 func TestThreeSum(t *testing.T) {
-	data := prepareData("../../assets/1/input.txt")
+	data := PrepareData("../../assets/1/input.txt")
 	sData := util.QSort(data)
 	dlen := len(data)
 	x, y, z := 0, 0, 0
@@ -69,7 +69,7 @@ func TestThreeSum(t *testing.T) {
 			}
 		}
 		targ := data[x] + data[y] + data[z]
-		a, b, c := threeSum(sData, targ)
+		a, b, c := ThreeSum(sData, targ)
 		assert.Equal(t, targ, a+b+c, fmt.Sprintf(
 			"got %d, %d, %d, expected: %d + %d + %d = %d",
 			a, b, c, data[x], data[y], data[z], targ))

@@ -1,4 +1,4 @@
-package main
+package day7
 
 import (
 	"fmt"
@@ -10,8 +10,8 @@ import (
 var data, data1 map[string]map[string]int
 
 func init() {
-	data = prepareData("../../test/testdata/7/test_input.txt")
-	data1 = prepareData("../../test/testdata/7/test_input1.txt")
+	data = PrepareData("../../test/testdata/7/test_input.txt")
+	data1 = PrepareData("../../test/testdata/7/test_input1.txt")
 }
 
 func TestPrepareData(t *testing.T) {
@@ -69,7 +69,7 @@ func TestPrepareData(t *testing.T) {
 }
 
 func TestCountParents(t *testing.T) {
-	count, _ := countParents("shiny_gold", data)
+	count, _ := CountParents("shiny_gold", data)
 
 	assert.Equal(t, 4, count)
 }
@@ -77,13 +77,13 @@ func TestCountParents(t *testing.T) {
 func TestCountContains(t *testing.T) {
 
 	t.Run("correctly counts the contains 1", func(t *testing.T) {
-		count, _ := countContains("shiny_gold", data)
+		count, _ := CountContains("shiny_gold", data)
 
 		assert.Equal(t, 32, count)
 	})
 
 	t.Run("correctly counts the contains 2", func(t *testing.T) {
-		count, _ := countContains("shiny_gold", data1)
+		count, _ := CountContains("shiny_gold", data1)
 
 		assert.Equal(t, 126, count)
 	})

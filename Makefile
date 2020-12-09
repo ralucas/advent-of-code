@@ -7,7 +7,7 @@ all: test run
 
 .PHONY: test
 test:
-	go test -v -cover ./cmd/$(CURRENT_DAY)/
+	go test -v -cover ./pkg/$(CURRENT_DAY)/
 
 .PHONY: test-all
 test-all:
@@ -15,7 +15,7 @@ test-all:
 
 .PHONY: test-util
 test-util:
-	go test -v -cover -bench=. ./internal/
+	go test -v -cover -bench=. ./pkg/util
 
 .PHONY: run
 run:
@@ -27,7 +27,9 @@ new:
 		mkdir cmd/$(CURRENT_DAY) && \
 		mkdir test/testdata/$(CURRENT_DAY) && \
 		mv ~/Downloads/input.txt assets/$(CURRENT_DAY)/input.txt && \
-		cp tools/boilerplate/* cmd/$(CURRENT_DAY) && \
-		gsed -i 's/%%DAY%%/$(CURRENT_DAY)/' cmd/$(CURRENT_DAY)/main.go && \
-		gsed -i 's/%%DAY%%/$(CURRENT_DAY)/' cmd/$(CURRENT_DAY)/main_test.go && \
+		cp tools/boilerplate/dayDAYX.go pkg/$(CURRENT_DAY)/day$(CURRENT_DAY).go && \
+		cp tools/boilerplate/dayDAYX_test.go pkg/$(CURRENT_DAY)/day$(CURRENT_DAY)_test.go && \
+		gsed -i 's/DAYX/$(CURRENT_DAY)/' cmd/$(CURRENT_DAY)/main.go && \
+		gsed -i 's/DAYX/$(CURRENT_DAY)/' pkg/$(CURRENT_DAY)/day$(CURRENT_DAY)_test.go && \
+		gsed -i 's/DAYX/$(CURRENT_DAY)/' pkg/$(CURRENT_DAY)/day$(CURRENT_DAY).go && \
 		touch test/testdata/$(CURRENT_DAY)/test_input.txt

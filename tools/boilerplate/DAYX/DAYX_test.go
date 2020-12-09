@@ -1,4 +1,4 @@
-package main
+package DAYX
 
 import (
 	"testing"
@@ -12,7 +12,7 @@ var data []string
 
 func init() {
 	// TODO: Uncomment and utilize
-	//data = prepareData("../../test/testdata/%%DAY%%/test_input.txt")
+	//data = prepareData("../../test/testdata/DAYX/test_input.txt")
 }
 
 func TestIsTrue(t *testing.T) {

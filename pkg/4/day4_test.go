@@ -1,4 +1,4 @@
-package main
+package day4
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 )
 
 func TestPrepareData(t *testing.T) {
-	data := prepareData("../../assets/4/input.txt")
+	data := PrepareData("../../assets/4/input.txt")
 
 	t.Run("is correct type", func(t *testing.T) {
 		assert.IsType(t, data[0], Passport{})
@@ -250,7 +250,7 @@ func TestIsValidPassportStrict(t *testing.T) {
 
 func TestIntegrationTotalValidity(t *testing.T) {
 	t.Run("is a not valid passport from file", func(t *testing.T) {
-		data := prepareData("../../test/testdata/4/invalid.txt")
+		data := PrepareData("../../test/testdata/4/invalid.txt")
 		for _, p := range data {
 			valid := isValid(p) && isValidStrict(p)
 			assert.False(t, valid)
@@ -258,7 +258,7 @@ func TestIntegrationTotalValidity(t *testing.T) {
 	})
 
 	t.Run("is a valid passport from file", func(t *testing.T) {
-		data := prepareData("../../test/testdata/4/valid.txt")
+		data := PrepareData("../../test/testdata/4/valid.txt")
 		for _, p := range data {
 			valid := isValid(p) && isValidStrict(p)
 			assert.True(t, valid)
@@ -268,11 +268,11 @@ func TestIntegrationTotalValidity(t *testing.T) {
 }
 
 func TestCountValidPassports(t *testing.T) {
-	data := prepareData("../../test/testdata/4/test_input_a.txt")
-	assert.Equal(t, 2, countValidPassports(data))
+	data := PrepareData("../../test/testdata/4/test_input_a.txt")
+	assert.Equal(t, 2, CountValidPassports(data))
 }
 
 func TestCountValidPassportsStrict(t *testing.T) {
-	data := prepareData("../../test/testdata/4/test_input_b.txt")
-	assert.Equal(t, 4, countValidPassportsStrict(data))
+	data := PrepareData("../../test/testdata/4/test_input_b.txt")
+	assert.Equal(t, 4, CountValidPassportsStrict(data))
 }

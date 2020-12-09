@@ -1,4 +1,4 @@
-package main
+package day8
 
 import (
 	"testing"
@@ -9,7 +9,7 @@ import (
 var data []Instruction
 
 func init() {
-	data = prepareData("../../test/testdata/8/test_input.txt")
+	data = PrepareData("../../test/testdata/8/test_input.txt")
 }
 
 func TestPrepareData(t *testing.T) {
@@ -45,7 +45,7 @@ func TestPrepareData(t *testing.T) {
 func TestRunInstructions(t *testing.T) {
 
 	t.Run("it returns correct last acc prior to looping", func(t *testing.T) {
-		lastAcc, exitcode := runInstructions(data)
+		lastAcc, exitcode := RunInstructions(data)
 
 		assert.Equal(t, 5, lastAcc)
 		assert.Equal(t, -1, exitcode)
@@ -53,7 +53,7 @@ func TestRunInstructions(t *testing.T) {
 }
 
 func TestFixInstructions(t *testing.T) {
-	acc := fixInstructions(data)
+	acc := FixInstructions(data)
 
 	assert.Equal(t, 8, acc)
 }
