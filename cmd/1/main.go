@@ -7,7 +7,7 @@ import (
 
 	day1 "github.com/ralucas/advent-of-code/pkg/1"
 
-	"github.com/ralucas/advent-of-code/pkg/util"
+	sort "github.com/ralucas/advent-of-code/pkg/utils"
 )
 
 func main() {
@@ -22,7 +22,7 @@ func main() {
 	result := a * b
 	fmt.Println("Two Entry Result: ", result)
 
-	sData := util.QSort(data)
+	sData := sort.QSort(data)
 	c, d, e := day1.ThreeSum(sData, *target)
 	if c == -1 {
 		log.Fatalf("Couldn't find entries")

@@ -13,9 +13,9 @@ test:
 test-all:
 	go test -cover ./...
 
-.PHONY: test-util
-test-util:
-	go test -v -cover -bench=. ./pkg/util
+.PHONY: test-utils
+test-utils:
+	go test -v -cover -bench=. ./pkg/utils
 
 .PHONY: run
 run:

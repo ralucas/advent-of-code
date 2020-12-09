@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ralucas/advent-of-code/pkg/util"
+	"github.com/ralucas/advent-of-code/pkg/utils"
 )
 
 type Passport struct {
@@ -23,7 +23,7 @@ type Passport struct {
 }
 
 func PrepareData(filepath string) []Passport {
-	data := util.ReadFileToArray(filepath, "\n\n")
+	data := utils.ReadFileToArray(filepath, "\n\n")
 
 	var preparedData []Passport
 

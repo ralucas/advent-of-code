@@ -4,14 +4,14 @@ import (
 	"log"
 	"strings"
 
-	"github.com/ralucas/advent-of-code/pkg/util"
+	"github.com/ralucas/advent-of-code/pkg/utils"
 )
 
 func PrepareData(filepath string) [][]string {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := util.ReadFileToArray(filepath, "\n\n")
+	data := utils.ReadFileToArray(filepath, "\n\n")
 
 	prepared := make([][]string, len(data))
 

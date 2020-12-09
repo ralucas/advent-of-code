@@ -6,14 +6,14 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ralucas/advent-of-code/pkg/util"
+	"github.com/ralucas/advent-of-code/pkg/utils"
 )
 
 func PrepareData(filepath string) map[string]map[string]int {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := util.ReadFileToArray(filepath, "\n")
+	data := utils.ReadFileToArray(filepath, "\n")
 
 	output := make(map[string]map[string]int)
 

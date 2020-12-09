@@ -3,17 +3,18 @@ package day9
 import (
 	"log"
 
+	"github.com/ralucas/advent-of-code/pkg/utils"
+
 	day1 "github.com/ralucas/advent-of-code/pkg/1"
-	"github.com/ralucas/advent-of-code/pkg/util"
 )
 
 func PrepareData(filepath string) []int {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := util.ReadFileToArray(filepath, "\n")
+	data := utils.ReadFileToArray(filepath, "\n")
 
-	m := util.MapToInt(data)
+	m := utils.MapToInt(data)
 
 	return m
 }

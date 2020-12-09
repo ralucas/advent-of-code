@@ -3,7 +3,7 @@ package day3
 import (
 	"strings"
 
-	"github.com/ralucas/advent-of-code/pkg/util"
+	"github.com/ralucas/advent-of-code/pkg/utils"
 )
 
 type SledState struct {
@@ -15,9 +15,9 @@ type SledState struct {
 }
 
 func PrepareData(filepath string) [][]string {
-	data := util.ReadFile(filepath)
+	data := utils.ReadFile(filepath)
 	var pData [][]string
-	splData := util.Filter(strings.Split(data, "\n"), func(in string) bool {
+	splData := utils.Filter(strings.Split(data, "\n"), func(in string) bool {
 		return in != ""
 	})
 	for _, line := range splData {

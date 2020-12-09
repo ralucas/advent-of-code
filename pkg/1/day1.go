@@ -3,16 +3,16 @@ package day1
 import (
 	"strings"
 
-	"github.com/ralucas/advent-of-code/pkg/util"
+	"github.com/ralucas/advent-of-code/pkg/utils"
 )
 
 func PrepareData(filepath string) []int {
-	inputString := util.ReadFile(filepath)
-	inputArr := util.Filter(strings.Split(inputString, "\n"), func(s string) bool {
+	inputString := utils.ReadFile(filepath)
+	inputArr := utils.Filter(strings.Split(inputString, "\n"), func(s string) bool {
 		return s != ""
 	})
 
-	preparedData := util.MapToInt(inputArr)
+	preparedData := utils.MapToInt(inputArr)
 
 	return preparedData
 }

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ralucas/advent-of-code/pkg/util"
+	"github.com/ralucas/advent-of-code/pkg/utils"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -94,7 +94,7 @@ func TestIsTree(t *testing.T) {
 
 	var tests []test
 
-	data := util.ReadFile("../../test/testdata/3/test-input.txt")
+	data := utils.ReadFile("../../test/testdata/3/test-input.txt")
 	lData := strings.Split(data, "\n")
 
 	lineLength := 0

@@ -3,7 +3,7 @@ package day2
 import (
 	"strings"
 
-	"github.com/ralucas/advent-of-code/pkg/util"
+	"github.com/ralucas/advent-of-code/pkg/utils"
 )
 
 type Password struct {
@@ -14,13 +14,13 @@ type Password struct {
 }
 
 func PrepareData(filepath string) []Password {
-	data := util.ReadFile(filepath)
+	data := utils.ReadFile(filepath)
 	dataArr := strings.Split(data, "\n")
 	output := make([]Password, 0)
 	for _, line := range dataArr {
 		if line != "" {
 			splitLine := strings.Split(line, " ")
-			minmax := util.MapToInt(strings.Split(splitLine[0], "-"))
+			minmax := utils.MapToInt(strings.Split(splitLine[0], "-"))
 			letter := string(splitLine[1][0])
 			password := splitLine[len(splitLine)-1]
 			newPw := Password{minmax[0], minmax[1], letter, password}

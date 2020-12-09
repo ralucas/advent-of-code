@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	util "github.com/ralucas/advent-of-code/pkg/util"
+	"github.com/ralucas/advent-of-code/pkg/utils"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -33,7 +33,7 @@ func TestTwoSum(t *testing.T) {
 
 func TestTwoSumSorted(t *testing.T) {
 	data := PrepareData("../../assets/1/input.txt")
-	sData := util.QSort(data)
+	sData := utils.QSort(data)
 	dlen := len(data)
 
 	x, y := 0, 0
@@ -55,7 +55,7 @@ func TestTwoSumSorted(t *testing.T) {
 
 func TestThreeSum(t *testing.T) {
 	data := PrepareData("../../assets/1/input.txt")
-	sData := util.QSort(data)
+	sData := utils.QSort(data)
 	dlen := len(data)
 	x, y, z := 0, 0, 0
 

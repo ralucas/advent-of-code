@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ralucas/advent-of-code/pkg/util"
+	"github.com/ralucas/advent-of-code/pkg/utils"
 )
 
 type Instruction struct {
@@ -18,7 +18,7 @@ func PrepareData(filepath string) []Instruction {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := util.ReadFileToArray(filepath, "\n")
+	data := utils.ReadFileToArray(filepath, "\n")
 
 	var instructions []Instruction
 
