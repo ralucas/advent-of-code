@@ -1,7 +1,6 @@
 package day4
 
 import (
-	"flag"
 	"log"
 	"regexp"
 	"strconv"
@@ -9,8 +8,6 @@ import (
 
 	"github.com/ralucas/advent-of-code/pkg/util"
 )
-
-var inputFile = flag.String("input", "", "Input file")
 
 type Passport struct {
 	byr    int

@@ -1,15 +1,12 @@
 package day8
 
 import (
-	"flag"
 	"log"
 	"strconv"
 	"strings"
 
 	"github.com/ralucas/advent-of-code/pkg/util"
 )
-
-var inputFile = flag.String("input", "assets/8/input.txt", "Input file")
 
 type Instruction struct {
 	op   string
