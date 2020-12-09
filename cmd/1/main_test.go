@@ -1,4 +1,4 @@
-package main
+package one
 
 import (
 	"fmt"
@@ -26,7 +26,7 @@ func TestTwoSum(t *testing.T) {
 			}
 		}
 		targ := data[x] + data[y]
-		a, b := twoSum(data, targ)
+		a, b := TwoSum(data, targ)
 		assert.Equal(t, targ, a+b, fmt.Sprintf("got %d + %d, expected %d + %d = %d", a, b, x, y, targ))
 	}
 }

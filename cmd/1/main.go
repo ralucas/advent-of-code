@@ -1,4 +1,4 @@
-package main
+package one
 
 import (
 	"flag"
@@ -23,7 +23,7 @@ func prepareData(filepath string) []int {
 // twoSum takes an unsorted array and finds
 // the two numbers that add up to the target.
 // Runtime is O(n), space O(n).
-func twoSum(data []int, target int) (int, int) {
+func TwoSum(data []int, target int) (int, int) {
 	i, j := 0, len(data)-1
 	m := make(map[int]int)
 
@@ -86,7 +86,7 @@ func main() {
 
 	target := flag.Int("target", 2020, "target")
 
-	a, b := twoSum(data, *target)
+	a, b := TwoSum(data, *target)
 	if a == -1 && b == -1 {
 		log.Fatalf("Couldn't find entries")
 	}
