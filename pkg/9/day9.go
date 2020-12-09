@@ -63,7 +63,7 @@ func ContiguousSumSet(nums []int, target int) []int {
 		}(i)
 	}
 
-	for i := 0; i < nlen; i++ {
+	for range nums {
 		ss := <-ch
 		if ss != nil {
 			return ss
@@ -74,7 +74,7 @@ func ContiguousSumSet(nums []int, target int) []int {
 	return nil
 }
 
-func MinMax(nums []int) (int, int) {
+func Extent(nums []int) (int, int) {
 	min := nums[0]
 	max := nums[0]
 

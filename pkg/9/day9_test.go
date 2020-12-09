@@ -32,7 +32,7 @@ func TestContiguousSumSet(t *testing.T) {
 	}
 }
 
-func TestMinMax(t *testing.T) {
+func TestExtent(t *testing.T) {
 	type test struct {
 		input  []int
 		expect []int
@@ -44,7 +44,7 @@ func TestMinMax(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		min, max := MinMax(tt.input)
+		min, max := Extent(tt.input)
 		assert.Equal(t, tt.expect[0], min)
 		assert.Equal(t, tt.expect[1], max)
 	}

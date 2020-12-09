@@ -18,6 +18,6 @@ func main() {
 	fmt.Println("A -- First num:", a)
 
 	b := day9.ContiguousSumSet(data[:aidx], a)
-	min, max := day9.MinMax(b)
+	min, max := day9.Extent(b)
 	fmt.Println("B -- Sum of min-max:", min+max)
 }

@@ -6,6 +6,7 @@ import (
 	//dayDAYX "github.com/ralucas/advent-of-code/pkg/DAYX"
 )
 
+//nolint
 var inputFile = flag.String("input", "assets/DAYX/input.txt", "Input file")
 
 func main() {
