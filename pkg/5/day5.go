@@ -1,7 +1,6 @@
 package day5
 
 import (
-	"flag"
 	"fmt"
 	"log"
 	"strings"
@@ -9,8 +8,6 @@ import (
 
 	"github.com/ralucas/advent-of-code/pkg/util"
 )
-
-var inputFile = flag.String("input", "", "Input file")
 
 type BoardingPass struct {
 	Row int

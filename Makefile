@@ -32,4 +32,5 @@ new:
 		gsed -i 's/DAYX/$(CURRENT_DAY)/' cmd/$(CURRENT_DAY)/main.go && \
 		gsed -i 's/DAYX/$(CURRENT_DAY)/' pkg/$(CURRENT_DAY)/day$(CURRENT_DAY)_test.go && \
 		gsed -i 's/DAYX/$(CURRENT_DAY)/' pkg/$(CURRENT_DAY)/day$(CURRENT_DAY).go && \
-		touch test/testdata/$(CURRENT_DAY)/test_input.txt
+		touch test/testdata/$(CURRENT_DAY)/test_input.txt && \
+		touch assets/$(CURRENT_DAY)/instructions.md
