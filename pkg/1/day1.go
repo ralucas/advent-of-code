@@ -1,12 +1,17 @@
 package day1
 
 import (
+	"log"
 	"strings"
 
 	"github.com/ralucas/advent-of-code/pkg/utils"
 )
 
-func PrepareData(filepath string) []int {
+type Day struct {
+	data []int
+}
+
+func (d *Day) PrepareData(filepath string) {
 	inputString := utils.ReadFile(filepath)
 	inputArr := utils.Filter(strings.Split(inputString, "\n"), func(s string) bool {
 		return s != ""
@@ -14,7 +19,30 @@ func PrepareData(filepath string) []int {
 
 	preparedData := utils.MapToInt(inputArr)
 
-	return preparedData
+	d.data = preparedData
+	return
+}
+
+func (d *Day) Part1() interface{} {
+	a, b := TwoSum(d.data, 2020)
+	if a == -1 && b == -1 {
+		log.Fatalf("Couldn't find entries")
+	}
+	result := a * b
+
+	return result
+}
+
+func (d *Day) Part2() interface{} {
+	sData := utils.QSort(d.data)
+	a, b, c := ThreeSum(sData, 2020)
+	if a == -1 {
+		log.Fatalf("Couldn't find entries")
+	}
+
+	result := a * b * c
+
+	return result
 }
 
 // TwoSum takes an unsorted array and finds

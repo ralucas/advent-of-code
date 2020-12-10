@@ -20,7 +20,11 @@ type Plane struct {
 	rows    []int
 }
 
-func PrepareData(filepath string) [][]string {
+type Day struct {
+	data [][]string
+}
+
+func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
@@ -32,7 +36,21 @@ func PrepareData(filepath string) [][]string {
 		prepared[i] = strings.Split(d, "")
 	}
 
-	return prepared
+	d.data = prepared
+
+	return
+}
+
+func (d *Day) Part1() interface{} {
+	maxID := GetHighestSeatID(d.data)
+
+	return maxID
+}
+
+func (d *Day) Part2() interface{} {
+	mySeat := FindSeat(d.data)
+
+	return mySeat.ID
 }
 
 func getRow(s []string) int {

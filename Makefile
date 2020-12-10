@@ -19,7 +19,7 @@ test-utils:
 
 .PHONY: run
 run:
-	go run ./cmd/$(CURRENT_DAY)/main.go --input "assets/$(CURRENT_DAY)/input.txt"
+	go run ./cmd/main.go --input "assets/$(CURRENT_DAY)/input.txt" --day "$(CURRENT_DAY)"
 
 .PHONY: new
 new:
@@ -27,9 +27,8 @@ new:
 		mkdir cmd/$(CURRENT_DAY) && \
 		mkdir test/testdata/$(CURRENT_DAY) && \
 		mv ~/Downloads/input.txt assets/$(CURRENT_DAY)/input.txt && \
-		cp tools/boilerplate/dayDAYX.go pkg/$(CURRENT_DAY)/day$(CURRENT_DAY).go && \
-		cp tools/boilerplate/dayDAYX_test.go pkg/$(CURRENT_DAY)/day$(CURRENT_DAY)_test.go && \
-		gsed -i 's/DAYX/$(CURRENT_DAY)/' cmd/$(CURRENT_DAY)/main.go && \
+		cp tools/boilerplate/DAYX.go pkg/$(CURRENT_DAY)/day$(CURRENT_DAY).go && \
+		cp tools/boilerplate/DAYX_test.go pkg/$(CURRENT_DAY)/day$(CURRENT_DAY)_test.go && \
 		gsed -i 's/DAYX/$(CURRENT_DAY)/' pkg/$(CURRENT_DAY)/day$(CURRENT_DAY)_test.go && \
 		gsed -i 's/DAYX/$(CURRENT_DAY)/' pkg/$(CURRENT_DAY)/day$(CURRENT_DAY).go && \
 		touch test/testdata/$(CURRENT_DAY)/test_input.txt && \

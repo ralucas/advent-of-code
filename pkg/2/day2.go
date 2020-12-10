@@ -7,13 +7,17 @@ import (
 )
 
 type Password struct {
-	min      int
-	max      int
-	letter   string
-	password string
+	Min    int
+	Max    int
+	Letter string
+	Pass   string
 }
 
-func PrepareData(filepath string) []Password {
+type Day struct {
+	data []Password
+}
+
+func (d *Day) PrepareData(filepath string) {
 	data := utils.ReadFile(filepath)
 	dataArr := strings.Split(data, "\n")
 	output := make([]Password, 0)
@@ -27,26 +31,51 @@ func PrepareData(filepath string) []Password {
 			output = append(output, newPw)
 		}
 	}
-	return output
+
+	d.data = output
+
+	return
+}
+
+func (d *Day) Part1() interface{} {
+	validCount := 0
+	for _, pw := range d.data {
+		if IsValid(pw) {
+			validCount += 1
+		}
+	}
+
+	return validCount
+}
+
+func (d *Day) Part2() interface{} {
+	validPosCount := 0
+	for _, pw := range d.data {
+		if IsValidByPosition(pw) {
+			validPosCount += 1
+		}
+	}
+
+	return validPosCount
 }
 
 func IsValid(p Password) bool {
 	matchCount := 0
-	for i := 0; i < len(p.password); i++ {
-		if string(p.password[i]) == p.letter {
+	for i := 0; i < len(p.Pass); i++ {
+		if string(p.Pass[i]) == p.Letter {
 			matchCount += 1
 		}
 	}
 
-	return matchCount >= p.min && matchCount <= p.max
+	return matchCount >= p.Min && matchCount <= p.Max
 }
 
 func IsValidByPosition(p Password) bool {
-	pos1 := p.min - 1
-	pos2 := p.max - 1
+	pos1 := p.Min - 1
+	pos2 := p.Max - 1
 
-	valid1 := string(p.password[pos1]) == p.letter && string(p.password[pos2]) != p.letter
-	valid2 := string(p.password[pos1]) != p.letter && string(p.password[pos2]) == p.letter
+	valid1 := string(p.Pass[pos1]) == p.Letter && string(p.Pass[pos2]) != p.Letter
+	valid2 := string(p.Pass[pos1]) != p.Letter && string(p.Pass[pos2]) == p.Letter
 
 	return valid1 || valid2
 }

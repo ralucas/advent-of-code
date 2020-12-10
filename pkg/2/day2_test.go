@@ -12,9 +12,11 @@ type Test struct {
 }
 
 func TestPrepareData(t *testing.T) {
-	data := PrepareData("../../assets/2/input.txt")
-	assert.IsType(t, data[1], Password{})
-	assert.True(t, len(data) > 10)
+	d := Day{}
+
+	d.PrepareData("../../assets/2/input.txt")
+	assert.IsType(t, d.data[1], Password{})
+	assert.True(t, len(d.data) > 10)
 }
 
 func TestPasswordValidate(t *testing.T) {

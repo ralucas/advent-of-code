@@ -8,15 +8,33 @@ import (
 	day1 "github.com/ralucas/advent-of-code/pkg/1"
 )
 
-func PrepareData(filepath string) []int {
+type Day struct {
+	data []int
+}
+
+func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
 	data := utils.ReadFileToArray(filepath, "\n")
 
-	m := utils.MapToInt(data)
+	d.data = utils.MapToInt(data)
 
-	return m
+	return
+}
+
+func (d *Day) Part1() interface{} {
+	a, _ := FindFirstNonSum(d.data, 25)
+
+	return a
+}
+
+func (d *Day) Part2() interface{} {
+	a, aidx := FindFirstNonSum(d.data, 25)
+	b := ContiguousSumSet(d.data[:aidx], a)
+	min, max := Extent(b)
+
+	return min + max
 }
 
 func FindFirstNonSum(nums []int, preamble int) (int, int) {

@@ -7,19 +7,19 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var data, data1 map[string]map[string]int
+var td, td1 Day
 
 func init() {
-	data = PrepareData("../../test/testdata/7/test_input.txt")
-	data1 = PrepareData("../../test/testdata/7/test_input1.txt")
+	td.PrepareData("../../test/testdata/7/test_input.txt")
+	td1.PrepareData("../../test/testdata/7/test_input1.txt")
 }
 
 func TestPrepareData(t *testing.T) {
 
-	assert.NotNil(t, data)
+	assert.NotNil(t, td.data)
 
 	t.Run("has the correct len", func(t *testing.T) {
-		assert.Equal(t, 9, len(data))
+		assert.Equal(t, 9, len(td.data))
 	})
 
 	t.Run("has the correct items", func(t *testing.T) {
@@ -55,7 +55,7 @@ func TestPrepareData(t *testing.T) {
 			"dotted_black": nil,
 		}
 
-		for k := range data {
+		for k := range td.data {
 			val, ok := testMap[k]
 			assert.True(t, ok, fmt.Sprintf("Failed on %s", k))
 
@@ -69,7 +69,7 @@ func TestPrepareData(t *testing.T) {
 }
 
 func TestCountParents(t *testing.T) {
-	count, _ := CountParents("shiny_gold", data)
+	count, _ := CountParents("shiny_gold", td.data)
 
 	assert.Equal(t, 4, count)
 }
@@ -77,13 +77,13 @@ func TestCountParents(t *testing.T) {
 func TestCountContains(t *testing.T) {
 
 	t.Run("correctly counts the contains 1", func(t *testing.T) {
-		count, _ := CountContains("shiny_gold", data)
+		count, _ := CountContains("shiny_gold", td.data)
 
 		assert.Equal(t, 32, count)
 	})
 
 	t.Run("correctly counts the contains 2", func(t *testing.T) {
-		count, _ := CountContains("shiny_gold", data1)
+		count, _ := CountContains("shiny_gold", td1.data)
 
 		assert.Equal(t, 126, count)
 	})

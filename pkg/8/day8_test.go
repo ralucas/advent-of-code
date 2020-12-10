@@ -6,19 +6,19 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var data []Instruction
+var td Day
 
 func init() {
-	data = PrepareData("../../test/testdata/8/test_input.txt")
+	td.PrepareData("../../test/testdata/8/test_input.txt")
 }
 
 func TestPrepareData(t *testing.T) {
 	t.Run("exists", func(t *testing.T) {
-		assert.NotNil(t, data)
+		assert.NotNil(t, td.data)
 	})
 
 	t.Run("has the correct length", func(t *testing.T) {
-		assert.Equal(t, 9, len(data))
+		assert.Equal(t, 9, len(td.data))
 	})
 
 	t.Run("individual items are correct", func(t *testing.T) {
@@ -35,9 +35,9 @@ func TestPrepareData(t *testing.T) {
 		}
 
 		for i, test := range testData {
-			assert.Equal(t, data[i].op, test.op)
-			assert.Equal(t, data[i].sign, test.sign)
-			assert.Equal(t, data[i].val, test.val)
+			assert.Equal(t, td.data[i].op, test.op)
+			assert.Equal(t, td.data[i].sign, test.sign)
+			assert.Equal(t, td.data[i].val, test.val)
 		}
 	})
 }
@@ -45,7 +45,7 @@ func TestPrepareData(t *testing.T) {
 func TestRunInstructions(t *testing.T) {
 
 	t.Run("it returns correct last acc prior to looping", func(t *testing.T) {
-		lastAcc, exitcode := RunInstructions(data)
+		lastAcc, exitcode := RunInstructions(td.data)
 
 		assert.Equal(t, 5, lastAcc)
 		assert.Equal(t, -1, exitcode)
@@ -53,7 +53,7 @@ func TestRunInstructions(t *testing.T) {
 }
 
 func TestFixInstructions(t *testing.T) {
-	acc := FixInstructions(data)
+	acc := FixInstructions(td.data)
 
 	assert.Equal(t, 8, acc)
 }

@@ -14,7 +14,11 @@ type Instruction struct {
 	val  int
 }
 
-func PrepareData(filepath string) []Instruction {
+type Day struct {
+	data []Instruction
+}
+
+func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
@@ -36,7 +40,24 @@ func PrepareData(filepath string) []Instruction {
 		instructions = append(instructions, inst)
 	}
 
-	return instructions
+	d.data = instructions
+
+	return
+}
+
+func (d *Day) Part1() interface{} {
+	lastAcc, exitcode := RunInstructions(d.data)
+	if exitcode != -1 {
+		log.Fatalf("Error, all instructions ran")
+	}
+
+	return lastAcc
+}
+
+func (d *Day) Part2() interface{} {
+	finalAcc := FixInstructions(d.data)
+
+	return finalAcc
 }
 
 // runInstructions returns last good accumulator and exit code

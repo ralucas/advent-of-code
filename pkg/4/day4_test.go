@@ -8,14 +8,15 @@ import (
 )
 
 func TestPrepareData(t *testing.T) {
-	data := PrepareData("../../assets/4/input.txt")
+	d := Day{}
+	d.PrepareData("../../assets/4/input.txt")
 
 	t.Run("is correct type", func(t *testing.T) {
-		assert.IsType(t, data[0], Passport{})
+		assert.IsType(t, d.data[0], Passport{})
 	})
 
 	t.Run("has items", func(t *testing.T) {
-		assert.Equal(t, 255, len(data))
+		assert.Equal(t, 255, len(d.data))
 	})
 
 	t.Run("is a matching passport", func(t *testing.T) {
@@ -32,7 +33,7 @@ func TestPrepareData(t *testing.T) {
 			pid:    "934693255",
 		}
 
-		assert.Equal(t, testPass, data[0])
+		assert.Equal(t, testPass, d.data[0])
 	})
 
 	t.Run("is another matching passport", func(t *testing.T) {
@@ -48,7 +49,7 @@ func TestPrepareData(t *testing.T) {
 			eyr:    2028,
 		}
 
-		assert.Equal(t, testPass, data[len(data)-1])
+		assert.Equal(t, testPass, d.data[len(d.data)-1])
 	})
 }
 
@@ -249,17 +250,20 @@ func TestIsValidPassportStrict(t *testing.T) {
 }
 
 func TestIntegrationTotalValidity(t *testing.T) {
+
 	t.Run("is a not valid passport from file", func(t *testing.T) {
-		data := PrepareData("../../test/testdata/4/invalid.txt")
-		for _, p := range data {
+		d := Day{}
+		d.PrepareData("../../test/testdata/4/invalid.txt")
+		for _, p := range d.data {
 			valid := isValid(p) && isValidStrict(p)
 			assert.False(t, valid)
 		}
 	})
 
 	t.Run("is a valid passport from file", func(t *testing.T) {
-		data := PrepareData("../../test/testdata/4/valid.txt")
-		for _, p := range data {
+		d := Day{}
+		d.PrepareData("../../test/testdata/4/valid.txt")
+		for _, p := range d.data {
 			valid := isValid(p) && isValidStrict(p)
 			assert.True(t, valid)
 		}
@@ -268,11 +272,13 @@ func TestIntegrationTotalValidity(t *testing.T) {
 }
 
 func TestCountValidPassports(t *testing.T) {
-	data := PrepareData("../../test/testdata/4/test_input_a.txt")
-	assert.Equal(t, 2, CountValidPassports(data))
+	d := Day{}
+	d.PrepareData("../../test/testdata/4/test_input_a.txt")
+	assert.Equal(t, 2, CountValidPassports(d.data))
 }
 
 func TestCountValidPassportsStrict(t *testing.T) {
-	data := PrepareData("../../test/testdata/4/test_input_b.txt")
-	assert.Equal(t, 4, CountValidPassportsStrict(data))
+	d := Day{}
+	d.PrepareData("../../test/testdata/4/test_input_b.txt")
+	assert.Equal(t, 4, CountValidPassportsStrict(d.data))
 }

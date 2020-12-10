@@ -9,7 +9,11 @@ import (
 	"github.com/ralucas/advent-of-code/pkg/utils"
 )
 
-func PrepareData(filepath string) map[string]map[string]int {
+type Day struct {
+	data map[string]map[string]int
+}
+
+func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
@@ -42,7 +46,21 @@ func PrepareData(filepath string) map[string]map[string]int {
 		output[key] = valMap
 	}
 
-	return output
+	d.data = output
+
+	return
+}
+
+func (d *Day) Part1() interface{} {
+	count, _ := CountParents("shiny_gold", d.data)
+
+	return count
+}
+
+func (d *Day) Part2() interface{} {
+	count, _ := CountContains("shiny_gold", d.data)
+
+	return count
 }
 
 func CountParents(needle string, haystack map[string]map[string]int) (int, map[string]int) {

@@ -6,24 +6,24 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var data []int
+var td Day
 
 func init() {
-	data = PrepareData("../../test/testdata/9/test_input.txt")
+	td.PrepareData("../../test/testdata/9/test_input.txt")
 }
 
 func TestPrepareData(t *testing.T) {
-	assert.Equal(t, 20, len(data))
+	assert.Equal(t, 20, len(td.data))
 }
 
 func TestFindFirstNonSum(t *testing.T) {
-	f, _ := FindFirstNonSum(data, 5)
+	f, _ := FindFirstNonSum(td.data, 5)
 	assert.Equal(t, 127, f)
 }
 
 func TestContiguousSumSet(t *testing.T) {
-	_, idx := FindFirstNonSum(data, 5)
-	ss := ContiguousSumSet(data[:idx], 127)
+	_, idx := FindFirstNonSum(td.data, 5)
+	ss := ContiguousSumSet(td.data[:idx], 127)
 
 	expects := []int{15, 25, 47, 40}
 

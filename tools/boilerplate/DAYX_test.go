@@ -1,4 +1,4 @@
-package DAYX
+package boilerplate
 
 import (
 	"testing"
@@ -8,11 +8,11 @@ import (
 
 // TODO: Update this per implementation
 //nolint
-var data []string
+var td Day
 
 func init() {
 	// TODO: Uncomment and utilize
-	//data = prepareData("../../test/testdata/DAYX/test_input.txt")
+	//td.PrepareData("../../test/testdata/DAYX/test_input.txt")
 }
 
 func TestIsTrue(t *testing.T) {

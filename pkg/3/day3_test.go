@@ -11,9 +11,10 @@ import (
 )
 
 func TestPrepareData(t *testing.T) {
-	d := PrepareData("../../assets/3/input.txt")
-	assert.Equal(t, 323, len(d))
-	assert.IsType(t, d[0], []string{})
+	d := Day{}
+	d.PrepareData("../../assets/3/input.txt")
+	assert.Equal(t, 323, len(d.data))
+	assert.IsType(t, d.data[0], []string{})
 }
 
 func TestSetGetPos(t *testing.T) {
@@ -126,17 +127,19 @@ func TestIsTree(t *testing.T) {
 
 func TestMultiplesIsTree(t *testing.T) {
 	type test struct {
-		input  [][]string
 		slope  []int
 		expect int
 	}
 
+	d := Day{}
+	d.PrepareData("../../test/testdata/3/test-input2.txt")
+
 	tests := []test{
-		{input: PrepareData("../../test/testdata/3/test-input2.txt"), slope: []int{1, 1}, expect: 2},
-		{input: PrepareData("../../test/testdata/3/test-input2.txt"), slope: []int{3, 1}, expect: 7},
-		{input: PrepareData("../../test/testdata/3/test-input2.txt"), slope: []int{5, 1}, expect: 3},
-		{input: PrepareData("../../test/testdata/3/test-input2.txt"), slope: []int{7, 1}, expect: 4},
-		{input: PrepareData("../../test/testdata/3/test-input2.txt"), slope: []int{1, 2}, expect: 2},
+		{slope: []int{1, 1}, expect: 2},
+		{slope: []int{3, 1}, expect: 7},
+		{slope: []int{5, 1}, expect: 3},
+		{slope: []int{7, 1}, expect: 4},
+		{slope: []int{1, 2}, expect: 2},
 	}
 
 	total := 1
@@ -144,14 +147,14 @@ func TestMultiplesIsTree(t *testing.T) {
 		startState := SledState{
 			Start: 0,
 			Pos:   0,
-			End:   len(tt.input[0]) - 1,
+			End:   len(d.data[0]) - 1,
 			Right: tt.slope[0],
 			Down:  tt.slope[1],
 		}
 
 		treeCount := 0
-		for j := 0; j < len(tt.input); j += startState.Down {
-			if startState.IsEqualToPosition(tt.input[j], "#") {
+		for j := 0; j < len(d.data); j += startState.Down {
+			if startState.IsEqualToPosition(d.data[j], "#") {
 				treeCount += 1
 			}
 			startState.SetPos(startState.NextPosition())

@@ -10,9 +10,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+var testDay Day
+
+func init() {
+	testDay.PrepareData("../../assets/1/input.txt")
+}
+
 func TestTwoSum(t *testing.T) {
-	data := PrepareData("../../assets/1/input.txt")
-	dlen := len(data)
+	dlen := len(testDay.data)
 
 	x, y := 0, 0
 
@@ -25,16 +30,15 @@ func TestTwoSum(t *testing.T) {
 				break
 			}
 		}
-		targ := data[x] + data[y]
-		a, b := TwoSum(data, targ)
+		targ := testDay.data[x] + testDay.data[y]
+		a, b := TwoSum(testDay.data, targ)
 		assert.Equal(t, targ, a+b, fmt.Sprintf("got %d + %d, expected %d + %d = %d", a, b, x, y, targ))
 	}
 }
 
 func TestTwoSumSorted(t *testing.T) {
-	data := PrepareData("../../assets/1/input.txt")
-	sData := utils.QSort(data)
-	dlen := len(data)
+	sData := utils.QSort(testDay.data)
+	dlen := len(testDay.data)
 
 	x, y := 0, 0
 
@@ -47,16 +51,15 @@ func TestTwoSumSorted(t *testing.T) {
 				break
 			}
 		}
-		targ := data[x] + data[y]
+		targ := testDay.data[x] + testDay.data[y]
 		a, b := TwoSumSorted(sData, targ)
 		assert.Equal(t, targ, a+b, fmt.Sprintf("got %d + %d, expected %d + %d = %d", a, b, x, y, targ))
 	}
 }
 
 func TestThreeSum(t *testing.T) {
-	data := PrepareData("../../assets/1/input.txt")
-	sData := utils.QSort(data)
-	dlen := len(data)
+	sData := utils.QSort(testDay.data)
+	dlen := len(testDay.data)
 	x, y, z := 0, 0, 0
 
 	for i := 0; i < 100000; i++ {
@@ -68,10 +71,10 @@ func TestThreeSum(t *testing.T) {
 				break
 			}
 		}
-		targ := data[x] + data[y] + data[z]
+		targ := testDay.data[x] + testDay.data[y] + testDay.data[z]
 		a, b, c := ThreeSum(sData, targ)
 		assert.Equal(t, targ, a+b+c, fmt.Sprintf(
 			"got %d, %d, %d, expected: %d + %d + %d = %d",
-			a, b, c, data[x], data[y], data[z], targ))
+			a, b, c, testDay.data[x], testDay.data[y], testDay.data[z], targ))
 	}
 }

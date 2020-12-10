@@ -7,7 +7,11 @@ import (
 	"github.com/ralucas/advent-of-code/pkg/utils"
 )
 
-func PrepareData(filepath string) [][]string {
+type Day struct {
+	data [][]string
+}
+
+func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
@@ -19,7 +23,21 @@ func PrepareData(filepath string) [][]string {
 		prepared[i] = strings.Split(d, "\n")
 	}
 
-	return prepared
+	d.data = prepared
+
+	return
+}
+
+func (d *Day) Part1() interface{} {
+	sum := SumCounts(d.data, GroupCount)
+
+	return sum
+}
+
+func (d *Day) Part2() interface{} {
+	sum := SumCounts(d.data, AllYesCount)
+
+	return sum
 }
 
 func GroupCount(vs []string) int {

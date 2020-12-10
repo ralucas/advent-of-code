@@ -22,7 +22,11 @@ type Passport struct {
 	cid    string
 }
 
-func PrepareData(filepath string) []Passport {
+type Day struct {
+	data []Passport
+}
+
+func (d *Day) PrepareData(filepath string) {
 	data := utils.ReadFileToArray(filepath, "\n\n")
 
 	var preparedData []Passport
@@ -78,7 +82,21 @@ func PrepareData(filepath string) []Passport {
 		preparedData = append(preparedData, pass)
 	}
 
-	return preparedData
+	d.data = preparedData
+
+	return
+}
+
+func (d *Day) Part1() interface{} {
+	validPassportCount := CountValidPassports(d.data)
+
+	return validPassportCount
+}
+
+func (d *Day) Part2() interface{} {
+	validPassportStrictCount := CountValidPassportsStrict(d.data)
+
+	return validPassportStrictCount
 }
 
 func isValid(p Passport) bool {
