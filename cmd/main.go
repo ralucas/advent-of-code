@@ -11,6 +11,10 @@ import (
 var inputFile = flag.String("input", "", "Input file")
 var day = flag.Int("day", getDay(), "Day to run")
 
+func getDay() int {
+	return time.Now().Day()
+}
+
 func run(day int, inputFile string) {
 	runner := aoc.New(day)
 
@@ -20,10 +24,6 @@ func run(day int, inputFile string) {
 
 	fmt.Println("Part 1:", part1)
 	fmt.Println("Part 2:", part2)
-}
-
-func getDay() int {
-	return time.Now().Day()
 }
 
 func main() {
