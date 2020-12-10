@@ -14,56 +14,56 @@ var testInputExpects = []BoardingPass{
 	BoardingPass{102, 4, 820},
 }
 
-var testDay Day
+var td Day
 
 func init() {
-	testDay.PrepareData("../../test/testdata/5/test_input.txt")
+	td.PrepareData("../../test/testdata/5/test_input.txt")
 }
 
 func TestPrepareData(t *testing.T) {
 
-	assert.IsType(t, []string{}, testDay.data[0])
-	assert.Equal(t, 4, len(testDay.data))
+	assert.IsType(t, []string{}, td.data[0])
+	assert.Equal(t, 4, len(td.data))
 }
 
 func TestGetRow(t *testing.T) {
-	for i := 0; i < len(testDay.data); i++ {
-		row := getRow(testDay.data[i][:7])
-		assert.Equal(t, testInputExpects[i].Row, row, fmt.Sprintf("input of %v\n", testDay.data[i][:7]))
+	for i := 0; i < len(td.data); i++ {
+		row := getRow(td.data[i][:7])
+		assert.Equal(t, testInputExpects[i].Row, row, fmt.Sprintf("input of %v\n", td.data[i][:7]))
 	}
 }
 
 func TestGetCol(t *testing.T) {
-	for i := 0; i < len(testDay.data); i++ {
-		col := getCol(testDay.data[i][7:])
-		assert.Equal(t, testInputExpects[i].Col, col, fmt.Sprintf("input of %v\n", testDay.data[i][7:]))
+	for i := 0; i < len(td.data); i++ {
+		col := getCol(td.data[i][7:])
+		assert.Equal(t, testInputExpects[i].Col, col, fmt.Sprintf("input of %v\n", td.data[i][7:]))
 	}
 }
 
 func TestToBoardingPass(t *testing.T) {
-	for i := 0; i < len(testDay.data); i++ {
-		bp := toBoardingPass(testDay.data[i])
+	for i := 0; i < len(td.data); i++ {
+		bp := toBoardingPass(td.data[i])
 		assert.Equal(t, testInputExpects[i], bp)
 	}
 }
 
 func TestMaxId(t *testing.T) {
-	maxId := GetHighestSeatID(testDay.data)
+	maxId := GetHighestSeatID(td.data)
 
 	assert.Equal(t, 820, maxId)
 }
 
 func TestNewPlane(t *testing.T) {
-	p := NewPlane(testDay.data)
+	p := NewPlane(td.data)
 
 	t.Run("has correct row count", func(t *testing.T) {
-		for i := 0; i < len(testDay.data); i++ {
+		for i := 0; i < len(td.data); i++ {
 			assert.Equal(t, 1, p.rows[testInputExpects[i].Row])
 		}
 	})
 
 	t.Run("has correct plane row and col", func(t *testing.T) {
-		for i := 0; i < len(testDay.data); i++ {
+		for i := 0; i < len(td.data); i++ {
 			assert.Equal(t, 1, p.seating[testInputExpects[i].Row][testInputExpects[i].Col])
 		}
 	})
@@ -72,7 +72,7 @@ func TestNewPlane(t *testing.T) {
 func TestFindAvailableSeats(t *testing.T) {
 	totalSeats := 128 * 8
 
-	p := NewPlane(testDay.data)
+	p := NewPlane(td.data)
 	as := findAvailableSeats(p)
 	assert.Equal(t, totalSeats-4, len(as))
 }

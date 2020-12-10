@@ -20,6 +20,7 @@ func (d *Day) PrepareData(filepath string) {
 	preparedData := utils.MapToInt(inputArr)
 
 	d.data = preparedData
+
 	return
 }
 
