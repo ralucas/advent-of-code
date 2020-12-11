@@ -2,6 +2,7 @@ package aoc
 
 import (
 	day1 "github.com/ralucas/advent-of-code/pkg/1"
+	day10 "github.com/ralucas/advent-of-code/pkg/10"
 	day2 "github.com/ralucas/advent-of-code/pkg/2"
 	day3 "github.com/ralucas/advent-of-code/pkg/3"
 	day4 "github.com/ralucas/advent-of-code/pkg/4"
@@ -10,6 +11,7 @@ import (
 	day7 "github.com/ralucas/advent-of-code/pkg/7"
 	day8 "github.com/ralucas/advent-of-code/pkg/8"
 	day9 "github.com/ralucas/advent-of-code/pkg/9"
+	"github.com/ralucas/advent-of-code/pkg/noop"
 )
 
 type AOC interface {
@@ -38,7 +40,11 @@ func New(day int) AOC {
 		return &day8.Day{}
 	case 9:
 		return &day9.Day{}
+	case 10:
+		return &day10.Day{}
+	//case DAYX:
+	//   return &dayDAYX.Day{}
 	default:
-		return &day9.Day{}
+		return &noop.Day{}
 	}
 }

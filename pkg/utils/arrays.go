@@ -3,7 +3,17 @@ package utils
 import (
 	"log"
 	"strconv"
+	"strings"
 )
+
+func MapTo2D(vs []string, sep string) [][]string {
+	vsm := make([][]string, len(vs))
+	for i, v := range vs {
+		vsm[i] = strings.Split(v, sep)
+	}
+
+	return vsm
+}
 
 func MapToInt(vs []string) []int {
 	vsm := make([]int, len(vs))

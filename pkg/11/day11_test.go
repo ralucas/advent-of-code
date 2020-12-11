@@ -1,4 +1,4 @@
-package dayDAYX
+package day11
 
 import (
 	"testing"
@@ -12,7 +12,7 @@ var td Day
 
 func init() {
 	// TODO: Uncomment and utilize
-	//td.PrepareData("../../test/testdata/DAYX/test_input.txt")
+	//td.PrepareData("../../test/testdata/11/test_input.txt")
 }
 
 func TestIsTrue(t *testing.T) {

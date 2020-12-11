@@ -29,7 +29,7 @@ func run(day int, inputFile string) {
 func main() {
 	flag.Parse()
 
-	fmt.Printf("\nDay %d\n===========\n\n", *day)
+	fmt.Printf("\n================\n    Day %d\n================\n\n\n", *day)
 
 	run(*day, *inputFile)
 

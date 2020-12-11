@@ -1,4 +1,4 @@
-package dayDAYX
+package day11
 
 import (
 	"log"
@@ -7,18 +7,18 @@ import (
 )
 
 type Day struct {
-	// TODO: Change this
-	data []string
+	data [][]string
 }
 
-// TODO: Alter this for actual implementation
 func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
 	data := utils.ReadFileToArray(filepath, "\n")
 
-	d.data = data
+	out := utils.MapTo2D(data, ",")
+
+	d.data = out
 
 	return
 }
