@@ -44,21 +44,30 @@ func TestCountDistinctArrangements(t *testing.T) {
 
 		svi := utils.QSort(td.data)
 		upd := insertOutletAndDevice(svi)
-		_, count := DistinctArrangements(upd)
-		//tree.Print()
-		//count := CountPaths(tree.Root)
+		_, tcount := BuildTree(upd)
+		count := CountDistinctArrangements(upd)
 
-		assert.Equal(t, len(expected), count)
+		assert.Equal(t, len(expected), tcount, "Tree count failed")
+		assert.Equal(t, len(expected), count, "Count failed")
+	})
+
+	t.Run("has the correct count on alternate input", func(t *testing.T) {
+		input := []int{0, 1, 4, 5, 6, 7, 8, 10, 11, 12, 15, 16, 19, 22}
+
+		_, tcount := BuildTree(input)
+		count := CountDistinctArrangements(input)
+
+		assert.Equal(t, tcount, count)
 	})
 
 	t.Run("has the correct count on input 2", func(t *testing.T) {
 		svi := utils.QSort(td1.data)
 		upd := insertOutletAndDevice(svi)
-		_, count := DistinctArrangements(upd)
-		//count := CountPaths(tree.Root, 0)
-		//count := CountDistinctArrangements(upd)
+		_, tcount := BuildTree(upd)
+		count := CountDistinctArrangements(upd)
 
-		assert.Equal(t, 19208, count)
+		assert.Equal(t, 19208, tcount, "Tree count failed")
+		assert.Equal(t, 19208, count, "Count failed")
 	})
 
 }

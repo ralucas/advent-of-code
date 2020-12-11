@@ -3,7 +3,6 @@ package day10
 import (
 	"fmt"
 	"log"
-	"sync"
 
 	"github.com/ralucas/advent-of-code/pkg/utils"
 )
@@ -37,10 +36,9 @@ func (d *Day) Part2() interface{} {
 	svi := utils.QSort(d.data)
 	upd := insertOutletAndDevice(svi)
 
-	_, counts := DistinctArrangements(upd)
+	counts := CountDistinctArrangements(upd)
 
 	return counts
-	//return -1
 }
 
 func getDevice(svi []int) int {
@@ -68,39 +66,56 @@ func CountDiffs(svi []int) map[int]int {
 	return counts
 }
 
+// CountDistinctArrangements is the speedy and correct implementation
+//
+// Adapters can only connect to a source 1-3 jolts lower than its rating
+// The charging outlet has an effective rating of 0 jolts, so the only
+// adapters that could connect to it directly would need to have a joltage
+// rating of 1, 2, or 3 jolts.
+//
+// Runtime O(n^2)
 func CountDistinctArrangements(svi []int) int {
 	slen := len(svi)
 
-	counts := make([]int, slen-1)
+	branches := make([]int, slen-1)
+	pointers := make([]int, slen)
 
 	end := 3
+
 	for i := 0; i < slen-1; i++ {
 		if slen-end == i {
 			end--
 		}
 		for k := 1; k <= end; k++ {
 			diff := svi[i+k] - svi[i]
-			if diff > 3 {
-				break
+			if diff <= 3 {
+				branches[i]++
 			}
-			counts[i]++
+		}
+		// increment correctly
+		// i.e. given this number, how many paths are created from it?
+		// get the numbers multiplier, i.e. how many previous branches point to this number
+		// then multiply branch[i] by multiplier and add
+		b := branches[i]
+		for j := i + 1; j <= b+i; j++ {
+			adder := 1
+			if pointers[i] > 1 {
+				adder = pointers[i]
+			}
+			pointers[j] += adder
 		}
 	}
 
-	out := 1
-	for _, c := range counts {
-		if c != 0 {
-			out *= c
-		}
-	}
-
-	return out
+	return pointers[len(pointers)-1]
 }
 
+// Below here is a tree implementation
+// Building the tree will correctly count the number
+// of paths, however, it is extremely slow on datasets
+// much larger than 50 numbers
+// Was an interesting study in creation and runtime issues
 type Tree struct {
-	Root   *Node
-	AdjMap map[int][]*Node
-	Edges  int
+	Root *Node
 }
 
 type Node struct {
@@ -112,19 +127,6 @@ func (t *Tree) FindAll(val int) []*Node {
 	if t.Root.Val == val {
 		return []*Node{t.Root}
 	}
-
-	//v := val - 3
-	//if v < 0 {
-	//	v = 0
-	//}
-	//
-	//for {
-	//	if _, ok := t.AdjMap[v]; ok {
-	//		break
-	//	} else {
-	//		v++
-	//	}
-	//}
 
 	queue := make([]*Node, len(t.Root.Children))
 	copy(queue, t.Root.Children)
@@ -142,29 +144,6 @@ func (t *Tree) FindAll(val int) []*Node {
 	}
 
 	return found
-}
-
-func CountPaths(svi []int) int {
-	slen := len(svi)
-	counts := make([]int, slen)
-
-	end := 3
-	for i, n := range svi {
-		if slen-end == i {
-			end--
-		}
-		if i > 0 {
-			counts[i] = counts[i-1]
-		}
-		for k := 1; k <= end; k++ {
-			diff := svi[i+k] - n
-			if diff <= 3 {
-				counts[i] += 1
-			}
-		}
-	}
-
-	return len(counts)
 }
 
 func (n *Node) InsertChild(val int) *Node {
@@ -187,54 +166,31 @@ func (t *Tree) Print() {
 	fmt.Print("\n")
 }
 
-// Adapters can only connect to a source 1-3 jolts lower than its rating
-// The charging outlet has an effective rating of 0 jolts, so the only
-// adapters that could connect to it directly would need to have a joltage
-// rating of 1, 2, or 3 jolts.
-func DistinctArrangements(svi []int) (Tree, int) {
+func BuildTree(svi []int) (Tree, int) {
 	slen := len(svi)
 
 	root := Node{Val: 0, Children: make([]*Node, 0)}
-	tree := Tree{Root: &root, AdjMap: make(map[int][]*Node)}
+	tree := Tree{Root: &root}
 
 	end := 3
 	paths := 0
-	counts := make([]int, slen)
-	counts[0] = 1
 
 	for i := 0; i < slen-1; i++ {
-		fmt.Println("on", i)
 		if slen-end == i {
 			end--
 		}
 
-		fmt.Println("prefindall")
 		nodes := tree.FindAll(svi[i])
-		fmt.Println("postfindall")
-		//fmt.Println("postfindall", svi[i], nodes)
-		//if len(nodes) > 0 {
-		//	fmt.Println(nodes[0].Val)
-		//}
 		paths = len(nodes)
-		//fmt.Println(paths)
 		for k := 1; k <= end; k++ {
 			diff := svi[i+k] - svi[i]
 			if diff <= 3 {
-				wg := sync.WaitGroup{}
 				for _, n := range nodes {
-					wg.Add(1)
-					go func(node *Node, ii, kk int) {
-						defer wg.Done()
-						node.InsertChild(svi[ii+kk])
-						//tree.AdjMap[svi[ii]] = append(tree.AdjMap[svi[ii]], nn)
-					}(n, i, k)
+					n.InsertChild(svi[i+k])
 				}
-				wg.Wait()
 			}
 		}
 	}
-
-	//fmt.Println(tree.AdjMap)
 
 	return tree, paths
 }
