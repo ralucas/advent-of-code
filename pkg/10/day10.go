@@ -72,12 +72,14 @@ func CountDiffs(svi []int) map[int]int {
 // adapters that could connect to it directly would need to have a joltage
 // rating of 1, 2, or 3 jolts.
 //
-// Runtime O(n^2)
+// Runtime O(n)
 func CountDistinctArrangements(svi []int) int {
 	slen := len(svi)
 
-	branches := make([]int, slen-1)
-	pointers := make([]int, slen)
+	pointers := make([]int, slen-1)
+	branches := make([]int, slen)
+
+	branches[0] = 1
 
 	end := 3
 
@@ -88,24 +90,24 @@ func CountDistinctArrangements(svi []int) int {
 		for k := 1; k <= end; k++ {
 			diff := svi[i+k] - svi[i]
 			if diff <= 3 {
-				branches[i]++
+				pointers[i]++
 			}
 		}
 		// increment correctly
 		// i.e. given this number, how many paths are created from it?
 		// get the numbers multiplier, i.e. how many previous branches point to this number
 		// then multiply branch[i] by multiplier and add
-		b := branches[i]
-		for j := i + 1; j <= b+i; j++ {
-			adder := 1
-			if pointers[i] > 1 {
-				adder = pointers[i]
-			}
-			pointers[j] += adder
+
+		// here take the current # of pointers
+		// the current number has and add it to
+		// any future number that creates a new branch
+		p := pointers[i]
+		for j := i + 1; j <= p+i; j++ {
+			branches[j] += branches[i]
 		}
 	}
 
-	return pointers[len(pointers)-1]
+	return branches[len(branches)-1]
 }
 
 // Below here is a tree implementation
