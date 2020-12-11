@@ -11,7 +11,6 @@ type Day struct {
 	data []int
 }
 
-// TODO: Alter this for actual implementation
 func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
