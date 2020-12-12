@@ -3,6 +3,7 @@ package aoc
 import (
 	day1 "github.com/ralucas/advent-of-code/pkg/1"
 	day10 "github.com/ralucas/advent-of-code/pkg/10"
+	day11 "github.com/ralucas/advent-of-code/pkg/11"
 	day2 "github.com/ralucas/advent-of-code/pkg/2"
 	day3 "github.com/ralucas/advent-of-code/pkg/3"
 	day4 "github.com/ralucas/advent-of-code/pkg/4"
@@ -42,8 +43,10 @@ func New(day int) AOC {
 		return &day9.Day{}
 	case 10:
 		return &day10.Day{}
+	case 11:
+		return &day11.Day{}
 	//case DAYX:
-	//   return &dayDAYX.Day{}
+	//    return &dayDAYX.Day{}
 	default:
 		return &noop.Day{}
 	}

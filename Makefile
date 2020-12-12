@@ -7,7 +7,7 @@ all: test run
 
 .PHONY: test
 test:
-	go test -v -cover ./pkg/$(CURRENT_DAY)/
+	gotest -v -cover -failfast ./pkg/$(CURRENT_DAY)/
 
 .PHONY: test-all
 test-all:
