@@ -11,11 +11,11 @@ test:
 
 .PHONY: test-all
 test-all:
-	go test -cover ./...
+	gotest -cover ./...
 
 .PHONY: test-utils
 test-utils:
-	go test -v -cover -bench=. ./pkg/utils
+	gotest -v -cover -bench=. ./pkg/utils
 
 .PHONY: run
 run:

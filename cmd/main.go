@@ -15,23 +15,21 @@ func getDay() int {
 	return time.Now().Day()
 }
 
-func run(day int, inputFile string) {
-	runner := aoc.New(day)
-
+func run(runner aoc.AOC, inputFile string) {
 	runner.PrepareData(inputFile)
 	part1 := runner.Part1()
 	part2 := runner.Part2()
 
-	fmt.Println("Part 1:", part1)
-	fmt.Println("Part 2:", part2)
+	fmt.Println("  Part 1:", part1)
+	fmt.Println("  Part 2:", part2)
 }
 
 func main() {
 	flag.Parse()
 
-	fmt.Printf("\n================\n    Day %d\n================\n\n\n", *day)
+	fmt.Printf("\n\n================\n    Day %d\n================\n\n", *day)
 
-	run(*day, *inputFile)
+	run(aoc.New(*day), *inputFile)
 
 	fmt.Print("\n================\n")
 }
