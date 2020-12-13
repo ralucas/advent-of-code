@@ -32,13 +32,13 @@ func (d *Day) PrepareData(filepath string) {
 
 func (d *Day) Part1() interface{} {
 	input := d.data
-	filled := Fill(input)
+	filled := Fill(input, GetSeatState)
 	for {
 		if IsEqual(filled, input) {
 			break
 		}
 		input = filled
-		filled = Fill(input)
+		filled = Fill(input, GetSeatState)
 	}
 
 	occupied, _ := CountSeats(filled)
@@ -46,7 +46,18 @@ func (d *Day) Part1() interface{} {
 }
 
 func (d *Day) Part2() interface{} {
-	return -1
+	input := d.data
+	filled := Fill(input, GetVisualSeatState)
+	for {
+		if IsEqual(filled, input) {
+			break
+		}
+		input = filled
+		filled = Fill(input, GetVisualSeatState)
+	}
+
+	occupied, _ := CountSeats(filled)
+	return occupied
 }
 
 // "Adjacent" to a given seat means one of the eight positions immediately
@@ -56,15 +67,27 @@ func (d *Day) Part2() interface{} {
 // If a seat is empty (L) and there are no occupied seats adjacent to it, the seat becomes occupied.
 // If a seat is occupied (#) and four or more seats adjacent to it are also occupied, the seat becomes empty.
 // Otherwise, the seat's state does not change.
+func ApplyRules(val string, occCount int, moveToEmpty int) string {
+	switch val {
+	case EmptySeat:
+		if occCount == 0 {
+			return OccupiedSeat
+		}
+		return EmptySeat
+	case OccupiedSeat:
+		if occCount >= moveToEmpty {
+			return EmptySeat
+		}
+		return OccupiedSeat
+	case Floor:
+		return Floor
+	}
 
-// GetSeatState checks adjacency of a seat
-// given the i, j of the seat according to the
-// rules above.
-// returns OccupiedSeat if no occupied seats adjacent
-// returns EmptySeat if seat is occupied and four or more seats adjacent to it are also occupied
-// returns the same input if neither
-func GetSeatState(i, j int, vss [][]string) string {
-	adj := [][]int{
+	return val
+}
+
+func GetAdjacencyList(i, j int) [][]int {
+	return [][]int{
 		{i - 1, j},     //up
 		{i + 1, j},     //down
 		{i, j - 1},     //left
@@ -74,53 +97,49 @@ func GetSeatState(i, j int, vss [][]string) string {
 		{i + 1, j - 1}, //down-left
 		{i + 1, j + 1}, //down-right
 	}
+}
 
-	vlen := len(vss)
-	svlen := len(vss[0])
+func EvaluateSeat(seat string) (int, int) {
+	switch seat {
+	case OccupiedSeat:
+		return 1, 0
+	case EmptySeat:
+		return 0, 1
+	default:
+		return 0, 0
+	}
+}
 
+// GetSeatState checks adjacency of a seat
+// given the i, j of the seat according to the
+// rules above.
+// returns OccupiedSeat if no occupied seats adjacent
+// returns EmptySeat if seat is occupied and four or more seats adjacent to it are also occupied
+// returns the same input if neither
+func GetSeatState(i, j int, vss [][]string) string {
 	occCount := 0
 	empCount := 0
+
+	adj := GetAdjacencyList(i, j)
+
 	for _, ij := range adj {
 		x := ij[0]
 		y := ij[1]
 
-		if x < 0 || x > vlen-1 || y < 0 || y > svlen-1 {
-			continue
-		}
-
-		switch vss[x][y] {
-		case OccupiedSeat:
-			occCount += 1
-		case EmptySeat:
-			empCount += 1
-		default:
-			continue
+		if IsValidPosition(x, y, vss) {
+			occ, emp := EvaluateSeat(vss[x][y])
+			occCount += occ
+			empCount += emp
 		}
 	}
 
-	switch vss[i][j] {
-	case EmptySeat:
-		if occCount == 0 {
-			return OccupiedSeat
-		}
-		return EmptySeat
-	case OccupiedSeat:
-		if occCount >= 4 {
-			return EmptySeat
-		}
-		return OccupiedSeat
-	case Floor:
-		return Floor
-	}
-
-	// Should never be reached.
-	return vss[i][j]
+	return ApplyRules(vss[i][j], occCount, 4)
 }
 
 // Fill takes a seat pattern and in parallel
 // fills the seats given the rules above
 // returning a filled seat pattern.
-func Fill(vss [][]string) [][]string {
+func Fill(vss [][]string, seatStateHandler func(i, j int, vec [][]string) string) [][]string {
 	// Need to properly copy a 2D array
 	// via looping and copying.
 	// Straight up copy does not work on 2D.
@@ -136,7 +155,7 @@ func Fill(vss [][]string) [][]string {
 		wg.Add(1)
 		go func(idx int) {
 			for j := range cpvss[idx] {
-				ss := GetSeatState(idx, j, vss)
+				ss := seatStateHandler(idx, j, vss)
 				cpvss[idx][j] = ss
 			}
 			wg.Done()
@@ -201,4 +220,40 @@ func CountSeats(vss [][]string) (int, int) {
 
 	defer close(ch)
 	return occCount, empCount
+}
+
+func IsValidPosition(i, j int, vss [][]string) bool {
+	vlen := len(vss)
+	svlen := len(vss[0])
+
+	return i >= 0 && i < vlen && j >= 0 && j < svlen
+}
+
+func GetVisualSeatState(i, j int, vss [][]string) string {
+	curSeat := vss[i][j]
+
+	occCount := 0
+	var x, y int
+	// iterate over each 8 angles
+	for k := 0; k < 8; k++ {
+		x, y = i, j
+		for {
+			adjList := GetAdjacencyList(x, y)
+			xy := adjList[k]
+			x, y = xy[0], xy[1]
+			if IsValidPosition(x, y, vss) {
+				occ, emp := EvaluateSeat(vss[x][y])
+				if occ == 0 && emp == 0 {
+					continue
+				} else {
+					occCount += occ
+					break
+				}
+			} else {
+				break
+			}
+		}
+	}
+
+	return ApplyRules(curSeat, occCount, 5)
 }

@@ -9,6 +9,10 @@ all: test run
 test:
 	gotest -v -cover -failfast ./pkg/$(CURRENT_DAY)/
 
+.PHONY: test-watch
+test-watch:
+	goconvey -workDir ./pkg/$(CURRENT_DAY)/
+
 .PHONY: test-all
 test-all:
 	gotest -cover ./...
@@ -33,3 +37,10 @@ new:
 		gsed -i 's/DAYX/$(CURRENT_DAY)/' pkg/$(CURRENT_DAY)/day$(CURRENT_DAY).go && \
 		mkdir test/testdata/$(CURRENT_DAY) && \
 		touch test/testdata/$(CURRENT_DAY)/test_input.txt
+
+.PHONY: clean
+clean:
+	trash assets/$(CURRENT_DAY) && \
+		trash pkg/$(CURRENT_DAY) && \
+		trash test/testdata/$(CURRENT_DAY)
+
