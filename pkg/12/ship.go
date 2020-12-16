@@ -4,6 +4,12 @@ type Ship struct {
 	pos      Position
 	start    Position
 	pointing Direction
+	waypoint *Waypoint
+}
+
+type Waypoint struct {
+	pos   Position
+	start Position
 }
 
 func NewShip(p Position) *Ship {
@@ -11,6 +17,14 @@ func NewShip(p Position) *Ship {
 		pos:      p,
 		start:    p,
 		pointing: E,
+		waypoint: NewWaypoint(Position{E, 10, N, 1}),
+	}
+}
+
+func NewWaypoint(p Position) *Waypoint {
+	return &Waypoint{
+		pos:   p,
+		start: p,
 	}
 }
 
@@ -34,6 +48,20 @@ func (s *Ship) Turn(turn string, deg int) {
 	}
 }
 
+func (s *Ship) TurnWaypoint(turn string, deg int) {
+	for deg > 0 {
+		deg -= 90
+
+		if turn == "L" {
+			s.waypoint.pos.SetXDirection(s.waypoint.pos.xDirection - 1)
+			s.waypoint.pos.SetYDirection(s.waypoint.pos.yDirection - 1)
+		} else {
+			s.waypoint.pos.SetXDirection(s.waypoint.pos.xDirection + 1)
+			s.waypoint.pos.SetYDirection(s.waypoint.pos.yDirection + 1)
+		}
+	}
+}
+
 func (s *Ship) Move(n Navigation) {
 	switch n.action {
 	case "L":
@@ -50,6 +78,26 @@ func (s *Ship) Move(n Navigation) {
 		s.pos.MovePosition(S, n.value)
 	case "W":
 		s.pos.MovePosition(W, n.value)
+	}
+}
+
+func (s *Ship) MoveWithWaypoint(n Navigation) {
+	switch n.action {
+	case "L":
+		s.TurnWaypoint(n.action, n.value)
+	case "R":
+		s.TurnWaypoint(n.action, n.value)
+	case "F":
+		s.pos.MovePosition(s.waypoint.pos.xDirection, n.value*s.waypoint.pos.xUnits)
+		s.pos.MovePosition(s.waypoint.pos.yDirection, n.value*s.waypoint.pos.yUnits)
+	case "N":
+		s.waypoint.pos.MovePosition(N, n.value)
+	case "E":
+		s.waypoint.pos.MovePosition(E, n.value)
+	case "S":
+		s.waypoint.pos.MovePosition(S, n.value)
+	case "W":
+		s.waypoint.pos.MovePosition(W, n.value)
 	}
 }
 

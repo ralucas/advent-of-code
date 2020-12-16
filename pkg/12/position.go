@@ -32,6 +32,28 @@ func (p *Position) MovePosition(d Direction, units int) {
 	}
 }
 
+func (p *Position) SetXDirection(d Direction) {
+	if d < 0 {
+		d = W
+	}
+	if d > 3 {
+		d = N
+	}
+
+	p.xDirection = d
+}
+
+func (p *Position) SetYDirection(d Direction) {
+	if d < 0 {
+		d = W
+	}
+	if d > 3 {
+		d = N
+	}
+
+	p.yDirection = d
+}
+
 func (p *Position) ManhattanDistance() int {
 	return p.xUnits + p.yUnits
 }

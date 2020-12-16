@@ -57,5 +57,17 @@ func (d *Day) Part1() interface{} {
 }
 
 func (d *Day) Part2() interface{} {
-	return -1
+	startingPos := Position{
+		xDirection: E,
+		xUnits:     0,
+		yDirection: N,
+		yUnits:     0,
+	}
+	ship := NewShip(startingPos)
+	for _, nav := range d.data {
+		ship.MoveWithWaypoint(nav)
+	}
+	finalPos := ship.GetPos()
+
+	return finalPos.ManhattanDistance()
 }

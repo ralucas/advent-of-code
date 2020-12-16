@@ -117,3 +117,46 @@ func TestPosition_ManhattanDistance(t *testing.T) {
 	lp := ship.GetPos()
 	assert.Equal(t, 25, lp.ManhattanDistance())
 }
+
+func TestShip_TurnWaypoint(t *testing.T) {
+	sp := Position{E, 0, N, 0}
+	ship := NewShip(sp)
+	ship.TurnWaypoint("R", 90)
+
+	assert.Equal(t, Position{S, 10, E, 1}, ship.waypoint.pos)
+}
+
+func TestShip_MoveWithWaypoint(t *testing.T) {
+	t.Run("ships position", func(t *testing.T) {
+		expects := []Position{
+			{E, 100, N, 10},
+			{E, 100, N, 10},
+			{E, 170, N, 38},
+			{E, 170, N, 38},
+			{E, 214, S, 72},
+		}
+		sp := Position{E, 0, N, 0}
+		ship := NewShip(sp)
+		for i, nav := range td.data {
+			ship.MoveWithWaypoint(nav)
+			assert.Equal(t, expects[i], ship.pos, fmt.Sprintf("test %d, nav %+v", i+1, nav))
+		}
+	})
+
+	t.Run("waypoints position", func(t *testing.T) {
+		expects := []Position{
+			{E, 10, N, 1},
+			{E, 10, N, 4},
+			{E, 10, N, 4},
+			{S, 10, E, 4},
+			{S, 10, E, 4},
+		}
+		sp := Position{E, 0, N, 0}
+		ship := NewShip(sp)
+		for i, nav := range td.data {
+			ship.MoveWithWaypoint(nav)
+			assert.Equal(t, expects[i], ship.waypoint.pos, fmt.Sprintf("test %d, nav %+v", i+1, nav))
+		}
+
+	})
+}
