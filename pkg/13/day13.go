@@ -302,7 +302,12 @@ func findLowestCommonNumerator(
 
 	for x < y {
 
-		progress = float64((x - start) / y)
+		curprogress := (float64(x) - float64(start)) / float64(y) * float64(100)
+
+		if curprogress > progress+1 {
+			progress += float64(1)
+			fmt.Printf("Current Progress: %f\n", progress)
+		}
 
 		rs = x * bus
 		for i, rem := range remainders {

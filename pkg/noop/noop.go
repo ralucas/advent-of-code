@@ -7,9 +7,9 @@ func (d *Day) PrepareData(_ string) {
 }
 
 func (d *Day) Part1() interface{} {
-	return -1
+	return "noop"
 }
 
 func (d *Day) Part2() interface{} {
-	return -1
+	return "noop"
 }
