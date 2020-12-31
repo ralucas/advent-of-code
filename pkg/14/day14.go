@@ -82,7 +82,27 @@ func (d *Day) Part1() interface{} {
 }
 
 func (d *Day) Part2() interface{} {
-	return -1
+	mmap := make(map[int]int)
+
+	for _, pset := range d.data {
+		mask := pset.mask
+		for _, m := range pset.mem {
+			loc := m.loc
+			val := m.val
+			_, newmemlocs := ApplyMask2(itob(loc), mask)
+			for _, memloc := range newmemlocs {
+				mmap[memloc] = val
+			}
+		}
+	}
+
+	output := int64(0)
+
+	for _, v := range mmap {
+		output += int64(v)
+	}
+
+	return output
 }
 
 func NewMemory(loc int, val int) Memory {
@@ -150,4 +170,78 @@ func ApplyMask(bin []int8, mask string) []int8 {
 	}
 
 	return bin
+}
+
+func CountFloatingBits(mask string) int {
+	count := 0
+
+	for _, r := range mask {
+		if r == rune('X') {
+			count += 1
+		}
+	}
+
+	return count
+}
+
+func BitPermutations(n int) [][]int8 {
+	if n == 0 {
+		return [][]int8{}
+	}
+
+	var perms = [][]int8{{0}, {1}}
+
+	if n == 1 {
+		return perms
+	}
+
+	for i := 0; i < n-1; i++ {
+		plen := len(perms)
+		for d := 0; d < plen; d++ {
+			cp := make([]int8, len(perms[d]))
+			copy(cp, perms[d])
+			perms = append(perms, cp)
+		}
+
+		nplen := len(perms)
+
+		for j := 0; j < 2; j++ {
+			k := j * (nplen / 2)
+			end := k + (nplen / 2)
+
+			for k < end {
+				perms[k] = append(perms[k], int8(j))
+				k++
+			}
+		}
+	}
+
+	return perms
+}
+
+func ApplyMask2(bin []int8, mask string) ([][]int8, []int) {
+	var out [][]int8
+	vals := make([]int, 0)
+
+	floatCount := CountFloatingBits(mask)
+	perms := BitPermutations(floatCount)
+
+	for _, perm := range perms {
+		j := 0
+		cpbin := make([]int8, len(bin))
+		copy(cpbin, bin)
+		for i, r := range mask {
+			switch r {
+			case rune('1'):
+				cpbin[i] = 1
+			case rune('X'):
+				cpbin[i] = perm[j]
+				j++
+			}
+		}
+		out = append(out, cpbin)
+		vals = append(vals, btoi(cpbin))
+	}
+
+	return out, vals
 }

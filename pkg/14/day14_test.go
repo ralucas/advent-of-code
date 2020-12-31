@@ -95,3 +95,44 @@ func TestPart1(t *testing.T) {
 	o := td.Part1()
 	assert.Equal(t, int64(165), o)
 }
+
+func TestCountFloatingBits(t *testing.T) {
+	mask := "100X0X11X0X"
+
+	assert.Equal(t, 4, CountFloatingBits(mask))
+}
+
+func TestBitPermutations(t *testing.T) {
+	t.Run("1", func(t *testing.T) {
+		p := BitPermutations(1)
+		var expect = [][]int8{{0}, {1}}
+
+		assert.Equal(t, expect, p)
+	})
+
+	t.Run("2", func(t *testing.T) {
+		p := BitPermutations(2)
+		var expect = [][]int8{{0, 0}, {1, 0}, {0, 1}, {1, 1}}
+
+		assert.Equal(t, expect, p)
+	})
+
+	t.Run("3", func(t *testing.T) {
+		p := BitPermutations(3)
+		var expect = [][]int8{
+			{0, 0, 0}, {1, 0, 0}, {0, 1, 0}, {1, 1, 0},
+			{0, 0, 1}, {1, 0, 1}, {0, 1, 1}, {1, 1, 1},
+		}
+
+		assert.Equal(t, expect, p)
+	})
+}
+
+func TestPart2(t *testing.T) {
+	td2 := Day{}
+	td2.PrepareData("../../test/testdata/14/test_input2.txt")
+
+	out := td2.Part2()
+
+	assert.Equal(t, int64(208), out)
+}
