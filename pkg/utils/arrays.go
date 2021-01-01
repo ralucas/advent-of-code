@@ -21,7 +21,7 @@ func MapToInt(vs []string) []int {
 		var err error
 		vsm[i], err = strconv.Atoi(v)
 		if err != nil {
-			log.Fatalf("Error processing map to int")
+			log.Fatalf("Error processing map to int %v\n", err)
 		}
 	}
 	return vsm
