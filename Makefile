@@ -19,7 +19,11 @@ test-all:
 
 .PHONY: test-utils
 test-utils:
-	gotest -v -cover -bench=. ./pkg/utils
+	gotest -v -cover -benchmem -bench=. ./pkg/utils
+
+.PHONY: lint
+lint:
+	golang-ci run -v ./pkg/$(DAY)
 
 .PHONY: run
 run:

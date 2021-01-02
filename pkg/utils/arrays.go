@@ -71,3 +71,39 @@ func Every(vi []int, f func(int) bool) bool {
 
 	return out
 }
+
+// Index returns the first index found
+// where the input value is found,
+// else -1 if nothing found.
+func Index(vs []string, val string) int {
+	for i, v := range vs {
+		if v == val {
+			return i
+		}
+	}
+
+	return -1
+}
+
+func IndexInt(vi []int, val int) int {
+	for i, v := range vi {
+		if v == val {
+			return i
+		}
+	}
+
+	return -1
+}
+
+// IndexesInt returns all indexes that match
+func IndexesInt(vi []int, val int) []int {
+	var output []int
+
+	for i, v := range vi {
+		if v == val {
+			output = append(output, i)
+		}
+	}
+
+	return output
+}

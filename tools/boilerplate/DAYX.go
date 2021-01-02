@@ -30,7 +30,3 @@ func (d *Day) Part1() interface{} {
 func (d *Day) Part2() interface{} {
 	return -1
 }
-
-// Things to consider:
-// 1. Writing easily testable methods/funcs
-// 2. Is parallelism possible?
