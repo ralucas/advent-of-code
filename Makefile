@@ -4,7 +4,10 @@ DAY ?= $(shell date "+%-d")
 YEAR ?= $(shell [ "12" -eq "$$(date +%m)" ] && date "+%Y" || $$(($$(date +%Y)-1)))
 
 .PHONY: all
-all: test run
+all: build test run
+
+.PHONY: build
+build: go build -v ./...
 
 .PHONY: test
 test:
@@ -18,7 +21,11 @@ test-watch:
 test-all:
 	gotest -cover -benchmem -bench=. ./...
 
-.PHONY: test-utils
+.PHONY: test-current-year
+test-current-year:
+	gotest -v -cover -benchmem -bench=. ./pkg/$(YEAR)/...
+
+.PHONY: test-util
 test-utils:
 	gotest -v -cover -benchmem -bench=. ./pkg/utils
 
