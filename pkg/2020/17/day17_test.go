@@ -4,15 +4,16 @@ import (
 	"os"
 	"testing"
 
-	day17 "github.com/ralucas/advent-of-code/pkg/17"
 	"github.com/stretchr/testify/assert"
+
+	day17 "github.com/ralucas/advent-of-code/pkg/2020/17"
 )
 
 //nolint
 var td day17.Day
 
 func TestMain(m *testing.M) {
-	td.PrepareData("../../test/testdata/17/test_input.txt")
+	td.PrepareData("../../../test/testdata/2020/17/test_input.txt")
 
 	m.Run()
 

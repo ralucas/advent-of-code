@@ -9,7 +9,7 @@ import (
 
 func TestPrepareData(t *testing.T) {
 	d := Day{}
-	d.PrepareData("../../assets/4/input.txt")
+	d.PrepareData("../../../assets/2020/4/input.txt")
 
 	t.Run("is correct type", func(t *testing.T) {
 		assert.IsType(t, d.data[0], Passport{})

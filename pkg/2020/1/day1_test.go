@@ -14,7 +14,7 @@ import (
 var td Day
 
 func init() {
-	td.PrepareData("../../assets/2020/1/input.txt")
+	td.PrepareData("../../../assets/2020/1/input.txt")
 }
 
 func TestTwoSum(t *testing.T) {

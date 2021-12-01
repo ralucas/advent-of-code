@@ -14,7 +14,7 @@ type Test struct {
 func TestPrepareData(t *testing.T) {
 	d := Day{}
 
-	d.PrepareData("../../assets/2/input.txt")
+	d.PrepareData("../../../assets/2020/2/input.txt")
 	assert.IsType(t, d.data[1], Password{})
 	assert.True(t, len(d.data) > 10)
 }

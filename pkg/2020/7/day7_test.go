@@ -10,8 +10,8 @@ import (
 var td, td1 Day
 
 func init() {
-	td.PrepareData("../../test/testdata/7/test_input.txt")
-	td1.PrepareData("../../test/testdata/7/test_input1.txt")
+	td.PrepareData("../../../test/testdata/2020/7/test_input.txt")
+	td1.PrepareData("../../../test/testdata/2020/7/test_input1.txt")
 }
 
 func TestPrepareData(t *testing.T) {

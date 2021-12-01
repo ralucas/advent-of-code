@@ -6,13 +6,14 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ralucas/advent-of-code/pkg/utils"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/ralucas/advent-of-code/pkg/utils"
 )
 
 func TestPrepareData(t *testing.T) {
 	d := Day{}
-	d.PrepareData("../../assets/3/input.txt")
+	d.PrepareData("../../../assets/2020/3/input.txt")
 	assert.Equal(t, 323, len(d.data))
 	assert.IsType(t, d.data[0], []string{})
 }
@@ -95,7 +96,7 @@ func TestIsTree(t *testing.T) {
 
 	var tests []test
 
-	data := utils.ReadFile("../../test/testdata/3/test-input.txt")
+	data := utils.ReadFile("../../../test/testdata/2020/3/test-input.txt")
 	lData := strings.Split(data, "\n")
 
 	lineLength := 0
@@ -132,7 +133,7 @@ func TestMultiplesIsTree(t *testing.T) {
 	}
 
 	d := Day{}
-	d.PrepareData("../../test/testdata/3/test-input2.txt")
+	d.PrepareData("../../../test/testdata/2020/3/test-input2.txt")
 
 	tests := []test{
 		{slope: []int{1, 1}, expect: 2},

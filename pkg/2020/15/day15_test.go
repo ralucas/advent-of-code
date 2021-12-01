@@ -11,7 +11,7 @@ import (
 var td Day
 
 func init() {
-	td.PrepareData("../../test/testdata/15/test_input.txt")
+	td.PrepareData("../../../test/testdata/2020/15/test_input.txt")
 }
 
 func TestFindNumberSteps(t *testing.T) {

@@ -12,8 +12,8 @@ var td Day
 var td2 Day
 
 func init() {
-	td.PrepareData("../../test/testdata/16/test_input.txt")
-	td2.PrepareData("../../test/testdata/16/test_input2.txt")
+	td.PrepareData("../../../test/testdata/2020/16/test_input.txt")
+	td2.PrepareData("../../../test/testdata/2020/16/test_input2.txt")
 }
 
 func TestPrepareData(t *testing.T) {

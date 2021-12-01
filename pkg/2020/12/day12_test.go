@@ -10,7 +10,7 @@ import (
 var td Day
 
 func init() {
-	td.PrepareData("../../test/testdata/12/test_input.txt")
+	td.PrepareData("../../../test/testdata/2020/12/test_input.txt")
 }
 
 func TestPrepareData(t *testing.T) {

@@ -17,7 +17,7 @@ var testInputExpects = []BoardingPass{
 var td Day
 
 func init() {
-	td.PrepareData("../../test/testdata/5/test_input.txt")
+	td.PrepareData("../../../test/testdata/2020/5/test_input.txt")
 }
 
 func TestPrepareData(t *testing.T) {

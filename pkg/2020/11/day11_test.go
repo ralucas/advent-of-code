@@ -12,25 +12,25 @@ var outputData = make([][][]string, 5)
 var outputData2 = make([][][]string, 6)
 
 func init() {
-	td.PrepareData("../../test/testdata/11/part1/test_input.txt")
+	td.PrepareData("../../../test/testdata/2020/11/part1/test_input.txt")
 
 	for i := 0; i < 5; i++ {
 		d := i + 1
 		tdo := Day{}
-		fp := fmt.Sprintf("../../test/testdata/11/part1/test_output%d.txt", d)
+		fp := fmt.Sprintf("../../../test/testdata/2020/11/part1/test_output%d.txt", d)
 		tdo.PrepareData(fp)
 		data := make([][]string, len(tdo.data))
 		copy(data, tdo.data)
 		outputData[i] = data
 	}
 
-	td1.PrepareData("../../test/testdata/11/part2/test_input.txt")
-	td2.PrepareData("../../test/testdata/11/part2/test_input_no_replace.txt")
+	td1.PrepareData("../../../test/testdata/2020/11/part2/test_input.txt")
+	td2.PrepareData("../../../test/testdata/2020/11/part2/test_input_no_replace.txt")
 
 	for i := 0; i < 6; i++ {
 		d := i + 1
 		tdo := Day{}
-		fp := fmt.Sprintf("../../test/testdata/11/part2/test_output%d.txt", d)
+		fp := fmt.Sprintf("../../../test/testdata/2020/11/part2/test_output%d.txt", d)
 		tdo.PrepareData(fp)
 		data := make([][]string, len(tdo.data))
 		copy(data, tdo.data)

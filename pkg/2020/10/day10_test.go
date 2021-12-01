@@ -11,8 +11,8 @@ import (
 var td, td1 Day
 
 func init() {
-	td.PrepareData("../../test/testdata/10/test_input.txt")
-	td1.PrepareData("../../test/testdata/10/test_input1.txt")
+	td.PrepareData("../../../test/testdata/2020/10/test_input.txt")
+	td1.PrepareData("../../../test/testdata/2020/10/test_input1.txt")
 }
 
 func TestCountDiffs(t *testing.T) {
