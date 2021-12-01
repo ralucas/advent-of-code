@@ -1,3 +1,5 @@
+//go:build unit
+
 package day14
 
 import (
@@ -130,7 +132,7 @@ func TestBitPermutations(t *testing.T) {
 
 func TestPart2(t *testing.T) {
 	td2 := Day{}
-	td2.PrepareData("../../test/testdata/14/test_input2.txt")
+	td2.PrepareData("../../../test/testdata/2020/14/test_input2.txt")
 
 	out := td2.Part2()
 

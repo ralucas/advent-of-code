@@ -1,3 +1,5 @@
+//go:build unit
+
 package day17_test
 
 import (

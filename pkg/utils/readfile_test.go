@@ -7,12 +7,12 @@ import (
 )
 
 func TestReadFile(t *testing.T) {
-	rf := ReadFile("../../test/testdata/3/test-input1.txt")
+	rf := ReadFile("../../test/testdata/2020/3/test-input1.txt")
 	assert.NotNil(t, rf)
 }
 
 func TestReadFileToArray(t *testing.T) {
-	rfArray := ReadFileToArray("../../test/testdata/3/test-input1.txt", "\n")
+	rfArray := ReadFileToArray("../../test/testdata/2020/3/test-input1.txt", "\n")
 	assert.NotNil(t, rfArray)
 	assert.IsType(t, rfArray, []string{})
 	assert.True(t, len(rfArray) > 1)

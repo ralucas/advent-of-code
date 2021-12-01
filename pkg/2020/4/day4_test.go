@@ -1,3 +1,5 @@
+//go:build unit
+
 package day4
 
 import (
