@@ -1,5 +1,3 @@
-//go:build unit
-
 package day11
 
 import (

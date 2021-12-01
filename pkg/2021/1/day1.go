@@ -32,7 +32,7 @@ func (d *Day) Part1() interface{} {
 	for i := 1; i < len(d.data); i++ {
 		if d.data[i] > d.data[i-1] {
 			count += 1
-		}	
+		}
 	}
 
 	return count
@@ -48,7 +48,7 @@ func (d *Day) Part2() interface{} {
 	for i := 3; i < len(d.data); i++ {
 		if d.data[i] > d.data[i-3] {
 			count += 1
-		}	
+		}
 	}
 
 	return count

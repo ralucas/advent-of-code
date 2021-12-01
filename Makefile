@@ -8,7 +8,7 @@ all: test run
 
 .PHONY: test
 test:
-	gotest -v -tags=unit -cover -failfast -benchmem -bench=. ./pkg/$(YEAR)/$(DAY)/
+	gotest -v -cover -failfast -benchmem -bench=. ./pkg/$(YEAR)/$(DAY)/
 
 .PHONY: test-watch
 test-watch:
@@ -16,11 +16,11 @@ test-watch:
 
 .PHONY: test-all
 test-all:
-	gotest -tags=unit -cover -benchmem -bench=. ./...
+	gotest -cover -benchmem -bench=. ./...
 
 .PHONY: test-utils
 test-utils:
-	gotest -v -tags=unit -cover -benchmem -bench=. ./pkg/utils
+	gotest -v -cover -benchmem -bench=. ./pkg/utils
 
 .PHONY: lint
 lint:
@@ -40,11 +40,10 @@ new:
 		mv ~/Downloads/input.txt assets/$(YEAR)/$(DAY)/input.txt && \
 		touch assets/$(YEAR)/$(DAY)/instructions.md && \
 		mkdir -p pkg/$(YEAR)/$(DAY) && \
-		cp tools/boilerplate/DAYX.go pkg/$(YEAR)/$(DAY)/day$(DAY).go && \
-		cp tools/boilerplate/DAYX_test.go pkg/$(YEAR)/$(DAY)/day$(DAY)_test.go && \
+		cp tools/boilerplate/DAYX.gotpl pkg/$(YEAR)/$(DAY)/day$(DAY).go && \
+		cp tools/boilerplate/DAYX_test.gotpl pkg/$(YEAR)/$(DAY)/day$(DAY)_test.go && \
 		gsed -i 's/DAYX/$(DAY)/' pkg/$(YEAR)/$(DAY)/day$(DAY)_test.go && \
 		gsed -i 's/YEARX/$(YEAR)/' pkg/$(YEAR)/$(DAY)/day$(DAY)_test.go && \
-		gsed -i '1s|^|//go:build unit\n|' pkg/$(YEAR)/$(DAY)/day$(DAY)_test.go && \
 		gsed -i 's/DAYX/$(DAY)/' pkg/$(YEAR)/$(DAY)/day$(DAY).go && \
 		gsed -i 's|//newdayimport|day$(DAY) \"github.com/ralucas/advent-of-code/pkg/$(YEAR)/$(DAY)\"\n//newdayimport|' pkg/aoc/days_$(YEAR).go && \
 		gsed -i 's|//newdaystruct|\&day$(DAY).Day{},\n\r//newdaystruct|' pkg/aoc/days_$(YEAR).go && \

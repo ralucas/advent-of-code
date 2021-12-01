@@ -1,5 +1,3 @@
-//go:build unit
-
 package day5
 
 import (
