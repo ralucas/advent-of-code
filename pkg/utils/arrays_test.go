@@ -7,6 +7,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestMapTo2D(t *testing.T) {
+	testArr := []string{"1:A", "2:B", "3:C"}
+	arr2D := MapTo2D(testArr, ":")
+	for _, vi := range arr2D {
+		assert.Equal(t, 2, len(vi))
+	}
+}
+
 func TestMapToInt(t *testing.T) {
 	testArr := []string{"1", "2", "3"}
 	mappedInts := MapToInt(testArr)
@@ -53,6 +61,7 @@ func TestEvery(t *testing.T) {
 }
 
 func TestIndex(t *testing.T) {
+	t.Parallel()
 	inputArr := []string{"a", "b", "c", "d", "e"}
 	tests := []struct {
 		input  string
@@ -71,5 +80,48 @@ func TestIndex(t *testing.T) {
 			assert.Equal(t, test.expect, Index(inputArr, test.input))
 		})
 	}
+}
 
+func TestIndexInt(t *testing.T) {
+	t.Parallel()
+	inputArr := []int{1, 2, 3, 4, 5}
+	tests := []struct {
+		input  int
+		expect int
+	}{
+		{input: 3, expect: 2},
+		{input: 20, expect: -1},
+		{input: 1, expect: 0},
+		{input: 5, expect: 4},
+		{input: 1234, expect: -1},
+		{input: 100, expect: -1},
+	}
+
+	for i, test := range tests {
+		t.Run(fmt.Sprintf("Test%d", i), func(t *testing.T) {
+			assert.Equal(t, test.expect, IndexInt(inputArr, test.input))
+		})
+	}
+}
+
+func TestIndexesInt(t *testing.T) {
+	t.Parallel()
+	inputArr := []int{1, 1, 1, 2, 3, 4, 5, 2, 3}
+	tests := []struct {
+		input  int
+		expect []int
+	}{
+		{input: 3, expect: []int{4, 8}},
+		{input: 20, expect: nil},
+		{input: 1, expect: []int{0, 1, 2}},
+		{input: 5, expect: []int{6}},
+		{input: 1234, expect: nil},
+		{input: 100, expect: nil},
+	}
+
+	for i, test := range tests {
+		t.Run(fmt.Sprintf("Test%d", i), func(t *testing.T) {
+			assert.Equal(t, test.expect, IndexesInt(inputArr, test.input))
+		})
+	}
 }
