@@ -1,6 +1,11 @@
-Advent of Code 2020
+Advent of Code 
 ===
 
 ## Introduction
-This repository is for the exercises done for [Advent Of Code](https://adventofcode.com/2020) 
-hackathon.  Currently, everything is done in Go.
+This repository is for the exercises done for [Advent Of Code](https://adventofcode.com) hackathon.  
+
+### Years
+- 2020
+  - language: go
+- 2021
+  - language: go
