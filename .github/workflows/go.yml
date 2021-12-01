@@ -11,9 +11,6 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Install os dependencies
-        run: apt install -y make
-
       - name: Set up Go 1.x
         uses: actions/setup-go@v2
         with:

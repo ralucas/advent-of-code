@@ -7,11 +7,12 @@ YEAR ?= $(shell [ "12" -eq "$$(date +%m)" ] && date "+%Y" || $$(($$(date +%Y)-1)
 all: build test run
 
 .PHONY: build
-build: go build -v ./...
+build:
+	go build -v ./...
 
 .PHONY: test
 test:
-	gotest -v -cover -failfast -benchmem -bench=. ./pkg/$(YEAR)/$(DAY)/
+	go test -v -cover -failfast -benchmem -bench=. ./pkg/$(YEAR)/$(DAY)/
 
 .PHONY: test-watch
 test-watch:
@@ -19,15 +20,15 @@ test-watch:
 
 .PHONY: test-all
 test-all:
-	gotest -cover -benchmem -bench=. ./...
+	go test -cover -benchmem -bench=. ./...
 
 .PHONY: test-current-year
 test-current-year:
-	gotest -v -cover -benchmem -bench=. ./pkg/$(YEAR)/...
+	go test -v -cover -benchmem -bench=. ./pkg/$(YEAR)/...
 
 .PHONY: test-util
 test-utils:
-	gotest -v -cover -benchmem -bench=. ./pkg/utils
+	go test -v -cover -benchmem -bench=. ./pkg/utils
 
 .PHONY: lint
 lint:
