@@ -10,9 +10,14 @@ import (
 
 var inputFile = flag.String("input", "", "Input file")
 var day = flag.Int("day", getDay(), "Day to run")
+var year = flag.Int("year", getYear(), "Year to run")
 
 func getDay() int {
 	return time.Now().Day()
+}
+
+func getYear() int {
+	return time.Now().Year()
 }
 
 func run(runner aoc.AOC, inputFile string) {
@@ -29,7 +34,7 @@ func main() {
 
 	fmt.Printf("\n\n================\n    Day %d\n================\n\n", *day)
 
-	run(aoc.New(*day), *inputFile)
+	run(aoc.New(*day, *year), *inputFile)
 
 	fmt.Print("\n================\n")
 }

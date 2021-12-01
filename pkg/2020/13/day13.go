@@ -18,10 +18,9 @@ type Day struct {
 }
 
 const MaxUint64 uint64 = 1<<64 - 1
-const MinInt64 int64 = (1<<48 - 1)
-const MaxInt64 int64 = (1<<63 - 1)
+const MinInt64 int64 = 100000000000000
+const MaxInt64 int64 = (1<<48 - 1)
 
-// TODO: Alter this for actual implementation
 func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
@@ -171,7 +170,7 @@ func primeFactors(val int) []int {
 	return factors
 }
 
-func leastCommonMultiples(vi []int) int {
+func LeastCommonMultiples(vi []int) int {
 	pfMap := make(map[int]int)
 	for _, v := range vi {
 		pfs := primeFactors(v)
@@ -205,16 +204,19 @@ func leastCommonMultiples(vi []int) int {
 func EarliestTimestampForSchedule(schedule []map[int]int) int {
 	var scheds []int
 	bus, _ := keyValue(schedule[0])
-	rems := []int{bus}
+	rems := []int{0}
+	divs := []int{bus}
+	scheds = append(scheds, bus)
 	totalSkip := 0
 	for i := 1; i < len(schedule); i++ {
 		nbus, skip := keyValue(schedule[i])
 		totalSkip += skip
 		rems = append(rems, totalSkip)
 		scheds = append(scheds, nbus)
+		divs = append(divs, nbus-totalSkip)
 	}
 
-	return leastCommonMultiples(rems)
+	return LeastCommonMultiples(scheds)
 }
 
 func EarliestTimestampForScheduleSlow(schedule []map[int]int) int64 {
@@ -231,13 +233,14 @@ func EarliestTimestampForScheduleSlow(schedule []map[int]int) int64 {
 	}
 
 	maxProcs := int64(runtime.GOMAXPROCS(0))
+	// maxProcs := int64(1)
 	starts := make([]int64, maxProcs)
 	starts[0] = MinInt64
 	sect := (MaxInt64 - starts[0]) / maxProcs
-	for i := 1; i < int(maxProcs)-1; i++ {
+	for i := 1; i < int(maxProcs); i++ {
 		starts[i] = starts[i-1] + sect
 	}
-	starts[len(starts)-1] = MaxInt64
+	starts = append(starts, MaxInt64)
 
 	done := make(chan bool, len(starts))
 	result := make(chan int64, len(starts))
@@ -293,20 +296,20 @@ func findLowestCommonNumerator(
 	}
 	y := end / bus
 
-	rs := x * bus
+	rs := int64(0)
 
 	rlen := len(remainders)
 	fmt.Printf("%d :: %d %d\n", bus, x, y)
 
-	progress := float64(0)
+	progress := float64(1)
 
 	for x < y {
 
-		curprogress := (float64(x) - float64(start)) / float64(y) * float64(100)
+		curprogress := ((float64(x) - float64(start/bus)) / float64(y)) * float64(100)
 
-		if curprogress > progress+1 {
+		if curprogress > progress {
 			progress += float64(1)
-			fmt.Printf("Current Progress: %f\n", progress)
+			fmt.Printf("Current Progress: %f%% - %d\n", progress, start)
 		}
 
 		rs = x * bus
@@ -320,6 +323,7 @@ func findLowestCommonNumerator(
 			if i == rlen-1 {
 				doneCh <- true
 				resultCh <- rs
+				return
 			}
 		}
 		x++

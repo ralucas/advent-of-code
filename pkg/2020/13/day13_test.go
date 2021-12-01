@@ -40,10 +40,10 @@ func TestEarliestTimestampForScheduleSlow2(t *testing.T) {
 
 	testInputs := [][]string{
 		{"17", "x", "13", "19"},
-		{"67", "7", "59", "61"},
-		{"67", "x", "7", "59", "61"},
-		{"67", "7", "x", "59", "61"},
-		{"1789", "37", "47", "1889"},
+		// {"67", "7", "59", "61"},
+		// {"67", "x", "7", "59", "61"},
+		// {"67", "7", "x", "59", "61"},
+		// {"1789", "37", "47", "1889"},
 	}
 
 	expects := []int64{3417, 754018, 779210, 1261476, 1202161486}
@@ -117,6 +117,12 @@ func TestLeastCommonMultiples(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		assert.Equal(t, tt.expect, leastCommonMultiples(tt.input))
+		assert.Equal(t, tt.expect, LeastCommonMultiples(tt.input))
 	}
 }
+
+// func TestEarliestTimestampForSchedule(t *testing.T) {
+// 	m := EarliestTimestampForSchedule(td.bsMap)
+
+// 	assert.Equal(t, int64(1068781), m, fmt.Sprintf("expected %d, got %d", 1068781, m))
+// }

@@ -6,14 +6,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ralucas/advent-of-code/pkg/utils"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/ralucas/advent-of-code/pkg/utils"
 )
 
 var td Day
 
 func init() {
-	td.PrepareData("../../assets/1/input.txt")
+	td.PrepareData("../../assets/2020/1/input.txt")
 }
 
 func TestTwoSum(t *testing.T) {

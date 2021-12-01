@@ -3,9 +3,8 @@ package day9
 import (
 	"log"
 
+	day1 "github.com/ralucas/advent-of-code/pkg/2020/1"
 	"github.com/ralucas/advent-of-code/pkg/utils"
-
-	day1 "github.com/ralucas/advent-of-code/pkg/1"
 )
 
 type Day struct {

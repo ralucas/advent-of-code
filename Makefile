@@ -1,21 +1,22 @@
 # Simple Makefile for getting setup, testing, and running in a conventional manner
 
-DAY ?= $(shell date "+%d" | grep -o '[0-9]*')
+DAY ?= $(shell date "+%d")
+YEAR ?= $(shell [ "12" == "$(date +%m)" ] && date "+%Y" || $(($(date +%Y)-1)))
 
 .PHONY: all
 all: test run
 
 .PHONY: test
 test:
-	gotest -v -cover -failfast ./pkg/$(DAY)/
+	gotest -v -cover -failfast -benchmem -bench=. ./pkg/$(YEAR)/$(DAY)/
 
 .PHONY: test-watch
 test-watch:
-	goconvey -workDir ./pkg/$(DAY)/
+	goconvey -workDir ./pkg/$(YEAR)/$(DAY)/
 
 .PHONY: test-all
 test-all:
-	gotest -cover ./...
+	gotest -cover -benchmem -bench=. ./...
 
 .PHONY: test-utils
 test-utils:
@@ -23,28 +24,35 @@ test-utils:
 
 .PHONY: lint
 lint:
-	golang-ci run -v ./pkg/$(DAY)
+	golangci-lint run -v --enable-all ./pkg/$(YEAR)/$(DAY)
+
+.PHONY: lint-all
+lint-all:
+	golangci-lint run -v --enable-all ./...
 
 .PHONY: run
 run:
-	go run ./cmd/main.go --input "assets/$(DAY)/input.txt" --day "$(DAY)"
+	go run ./cmd/main.go --input "assets/$(YEAR)/$(DAY)/input.txt" --day "$(DAY)" --year "$(YEAR)"
 
 .PHONY: new
 new:
-	mkdir assets/$(DAY) && \
-		mv ~/Downloads/input.txt assets/$(DAY)/input.txt && \
-		touch assets/$(DAY)/instructions.md && \
-		mkdir pkg/$(DAY) && \
-		cp tools/boilerplate/DAYX.go pkg/$(DAY)/day$(DAY).go && \
-		cp tools/boilerplate/DAYX_test.go pkg/$(DAY)/day$(DAY)_test.go && \
-		gsed -i 's/DAYX/$(DAY)/' pkg/$(DAY)/day$(DAY)_test.go && \
-		gsed -i 's/DAYX/$(DAY)/' pkg/$(DAY)/day$(DAY).go && \
-		mkdir test/testdata/$(DAY) && \
-		touch test/testdata/$(DAY)/test_input.txt
+	mkdir -p assets/$(YEAR)/$(DAY) && \
+		mv ~/Downloads/input.txt assets/$(YEAR)/$(DAY)/input.txt && \
+		touch assets/$(YEAR)/$(DAY)/instructions.md && \
+		mkdir -p pkg/$(YEAR)/$(DAY) && \
+		cp tools/boilerplate/DAYX.go pkg/$(YEAR)/$(DAY)/day$(DAY).go && \
+		cp tools/boilerplate/DAYX_test.go pkg/$(YEAR)/$(DAY)/day$(DAY)_test.go && \
+		gsed -i 's/DAYX/$(DAY)/' pkg/$(YEAR)/$(DAY)/day$(DAY)_test.go && \
+		gsed -i 's/DAYX/$(DAY)/' pkg/$(YEAR)/$(DAY)/day$(DAY).go && \
+		gsed -i 's|//newdayimport|day$(DAY) \"github.com/ralucas/advent-of-code/pkg/$(YEAR)/$(DAY)\"\n//newdayimport|' pkg/aoc/days_$(YEAR).go && \
+		gsed -i 's|//newdaystruct|\&day$(DAY).Day{}\n\r//newdaystruct|' pkg/aoc/days_$(YEAR).go && \
+		goimports -w pkg/aoc/days_$(YEAR).go && \
+		mkdir -p test/testdata/$(YEAR)/$(DAY) && \
+		touch test/testdata/$(YEAR)/$(DAY)/test_input.txt
 
 .PHONY: clean
 clean:
-	trash assets/$(DAY) && \
-		trash pkg/$(DAY) && \
-		trash test/testdata/$(DAY)
+	trash assets/$(YEAR)/$(DAY) && \
+		trash pkg/$(YEAR)/$(DAY) && \
+		trash test/testdata/$(YEAR)/$(DAY)
 
