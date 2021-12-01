@@ -1,7 +1,7 @@
 # Simple Makefile for getting setup, testing, and running in a conventional manner
 
 DAY ?= $(shell date "+%d")
-YEAR ?= $(shell [ "12" == "$(date +%m)" ] && date "+%Y" || $(($(date +%Y)-1)))
+YEAR ?= $(shell [ "12" -eq "$$(date +%m)" ] && date "+%Y" || $$(($$(date +%Y)-1)))
 
 .PHONY: all
 all: test run
