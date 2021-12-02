@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	dayDAYX "github.com/ralucas/advent-of-code/YEARX/pkg/DAYX"
+	dayDAYX "github.com/ralucas/advent-of-code/pkg/YEARX/DAYX"
 )
 
 // TODO: Update this per implementation

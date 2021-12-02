@@ -24,9 +24,9 @@ func (d *Day) PrepareData(filepath string) {
 }
 
 func (d *Day) Part1() interface{} {
-	return -1
+	return nil
 }
 
 func (d *Day) Part2() interface{} {
-	return -1
+	return nil
 }
