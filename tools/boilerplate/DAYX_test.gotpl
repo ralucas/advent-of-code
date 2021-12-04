@@ -13,8 +13,7 @@ import (
 var td dayDAYX.Day
 
 func TestMain(m *testing.M) {
-	// TODO: Uncomment and utilize
-	//td.PrepareData("../../../test/testdata/YEARX/DAYX/test_input.txt")
+	td.PrepareData("../../../test/testdata/YEARX/DAYX/test_input.txt")
 
 	m.Run()
 }

@@ -1,4 +1,4 @@
-package utils
+package array
 
 import (
 	"log"
@@ -63,6 +63,17 @@ func Filter(vs []string, f func(string) bool) []string {
 
 func FilterInt(vi []int, f func(int) bool) []int {
 	vim := make([]int, 0)
+	for _, v := range vi {
+		if f(v) {
+			vim = append(vim, v)
+		}
+	}
+
+	return vim
+}
+
+func FilterInt2D(vi [][]int, f func([]int) bool) [][]int {
+	vim := make([][]int, 0)
 	for _, v := range vi {
 		if f(v) {
 			vim = append(vim, v)
