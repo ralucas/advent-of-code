@@ -50,9 +50,9 @@ new:
 		mkdir -p pkg/$(YEAR)/$(DAY) && \
 		cp tools/boilerplate/DAYX.gotpl pkg/$(YEAR)/$(DAY)/day$(DAY).go && \
 		cp tools/boilerplate/DAYX_test.gotpl pkg/$(YEAR)/$(DAY)/day$(DAY)_test.go && \
-		gsed -i 's/DAYX/$(DAY)/' pkg/$(YEAR)/$(DAY)/day$(DAY)_test.go && \
-		gsed -i 's/YEARX/$(YEAR)/' pkg/$(YEAR)/$(DAY)/day$(DAY)_test.go && \
-		gsed -i 's/DAYX/$(DAY)/' pkg/$(YEAR)/$(DAY)/day$(DAY).go && \
+		gsed -i 's/DAYX/$(DAY)/g' pkg/$(YEAR)/$(DAY)/day$(DAY)_test.go && \
+		gsed -i 's/YEARX/$(YEAR)/g' pkg/$(YEAR)/$(DAY)/day$(DAY)_test.go && \
+		gsed -i 's/DAYX/$(DAY)/g' pkg/$(YEAR)/$(DAY)/day$(DAY).go && \
 		gsed -i 's|//newdayimport|day$(DAY) \"github.com/ralucas/advent-of-code/pkg/$(YEAR)/$(DAY)\"\n//newdayimport|' pkg/aoc/days_$(YEAR).go && \
 		gsed -i 's|//newdaystruct|\&day$(DAY).Day{},\n\r//newdaystruct|' pkg/aoc/days_$(YEAR).go && \
 		mkdir -p test/testdata/$(YEAR)/$(DAY) && \

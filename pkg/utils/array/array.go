@@ -19,9 +19,12 @@ func MapToInt(vs []string) []int {
 	vsm := make([]int, len(vs))
 	for i, v := range vs {
 		var err error
-		vsm[i], err = strconv.Atoi(v)
-		if err != nil {
-			log.Fatalf("Error processing map to int %v\n", err)
+		tv := strings.TrimSpace(v)
+		if tv != "" {
+			vsm[i], err = strconv.Atoi(tv)
+			if err != nil {
+				log.Fatalf("Error processing map to int %v\n", err)
+			}
 		}
 	}
 	return vsm
