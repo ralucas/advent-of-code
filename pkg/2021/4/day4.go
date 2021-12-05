@@ -68,6 +68,36 @@ func (d *Day) Part1() interface{} {
 	return nil
 }
 
+func removeBoard(vi []*Board, index int) []*Board {
+	if index == len(vi)-1 {
+		return vi[:index]
+	}
+
+	return append(vi[:index], vi[index+1:]...)
+}
+
 func (d *Day) Part2() interface{} {
+	boards := make([]*Board, len(d.boards))
+	copy(boards, d.boards)
+
+	nilCount := 0
+
+	for _, n := range d.numbers {
+		for i, board := range boards {
+			if board != nil {
+				bingo := board.Mark(n)
+				if bingo && len(boards)-nilCount == 1 {
+					unmarked := board.UnmarkedValues()
+					s := mathutils.Sum(unmarked)
+					return s * n
+				}
+				if bingo {
+					boards[i] = nil
+					nilCount += 1
+				}
+			}
+		}
+	}
+
 	return nil
 }

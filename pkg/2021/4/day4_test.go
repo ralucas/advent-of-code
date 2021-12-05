@@ -41,7 +41,7 @@ func TestPart1(t *testing.T) {
 
 func TestPart2(t *testing.T) {
 	result := td.Part2()
-	expect := 0
+	expect := 1924
 
 	assert.Equal(t, expect, result)
 }

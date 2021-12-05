@@ -219,3 +219,11 @@ func Diagonals(vi [][]int) ([][]int, error) {
 
 	return d, nil
 }
+
+func Remove(vi []interface{}, index int) []interface{} {
+	if index == len(vi)-1 {
+		return vi[:index]
+	}
+
+	return append(vi[:index], vi[index+1:]...)
+}
