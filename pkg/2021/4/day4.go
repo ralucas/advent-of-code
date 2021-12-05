@@ -6,7 +6,8 @@ import (
 	"strings"
 
 	"github.com/ralucas/advent-of-code/pkg/utils"
-	arrayutil "github.com/ralucas/advent-of-code/pkg/utils/array"
+	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
+	mathutils "github.com/ralucas/advent-of-code/pkg/utils/math"
 )
 
 type Day struct {
@@ -30,7 +31,7 @@ func (d *Day) PrepareData(filepath string) {
 	}
 	data := utils.ReadFileToArray(filepath, "\n")
 
-	d.numbers = arrayutil.MapToInt(strings.Split(data[0], ","))
+	d.numbers = arrayutils.MapToInt(strings.Split(data[0], ","))
 
 	d.boards = make([]*Board, 0)
 
@@ -41,7 +42,7 @@ func (d *Day) PrepareData(filepath string) {
 		boardVals[i%5] = make([]int, 5)
 		tl := strings.TrimSpace(line)
 		pl := re.ReplaceAll([]byte(tl), []byte(","))
-		boardVals[i%5] = arrayutil.MapToInt(strings.Split(string(pl), ","))
+		boardVals[i%5] = arrayutils.MapToInt(strings.Split(string(pl), ","))
 
 		if boardVals[4] != nil {
 			d.boards = append(d.boards, NewBoard(boardVals))
@@ -53,6 +54,17 @@ func (d *Day) PrepareData(filepath string) {
 }
 
 func (d *Day) Part1() interface{} {
+	for _, n := range d.numbers {
+		for _, board := range d.boards {
+			bingo := board.Mark(n)
+			if bingo {
+				unmarked := board.UnmarkedValues()
+				s := mathutils.Sum(unmarked)
+				return s * n
+			}
+		}
+	}
+
 	return nil
 }
 

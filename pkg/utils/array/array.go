@@ -1,6 +1,7 @@
 package array
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -98,11 +99,11 @@ func FindIntIndexes(vi []int, f func(int) bool) []int {
 	return vim
 }
 
-func Every(vi []int, f func(int) bool) bool {
+func Every(vi []int, f func(int, int) bool) bool {
 	out := true
 
-	for _, v := range vi {
-		if !f(v) {
+	for i, v := range vi {
+		if !f(v, i) {
 			return false
 		}
 	}
@@ -179,4 +180,42 @@ func EqualDistance(v1, v2 []int) int {
 	}
 
 	return 0
+}
+
+func Transpose(vi [][]int) [][]int {
+	t := make([][]int, len(vi[0]))
+
+	for i := range vi {
+		for j := range vi[i] {
+			if t[j] == nil {
+				t[j] = make([]int, len(vi))
+			}
+			t[j][i] = vi[i][j]
+		}
+	}
+
+	return t
+}
+
+func Diagonals(vi [][]int) ([][]int, error) {
+	d := make([][]int, 2)
+	for i := range d {
+		d[i] = make([]int, len(vi))
+	}
+
+	if len(vi)%2 == 0 {
+		return nil, fmt.Errorf("invalid 2D array size, must be odd size for diagonals to exist")
+	}
+
+	for i := range vi {
+		if len(vi) != len(vi[i]) {
+			return nil, fmt.Errorf("invalid 2D array size, must be a square")
+		}
+
+		d[0][i] = vi[i][i]
+		k := len(vi[i]) - 1 - i
+		d[1][i] = vi[k][i]
+	}
+
+	return d, nil
 }

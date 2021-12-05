@@ -34,6 +34,13 @@ func TestPrepareData(t *testing.T) {
 
 func TestPart1(t *testing.T) {
 	result := td.Part1()
+	expect := 4512
+
+	assert.Equal(t, expect, result)
+}
+
+func TestPart2(t *testing.T) {
+	result := td.Part2()
 	expect := 0
 
 	assert.Equal(t, expect, result)
