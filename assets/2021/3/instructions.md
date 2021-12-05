@@ -1,4 +1,5 @@
 --- Day 3: Binary Diagnostic ---
+
 The submarine has been making some odd creaking noises, so you ask it to produce a diagnostic report just in case.
 
 The diagnostic report (your puzzle input) consists of a list of binary numbers which, when decoded properly, can tell you many useful things about the conditions of the submarine. The first parameter to check is the power consumption.
@@ -7,6 +8,7 @@ You need to use the binary numbers in the diagnostic report to generate two new 
 
 Each bit in the gamma rate can be determined by finding the most common bit in the corresponding position of all numbers in the diagnostic report. For example, given the following diagnostic report:
 
+```
 00100
 11110
 10110
@@ -19,6 +21,8 @@ Each bit in the gamma rate can be determined by finding the most common bit in t
 11001
 00010
 01010
+```
+
 Considering only the first bit of each number, there are five 0 bits and seven 1 bits. Since the most common bit is 1, the first bit of the gamma rate is 1.
 
 The most common second bit of the numbers in the diagnostic report is 0, so the second bit of the gamma rate is 0.
@@ -31,9 +35,10 @@ The epsilon rate is calculated in a similar way; rather than use the most common
 
 Use the binary numbers in your diagnostic report to calculate the gamma rate and epsilon rate, then multiply them together. What is the power consumption of the submarine? (Be sure to represent your answer in decimal, not binary.)
 
-Your puzzle answer was 3985686.
+Your puzzle answer was `3985686`.
 
 --- Part Two ---
+
 Next, you should verify the life support rating, which can be determined by multiplying the oxygen generator rating by the CO2 scrubber rating.
 
 Both the oxygen generator rating and the CO2 scrubber rating are values that can be found in your diagnostic report - finding them is the tricky part. Both values are located using a similar process that involves filtering out values until only one remains. Before searching for either rating value, start with the full list of binary numbers from your diagnostic report and consider just the first bit of those numbers. Then:
@@ -63,6 +68,6 @@ Finally, to find the life support rating, multiply the oxygen generator rating (
 
 Use the binary numbers in your diagnostic report to calculate the oxygen generator rating and CO2 scrubber rating, then multiply them together. What is the life support rating of the submarine? (Be sure to represent your answer in decimal, not binary.)
 
-Your puzzle answer was 2555739.
+Your puzzle answer was `2555739`.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
