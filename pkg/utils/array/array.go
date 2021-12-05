@@ -203,10 +203,6 @@ func Diagonals(vi [][]int) ([][]int, error) {
 		d[i] = make([]int, len(vi))
 	}
 
-	if len(vi)%2 == 0 {
-		return nil, fmt.Errorf("invalid 2D array size, must be odd size for diagonals to exist")
-	}
-
 	for i := range vi {
 		if len(vi) != len(vi[i]) {
 			return nil, fmt.Errorf("invalid 2D array size, must be a square")

@@ -11,7 +11,6 @@ import (
 )
 
 type Day struct {
-	// TODO: Change this
 	numbers []int
 	boards  []*Board
 }
@@ -66,14 +65,6 @@ func (d *Day) Part1() interface{} {
 	}
 
 	return nil
-}
-
-func removeBoard(vi []*Board, index int) []*Board {
-	if index == len(vi)-1 {
-		return vi[:index]
-	}
-
-	return append(vi[:index], vi[index+1:]...)
 }
 
 func (d *Day) Part2() interface{} {
