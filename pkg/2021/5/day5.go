@@ -2,6 +2,8 @@ package day5
 
 import (
 	"fmt"
+	"io"
+	"io/ioutil"
 	"log"
 	"strings"
 
@@ -13,10 +15,17 @@ import (
 type Day struct {
 	lineBuilders []*LineBuilder
 	maxX, maxY   int
+	output       io.Writer
+}
+
+func (d *Day) SetOutput(w io.Writer) {
+	d.output = w
 }
 
 // TODO: Alter this for actual implementation
 func (d *Day) PrepareData(filepath string) {
+	d.output = ioutil.Discard
+
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
@@ -43,16 +52,16 @@ func (d *Day) PrepareData(filepath string) {
 	return
 }
 
-func printAllPoints(points [][]int) {
+func (d *Day) printAllPoints(points [][]int) {
 	for i := range points {
 		for j := range points[i] {
 			if points[i][j] == 0 {
-				fmt.Print(". ")
+				fmt.Fprint(d.output, ". ")
 			} else {
-				fmt.Printf("%d ", points[i][j])
+				fmt.Fprintf(d.output, "%d ", points[i][j])
 			}
 		}
-		fmt.Print("\n")
+		fmt.Fprint(d.output, "\n")
 	}
 }
 
@@ -69,7 +78,7 @@ func (d *Day) calculateOverlaps(f func(l *LineBuilder) *Line) int {
 		}
 	}
 
-	// printAllPoints(allPoints)
+	d.printAllPoints(allPoints)
 
 	counts := 0
 	for i := range allPoints {
