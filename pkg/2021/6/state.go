@@ -1,5 +1,10 @@
 package day6
 
+import (
+	"fmt"
+	"strings"
+)
+
 type State struct {
 	fish []*Fish
 }
@@ -24,4 +29,14 @@ func (s *State) Day() {
 
 func (s *State) FishCount() int {
 	return len(s.fish)
+}
+
+func (s *State) Print() string {
+	var sb strings.Builder
+	for _, f := range s.fish {
+		sb.WriteString(fmt.Sprintf("%d", f.CurrentState()))
+		sb.WriteString(",")
+	}
+
+	return sb.String()
 }

@@ -20,12 +20,18 @@ func TestMain(m *testing.M) {
 func TestPart1(t *testing.T) {
 	t.Parallel()
 
-	inputs := []int{18, 80}
-	expects := []int{26, 5934}
+	inputs := []int{
+		28,
+		80,
+	}
+	expects := []int{
+		26,
+		5934,
+	}
 
 	for i := range expects {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			td.SetDays(inputs[i])
+			td.Days1 = inputs[i]
 			result := td.Part1()
 			assert.Equal(t, expects[i], result)
 		})
@@ -33,8 +39,24 @@ func TestPart1(t *testing.T) {
 }
 
 func TestPart2(t *testing.T) {
-	result := td.Part2()
-	expect := true
+	t.Parallel()
 
-	assert.Equal(t, expect, result)
+	inputs := []int{
+		18,
+		80,
+		256,
+	}
+	expects := []int64{
+		26,
+		5934,
+		26984457539,
+	}
+
+	for i := range expects {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			td.Days2 = inputs[i]
+			result := td.Part2()
+			assert.Equal(t, expects[i], result)
+		})
+	}
 }

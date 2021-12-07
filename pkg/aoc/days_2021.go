@@ -18,6 +18,6 @@ var days2021 = []AOC{
 	&day3.Day{},
 	&day4.Day{},
 	&day5.Day{},
-	&day6.Day{Days: 80},
+	&day6.Day{Days1: 80, Days2: 256},
 	//newdaystruct
 }
