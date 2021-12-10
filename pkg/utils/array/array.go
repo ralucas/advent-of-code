@@ -7,6 +7,26 @@ import (
 	"strings"
 )
 
+func Map(vs []string, cb func(string, int) string) []string {
+	m := make([]string, len(vs))
+
+	for i, s := range vs {
+		m[i] = cb(s, i)
+	}
+
+	return m
+}
+
+func MapToInt2(vs []string, cb func(string, int) int) []int {
+	m := make([]int, len(vs))
+
+	for i, s := range vs {
+		m[i] = cb(s, i)
+	}
+
+	return m
+}
+
 func MapTo2D(vs []string, sep string) [][]string {
 	vsm := make([][]string, len(vs))
 	for i, v := range vs {
@@ -110,6 +130,19 @@ func Every(vi []int, f func(int, int) bool) bool {
 
 	return out
 }
+
+func EveryLetter(s string, f func(rune, int) bool) bool {
+	out := true
+
+	for i, v := range s {
+		if !f(v, i) {
+			return false
+		}
+	}
+
+	return out
+}
+
 
 // Index returns the first index found
 // where the input value is found,
