@@ -143,7 +143,6 @@ func EveryLetter(s string, f func(rune, int) bool) bool {
 	return out
 }
 
-
 // Index returns the first index found
 // where the input value is found,
 // else -1 if nothing found.

@@ -1,11 +1,5 @@
 package day9
 
-type Point struct {
-	row   int
-	col   int
-	value int
-}
-
 type Grid struct {
 	values [][]int
 	rows   int
@@ -18,10 +12,6 @@ func NewGrid(data [][]int) *Grid {
 		rows:   len(data),
 		cols:   len(data[0]),
 	}
-}
-
-func NewPoint(row, col, value int) Point {
-	return Point{row, col, value}
 }
 
 func (g *Grid) Values() [][]int {

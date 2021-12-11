@@ -54,6 +54,31 @@ func (d *Day) Part2() interface{} {
 	// recursively for points that are greater
 	// than point.
 	// Backtracking?
+	basins := make([][]Point, 3)
+	for _, point := range lowpoints {
+		root := NewNodePoint(point)
+		basin := root.BuildBasin(grid)
+		lb := len(basin)
 
-	return nil
+		for i, b := range basins {
+			if b == nil {
+				basins[i] = basin
+				break
+			}
+			if lb > len(b) {
+				for j := i + 1; j < len(basins); j++ {
+					basins[j] = basins[j-1]
+				}
+				basins[i] = basin
+				break
+			}
+		}
+	}
+
+	ans := 1
+	for _, basin := range basins {
+		ans *= len(basin)
+	}
+
+	return ans
 }
