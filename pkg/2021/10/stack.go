@@ -1,6 +1,9 @@
 package day10
 
-import "errors"
+import (
+	"errors"
+	"strings"
+)
 
 type Stack struct {
 	values []string
@@ -31,4 +34,8 @@ func (s *Stack) Pop() (string, error) {
 
 func (s *Stack) Push(in string) {
 	s.values = append(s.values, in)
+}
+
+func (s *Stack) String() string {
+	return strings.Join(s.values, "")
 }

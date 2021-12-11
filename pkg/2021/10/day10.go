@@ -6,11 +6,13 @@ import (
 
 	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
 	mathutils "github.com/ralucas/advent-of-code/pkg/utils/math"
+	sortutils "github.com/ralucas/advent-of-code/pkg/utils/sort"
 )
 
 type Day struct {
-	data          [][]string
-	closingPoints map[string]int
+	data           [][]string
+	closingPoints  map[string]int
+	closingPoints2 map[string]int
 }
 
 // TODO: Alter this for actual implementation
@@ -29,6 +31,13 @@ func (d *Day) PrepareData(filepath string) {
 		"]": 57,
 		"}": 1197,
 		">": 25137,
+	}
+
+	d.closingPoints2 = map[string]int{
+		")": 1,
+		"]": 2,
+		"}": 3,
+		">": 4,
 	}
 
 	return
@@ -53,12 +62,27 @@ func matches(open, close string) bool {
 	}
 }
 
+func closer(open string) string {
+	switch open {
+	case "(":
+		return ")"
+	case "[":
+		return "]"
+	case "{":
+		return "}"
+	case "<":
+		return ">"
+	default:
+		return ""
+	}
+}
+
 func checkLine(line []string) (string, bool) {
 	if !isOpeningBracket(line[0]) {
 		return line[0], false
 	}
 
-	stack := NewStack(line[0])
+	stack := NewStack()
 
 	for _, bracket := range line {
 		if isOpeningBracket(bracket) {
@@ -75,7 +99,7 @@ func checkLine(line []string) (string, bool) {
 		}
 	}
 
-	return "", true
+	return stack.String(), true
 }
 
 func (d *Day) Part1() interface{} {
@@ -90,5 +114,35 @@ func (d *Day) Part1() interface{} {
 }
 
 func (d *Day) Part2() interface{} {
-	return nil
+	var closers [][]string
+
+	for _, line := range d.data {
+		if left, ok := checkLine(line); ok {
+			openers := strings.Split(left, "")
+			c := make([]string, 0)
+			for _, opener := range openers {
+				c = append(c, closer(opener))
+			}
+			closers = append(closers, c)
+		}
+	}
+
+	// Start with a total score of 0.
+	// Then, for each character, multiply
+	// the total score by 5 and then increase
+	// the total score by the point value
+	// given for the character.
+	scores := make([]int, len(closers))
+
+	for i := range scores {
+		for j := len(closers[i])-1; j >= 0; j-- {
+			scores[i] *= 5
+			c := closers[i][j]
+			scores[i] += d.closingPoints2[c]
+		}
+	}
+
+	sorted := sortutils.QSort(scores)
+
+	return mathutils.Median(sorted)
 }

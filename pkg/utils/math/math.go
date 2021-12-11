@@ -63,5 +63,5 @@ func Median(vi []int) int {
 		return (vi[mid] + vi[mid+1]) / 2
 	}
 
-	return vi[mid+1]
+	return vi[mid]
 }
