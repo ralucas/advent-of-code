@@ -2,13 +2,14 @@ package day11
 
 import (
 	"log"
+	"strings"
 
+	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
 	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
 )
 
 type Day struct {
-	// TODO: Change this
-	data []string
+	data [][]int
 }
 
 // TODO: Alter this for actual implementation
@@ -18,15 +19,39 @@ func (d *Day) PrepareData(filepath string) {
 	}
 	data := fileutils.ReadFileToArray(filepath, "\n")
 
-	d.data = data
+	vals := make([][]int, len(data))
+	for i, line := range data {
+		vals[i] = arrayutils.MapToInt(strings.Split(line, ""))
+	}
+
+	d.data = vals
 
 	return
 }
 
 func (d *Day) Part1() interface{} {
-	return nil
+	grid := NewGrid(d.data)
+
+	for i := 0; i < 100; i++ {
+		grid.Step()
+	}
+
+	return grid.FlashCount()
 }
 
 func (d *Day) Part2() interface{} {
-	return nil
+	grid := NewGrid(d.data)
+
+	gridSize := grid.cols * grid.rows
+
+	step := 1
+	for {
+		grid.Step()
+
+		if gridSize == grid.StepFlashCount() {
+			return step
+		}
+
+		step++
+	}
 }
