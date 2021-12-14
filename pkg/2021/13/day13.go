@@ -72,5 +72,13 @@ func (d *Day) Part1() interface{} {
 }
 
 func (d *Day) Part2() interface{} {
-	return nil
+	grid := NewGrid(d.coordinates).Build()
+
+	for _, dir := range d.directions {
+		grid.Fold(dir)
+	}
+
+	ans := grid.String(grid.foldValues)
+
+	return fmt.Sprintf("\n%s", ans)
 }

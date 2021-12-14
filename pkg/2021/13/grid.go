@@ -25,14 +25,6 @@ func NewGrid(points []*Point) *Grid {
 func (g *Grid) Build() *Grid {
 	maxX, maxY := extent(g.points)
 
-	// if maxX%2 == 0 {
-	// 	maxX += 1
-	// }
-
-	// if maxY%2 == 0 {
-	// 	maxY += 1
-	// }
-
 	g.values = make([][]int, maxY+1)
 
 	for i := 0; i < maxY+1; i++ {
@@ -45,6 +37,8 @@ func (g *Grid) Build() *Grid {
 	for _, pt := range g.points {
 		g.values[pt.y][pt.x] = GridMark
 	}
+
+	g.foldValues = g.values
 
 	return g
 }
@@ -63,35 +57,37 @@ func (g *Grid) Fold(direction Direction) [][]int {
 }
 
 func (g *Grid) foldHorizontal(val int) [][]int {
-	foldValues := g.values
+	foldValues := g.foldValues
 
 	x := 0
-	for i := len(g.values) - 1; i > val; i-- {
-		for j := 0; j < len(g.values[i]); j++ {
-			foldValues[x][j] = g.values[i][j] | foldValues[x][j]
+	for i := len(g.foldValues) - 1; i > val; i-- {
+		for j := 0; j < len(g.foldValues[i]); j++ {
+			foldValues[x][j] = g.foldValues[i][j] | foldValues[x][j]
 		}
 		x += 1
 	}
 
-	fv := foldValues[:val]
+	g.foldValues = foldValues[:val]
 
-	return fv
+	return g.foldValues
 }
 
 func (g *Grid) foldVertical(val int) [][]int {
-	output := make([][]int, len(g.values))
-	foldValues := g.values
+	tmparr := make([][]int, len(g.foldValues))
+	foldValues := g.foldValues
 
-	for i := 0; i < len(g.values); i++ {
+	for i := 0; i < len(g.foldValues); i++ {
 		y := 0
-		for j := len(g.values[i]) - 1; j > val; j-- {
-			foldValues[i][y] = g.values[i][j] | foldValues[i][y]
+		for j := len(g.foldValues[i]) - 1; j > val; j-- {
+			foldValues[i][y] = g.foldValues[i][j] | foldValues[i][y]
 			y += 1
 		}
-		output[i] = foldValues[i][:val]
+		tmparr[i] = foldValues[i][:val]
 	}
 
-	return output
+	g.foldValues = tmparr
+
+	return g.foldValues
 }
 
 func (g *Grid) String(arr [][]int) string {
