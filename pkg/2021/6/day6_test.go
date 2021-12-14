@@ -21,7 +21,7 @@ func TestPart1(t *testing.T) {
 	t.Parallel()
 
 	inputs := []int{
-		28,
+		18,
 		80,
 	}
 	expects := []int{
