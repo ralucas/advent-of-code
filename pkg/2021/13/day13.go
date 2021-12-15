@@ -8,11 +8,10 @@ import (
 
 	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
 	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
-	mathutils "github.com/ralucas/advent-of-code/pkg/utils/math"
 )
 
 type Day struct {
-	coordinates []*Point
+	coordinates []Point
 	directions  []Direction
 }
 
@@ -31,7 +30,7 @@ func (d *Day) PrepareData(filepath string) {
 
 	for _, line := range coordLines {
 		s := arrayutils.MapToInt(strings.Split(line, ","))
-		pt := NewPoint(s[0], s[1])
+		pt := Point{s[0], s[1]}
 		d.coordinates = append(d.coordinates, pt)
 	}
 
@@ -60,25 +59,20 @@ func (d *Day) PrepareData(filepath string) {
 
 func (d *Day) Part1() interface{} {
 	grid := NewGrid(d.coordinates).Build()
-	fold := grid.Fold(d.directions[0])
+	grid.FoldPoints(d.directions[0])
 
-	count := 0
-
-	for i := range fold {
-		count += mathutils.Sum(fold[i])
-	}
-
-	return count
+	return len(grid.pointMap)
 }
 
 func (d *Day) Part2() interface{} {
 	grid := NewGrid(d.coordinates).Build()
 
 	for _, dir := range d.directions {
-		grid.Fold(dir)
+		grid.FoldPoints(dir)
 	}
 
-	ans := grid.String(grid.foldValues)
+	vals := grid.PointsToGrid()
+	ans := grid.String(vals)
 
 	return fmt.Sprintf("\n%s", ans)
 }
