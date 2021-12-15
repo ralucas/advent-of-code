@@ -6,11 +6,13 @@ import (
 	"strings"
 
 	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	stackutils "github.com/ralucas/advent-of-code/pkg/utils/stack"
 )
 
 type Day struct {
 	polymer string
 	rules   map[string]string
+	letterCounts map[string]int
 }
 
 // TODO: Alter this for actual implementation
@@ -23,6 +25,12 @@ func (d *Day) PrepareData(filepath string) {
 	spl := strings.Split(data, "\n\n")
 
 	d.polymer = spl[0]
+
+	d.letterCounts = make(map[string]int)
+
+	for i := range d.polymer {
+		d.letterCounts[string(d.polymer[i])] += 1
+	}
 
 	ruleLines := strings.Split(spl[1], "\n")
 
@@ -66,7 +74,7 @@ func (d *Day) Part1() interface{} {
 		elementCounts[r] += 1
 	}
 
-	maxE, minE := 0, math.MaxInt
+	maxE, minE := 0, math.MaxInt64
 	for _, v := range elementCounts {
 		if v > maxE {
 			maxE = v
@@ -80,19 +88,42 @@ func (d *Day) Part1() interface{} {
 	return maxE - minE
 }
 
+func (d *Day) pair(s string, itersLimit int) map[string]int {
+	var sb strings.Builder
+
+	iters := 0
+
+	counts := make(map[string]int)
+
+	stack := stackutils.NewStack(s)
+
+	for !stack.Empty() {
+		val, _ := stack.Pop()
+
+		if v, ok := d.rules[val]; ok {
+			counts[v]++
+			sb.WriteByte(val[0])
+			sb.WriteString(v)
+			stack.Push(sb.String())
+			sb.Reset()
+		}
+
+		if iters == itersLimit {
+			return counts
+		}
+
+		iters++
+	}
+
+	return counts
+}
+
 func (d *Day) Part2() interface{} {
 	s := d.polymer
-	for i := 0; i < 40; i++ {
-		s = d.insert(s)
-	}
-
-	elementCounts := make(map[rune]int)
-	for _, r := range s {
-		elementCounts[r] += 1
-	}
+	d.pair(s[:2], 40)
 
 	maxE, minE := 0, math.MaxInt64
-	for _, v := range elementCounts {
+	for _, v := range d.letterCounts {
 		if v > maxE {
 			maxE = v
 		}
