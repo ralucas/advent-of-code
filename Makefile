@@ -44,6 +44,7 @@ run:
 
 .PHONY: new
 new:
+	if [ ! -f ~/Downloads/input.txt ]; then echo "no input file"; exit 1; fi; \
 	mkdir -p assets/$(YEAR)/$(DAY) && \
 		mv ~/Downloads/input.txt assets/$(YEAR)/$(DAY)/input.txt && \
 		touch assets/$(YEAR)/$(DAY)/instructions.md && \
