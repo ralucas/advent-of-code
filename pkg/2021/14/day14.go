@@ -6,12 +6,11 @@ import (
 	"strings"
 
 	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
-	stackutils "github.com/ralucas/advent-of-code/pkg/utils/stack"
 )
 
 type Day struct {
-	polymer string
-	rules   map[string]string
+	polymer      string
+	rules        map[string]string
 	letterCounts map[string]int
 }
 
@@ -88,42 +87,56 @@ func (d *Day) Part1() interface{} {
 	return maxE - minE
 }
 
-func (d *Day) pair(s string, itersLimit int) map[string]int {
+func (d *Day) pairs(start map[string]int) map[string]int {
+	m := make(map[string]int)
+
 	var sb strings.Builder
 
-	iters := 0
+	for k, v := range start {
+		nk := d.rules[k]
+		// handle 1st
+		sb.WriteByte(k[0])
+		sb.WriteString(nk)
+		m[sb.String()] += v
+		sb.Reset()
 
-	counts := make(map[string]int)
-
-	stack := stackutils.NewStack(s)
-
-	for !stack.Empty() {
-		val, _ := stack.Pop()
-
-		if v, ok := d.rules[val]; ok {
-			counts[v]++
-			sb.WriteByte(val[0])
-			sb.WriteString(v)
-			stack.Push(sb.String())
-			sb.Reset()
-		}
-
-		if iters == itersLimit {
-			return counts
-		}
-
-		iters++
+		// handle 2nd
+		sb.WriteString(nk)
+		sb.WriteByte(k[1])
+		m[sb.String()] += v
+		sb.Reset()
 	}
 
-	return counts
+	return m
+}
+
+func (d *Day) sToMap(s string) map[string]int {
+	m := make(map[string]int)
+
+	for i := 0; i < len(s)-1; i++ {
+		m[s[i:i+2]] += 1
+	}
+
+	return m
 }
 
 func (d *Day) Part2() interface{} {
-	s := d.polymer
-	d.pair(s[:2], 40)
+	m := d.sToMap(d.polymer)
 
-	maxE, minE := 0, math.MaxInt64
-	for _, v := range d.letterCounts {
+	for i := 0; i < 40; i++ {
+		m = d.pairs(m)
+	}
+
+	lc := make(map[string]int)
+
+	for k, v := range m {
+		lc[string(k[0])] += v
+		lc[string(k[1])] += v
+	}
+
+	maxE, minE := 0, math.MaxInt
+
+	for _, v := range lc {
 		if v > maxE {
 			maxE = v
 		}
@@ -133,5 +146,5 @@ func (d *Day) Part2() interface{} {
 		}
 	}
 
-	return maxE - minE
+	return int(math.Round((float64(maxE) / 2.0)) - math.Round((float64(minE) / 2.0)))
 }
