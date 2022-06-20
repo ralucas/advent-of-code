@@ -1,9 +1,9 @@
 package day16
 
 import (
-	"errors"
-	"fmt"
 	"strings"
+
+	"github.com/pkg/errors"
 
 	bitutils "github.com/ralucas/advent-of-code/pkg/utils/bit"
 )
@@ -23,77 +23,126 @@ const (
 )
 
 type PacketParser struct {
-	raw    string
-	rawArr []string
-	*Packet
+	raw     string
+	rawArr  []string
+	packets []*Packet
 }
 
 type Packet struct {
 	version      int
 	typeID       TypeID
 	lengthTypeID LengthTypeID
+	literal      int
 }
 
 func NewPacketParser(s string) *PacketParser {
 	return &PacketParser{
-		Packet: &Packet{},
-		raw:    s,
+		packets: []*Packet{},
+		raw:     s,
 	}
 }
 
-func (pp *PacketParser) parseHeader(bits []int8) error {
+func (pp *PacketParser) parseHeader(packet *Packet, bits []int8) (*Packet, error) {
 	if len(bits) < 7 {
-		return errors.New(fmt.Sprintf("bad length of %d, should be 7", len(bits)))
+		return nil, errors.Errorf("bad length of %d, should be 7", len(bits))
 	}
 
-	pp.SetVersion(bits[:3])
-	pp.SetTypeID(bits[3:6])
-	pp.SetLengthTypeID(bits[7])
+	packet.SetVersion(bits[:3])
+	packet.SetTypeID(bits[3:6])
+	packet.SetLengthTypeID(bits[6])
+
+	return packet, nil
+}
+
+func (pp *PacketParser) parseLiteral(packet *Packet, bits []int8) error {
+	packet.literal = bitutils.Btoi(bits)
 
 	return nil
 }
 
-func (pp *PacketParser) parseLiteral(bits []int8) {
+func (pp *PacketParser) parseOperator(packet *Packet, bits []int8) error {
+	if packet.LengthTypeID() == TotalBitLength {
+		totalLength := bitutils.Btoi(bits[:15])
+		bits = bits[15:]
+		pkt := new(Packet)
 
-	return
+		pp.packets = append(pp.packets, pkt)
+
+		if totalLength > len(bits) {
+			totalLength = len(bits)
+		}
+
+		return pp.parsePacket(pkt, bits[:totalLength])
+	}
+
+	if packet.LengthTypeID() == NumSubPackets {
+		n := bitutils.Btoi(bits[:11])
+		bits = bits[11:]
+		bits = trimLeadingZeros(bits)
+		pktlen := len(bits) / n
+
+		for i := 0; i < n; i++ {
+			pkt := new(Packet)
+
+			pp.packets = append(pp.packets, pkt)
+
+			start, end := i*pktlen, (i+1)*pktlen
+
+			err := pp.parsePacket(pkt, bits[start:end])
+			if err != nil {
+				return err
+			}
+		}
+
+		return nil
+	}
+
+	return errors.New("failed to parse operator")
 }
 
-func (pp *PacketParser) Parse() (*Packet, error) {
+func (pp *PacketParser) parsePacket(packet *Packet, bits []int8) error {
+	packet, err := pp.parseHeader(packet, bits[:7])
+	if err != nil {
+		return err
+	}
+
+	bits = bits[7:]
+
+	if packet.TypeID() == Literal {
+		return pp.parseLiteral(packet, bits)
+	}
+
+	if packet.TypeID() == Operator {
+		return pp.parseOperator(packet, bits)
+	}
+
+	return errors.New("failed to parse packet")
+}
+
+func (pp *PacketParser) Parse() ([]*Packet, error) {
 	var bits []int8
+	var err error
 
 	rawArr := strings.Split(pp.raw, "")
+
+	packet := new(Packet)
+
+	pp.packets = append(pp.packets, packet)
 
 	for _, char := range rawArr {
 		bin := bitutils.HexToBin[char]
 
 		bits = append(bits, bin...)
-
-		lb := len(bits)
-
-		if lb >= 7 {
-			if err := pp.parseHeader(bits[:7]); err != nil {
-				return nil, err
-			}
-			bits = bits[7:]
-			continue
-		}
-
-		if lb >= 15 && pp.TypeID() == Operator {
-			switch pp.LengthTypeID() {
-			case TotalBitLength:
-				fmt.Print("tbl")
-			case NumSubPackets:
-				fmt.Print("nsp")
-			}
-		}
 	}
 
-	if pp.TypeID() == Literal {
-		// handle literal
-		pp.parseLiteral(bits)
+	bits = trimTrailingZeros(bits)
+
+	err = pp.parsePacket(packet, bits)
+	if err != nil {
+		return nil, err
 	}
 
-	return pp.Packet, nil
+	return pp.packets, nil
 }
 
 func (p *Packet) SetVersion(bitarr []int8) {
@@ -123,4 +172,32 @@ func (p *Packet) SetLengthTypeID(bit int8) {
 
 func (p *Packet) LengthTypeID() LengthTypeID {
 	return p.lengthTypeID
+}
+
+func trimTrailingZeros(bits []int8) []int8 {
+	count := 0
+
+	for i := len(bits) - 1; i >= 0; i-- {
+		if bits[i] == 0 {
+			count++
+		} else {
+			break
+		}
+	}
+
+	return bits[:len(bits)-count]
+}
+
+func trimLeadingZeros(bits []int8) []int8 {
+	count := 0
+
+	for i := 0; i < len(bits); i++ {
+		if bits[i] == 0 {
+			count++
+		} else {
+			break
+		}
+	}
+
+	return bits[count:]
 }

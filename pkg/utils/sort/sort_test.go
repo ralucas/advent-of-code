@@ -9,11 +9,12 @@ import (
 )
 
 func TestQSort(t *testing.T) {
-	for i := 0; i < 10000; i++ {
-		rand.Seed(time.Now().Unix())
-		testArr := rand.Perm(100)
+	for i := 0; i < 1000; i++ {
+		rand.Seed(time.Now().UnixNano())
+		n := 1000
+		testArr := rand.Perm(n)
 		sorted := QSort(testArr)
-		for x := 1; x < 100; x++ {
+		for x := 1; x < n; x++ {
 			assert.True(t, sorted[x-1] <= sorted[x])
 		}
 	}
@@ -21,8 +22,30 @@ func TestQSort(t *testing.T) {
 
 func BenchmarkQSort(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		rand.Seed(time.Now().Unix())
-		testArr := rand.Perm(100)
+		rand.Seed(time.Now().UnixNano())
+		n := 1000
+		testArr := rand.Perm(n)
 		QSort(testArr)
+	}
+}
+
+func TestMergeSort(t *testing.T) {
+	for i := 0; i < 1000; i++ {
+		rand.Seed(time.Now().UnixNano())
+		n := 1000
+		testArr := rand.Perm(n)
+		sorted := MergeSort(testArr)
+		for x := 1; x < n; x++ {
+			assert.True(t, sorted[x-1] <= sorted[x])
+		}
+	}
+}
+
+func BenchmarkMergeSort(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		rand.Seed(time.Now().UnixNano())
+		n := 1000
+		testArr := rand.Perm(n)
+		MergeSort(testArr)
 	}
 }
