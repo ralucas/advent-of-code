@@ -4,7 +4,8 @@ import (
 	"log"
 	"sync"
 
-	"github.com/ralucas/advent-of-code/pkg/utils"
+	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
 )
 
 const (
@@ -21,9 +22,9 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := utils.ReadFileToArray(filepath, "\n")
+	data := fileutils.ReadFileToArray(filepath, "\n")
 
-	out := utils.MapTo2D(data, "")
+	out := arrayutils.MapTo2D(data, "")
 
 	d.data = out
 

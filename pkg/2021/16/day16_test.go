@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	day16 "github.com/ralucas/advent-of-code/pkg/2021/16"
 )
@@ -15,6 +16,38 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
+func TestLiteralPacketParser(t *testing.T) {
+	pp := day16.NewPacketParser("D2FE28")
+	packets, err := pp.Parse()
+
+	require.Nil(t, err)
+
+	assert.Equal(t, 2021, packets[0].Literal())
+}
+
+func TestOperatorPacketParserWithLength(t *testing.T) {
+	pp := day16.NewPacketParser("38006F45291200")
+	packets, err := pp.Parse()
+
+	require.Nil(t, err)
+
+	assert.Equal(t, 3, len(packets))
+	assert.Equal(t, 10, packets[1].Literal())
+	assert.Equal(t, 20, packets[2].Literal())
+}
+
+func TestOperatorPacketParserWithNumPackets(t *testing.T) {
+	pp := day16.NewPacketParser("EE00D40C823060")
+	packets, err := pp.Parse()
+
+	require.Nil(t, err)
+
+	assert.Equal(t, 4, len(packets))
+	assert.Equal(t, 1, packets[1].Literal())
+	assert.Equal(t, 2, packets[2].Literal())
+	assert.Equal(t, 3, packets[3].Literal())
+}
+
 func TestPart1(t *testing.T) {
 	t.Parallel()
 
@@ -22,10 +55,10 @@ func TestPart1(t *testing.T) {
 		input  string
 		expect int
 	}{
-		{
-			input:  "8A004A801A8002F478",
-			expect: 16,
-		},
+		// {
+		// 	input:  "8A004A801A8002F478",
+		// 	expect: 16,
+		// },
 		// {
 		// 	input:  "620080001611562C8802118E34",
 		// 	expect: 12,
@@ -50,9 +83,10 @@ func TestPart1(t *testing.T) {
 	}
 }
 
-// func TestPart2(t *testing.T) {
-// 	result := td.Part2()
-// 	expect := true
+func TestPart2(t *testing.T) {
+	t.Skip("not there")
+	result := td.Part2()
+	expect := true
 
-// 	assert.Equal(t, expect, result)
-// }
+	assert.Equal(t, expect, result)
+}

@@ -4,7 +4,9 @@ import (
 	"log"
 	"strings"
 
-	"github.com/ralucas/advent-of-code/pkg/utils"
+	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
+	sorting "github.com/ralucas/advent-of-code/pkg/utils/sort"
 )
 
 type Day struct {
@@ -12,16 +14,14 @@ type Day struct {
 }
 
 func (d *Day) PrepareData(filepath string) {
-	inputString := utils.ReadFile(filepath)
-	inputArr := utils.Filter(strings.Split(inputString, "\n"), func(s string) bool {
+	inputString := fileutils.ReadFile(filepath)
+	inputArr := arrayutils.Filter(strings.Split(inputString, "\n"), func(s string) bool {
 		return s != ""
 	})
 
-	preparedData := utils.MapToInt(inputArr)
+	preparedData := arrayutils.MapToInt(inputArr)
 
 	d.data = preparedData
-
-	return
 }
 
 func (d *Day) Part1() interface{} {
@@ -35,7 +35,7 @@ func (d *Day) Part1() interface{} {
 }
 
 func (d *Day) Part2() interface{} {
-	sData := utils.QSort(d.data)
+	sData := sorting.QSort(d.data)
 	a, b, c := ThreeSum(sData, 2020)
 	if a == -1 {
 		log.Fatalf("Couldn't find entries")

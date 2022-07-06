@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/ralucas/advent-of-code/pkg/utils"
+	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
 	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
 	mathutils "github.com/ralucas/advent-of-code/pkg/utils/math"
 )
@@ -28,7 +28,7 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := utils.ReadFileToArray(filepath, "\n")
+	data := fileutils.ReadFileToArray(filepath, "\n")
 
 	d.numbers = arrayutils.MapToInt(strings.Split(data[0], ","))
 

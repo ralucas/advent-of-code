@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/ralucas/advent-of-code/pkg/utils"
+	bitutils "github.com/ralucas/advent-of-code/pkg/utils/bit"
 )
 
 func TestItob(t *testing.T) {
@@ -27,7 +27,7 @@ func TestItob(t *testing.T) {
 		v := v
 		name := fmt.Sprintf("Test%d__input%d", i, v.input)
 		t.Run(name, func(t *testing.T) {
-			b := utils.Itob(v.input)
+			b := bitutils.Itob(v.input)
 			assert.Equal(t, v.expect, b)
 		})
 	}
@@ -51,7 +51,7 @@ func TestBtoi(t *testing.T) {
 		v := v
 		name := fmt.Sprintf("Test%d", i)
 		t.Run(name, func(t *testing.T) {
-			b := utils.Btoi(v.input)
+			b := bitutils.Btoi(v.input)
 			assert.Equal(t, v.expect, b)
 		})
 	}

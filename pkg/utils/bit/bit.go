@@ -1,22 +1,45 @@
 package bit
 
-var HexToBin = map[string][]int8{
-	"0": {0, 0, 0, 0},
-	"1": {0, 0, 0, 1},
-	"2": {0, 0, 1, 0},
-	"3": {0, 0, 1, 1},
-	"4": {0, 1, 0, 0},
-	"5": {0, 1, 0, 1},
-	"6": {0, 1, 1, 0},
-	"7": {0, 1, 1, 1},
-	"8": {1, 0, 0, 0},
-	"9": {1, 0, 0, 1},
-	"A": {1, 0, 1, 0},
-	"B": {1, 0, 1, 1},
-	"C": {1, 1, 0, 0},
-	"D": {1, 1, 0, 1},
-	"E": {1, 1, 1, 0},
-	"F": {1, 1, 1, 1},
+import "fmt"
+
+func Htob(s string) ([]int8, error) {
+	switch s {
+	case "0": 
+		return []int8{0, 0, 0, 0}, nil
+	case "1": 
+		return []int8{0, 0, 0, 1}, nil
+	case "2": 
+		return []int8{0, 0, 1, 0}, nil
+	case "3": 
+		return []int8{0, 0, 1, 1}, nil
+	case "4": 
+		return []int8{0, 1, 0, 0}, nil
+	case "5": 
+		return []int8{0, 1, 0, 1}, nil
+	case "6": 
+		return []int8{0, 1, 1, 0}, nil
+	case "7": 
+		return []int8{0, 1, 1, 1}, nil
+	case "8": 
+		return []int8{1, 0, 0, 0}, nil
+	case "9": 
+		return []int8{1, 0, 0, 1}, nil
+	case "A": 
+		return []int8{1, 0, 1, 0}, nil
+	case "B": 
+		return []int8{1, 0, 1, 1}, nil
+	case "C": 
+		return []int8{1, 1, 0, 0}, nil
+	case "D": 
+		return []int8{1, 1, 0, 1}, nil
+	case "E": 
+		return []int8{1, 1, 1, 0}, nil
+	case "F": 
+		return []int8{1, 1, 1, 1}, nil
+	default:
+		return []int8{}, fmt.Errorf("invalid character: [%s]", s)
+	}
+
 }
 
 func Itob(val int) []int8 {
@@ -45,6 +68,11 @@ func Itob(val int) []int8 {
 }
 
 func Btoi(b []int8) int {
+	
+	if len(b) == 0 {
+		return 0
+	}
+
 	r := len(b) - 1
 
 	output := 0

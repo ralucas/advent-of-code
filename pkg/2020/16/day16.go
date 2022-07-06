@@ -6,7 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ralucas/advent-of-code/pkg/utils"
+	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
 )
 
 type Day struct {
@@ -28,7 +29,7 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := utils.ReadFile(filepath)
+	data := fileutils.ReadFile(filepath)
 	sections := strings.Split(data, "\n\n")
 
 	fields := make([]Field, 0)
@@ -63,10 +64,10 @@ func (d *Day) PrepareData(filepath string) {
 				fields = append(fields, f)
 			}
 		case 1:
-			myticket.Vals = utils.MapToInt(strings.Split(spl[1], ","))
+			myticket.Vals = arrayutils.MapToInt(strings.Split(spl[1], ","))
 		case 2:
 			for _, s := range spl[1:] {
-				t := Ticket{utils.MapToInt(strings.Split(s, ","))}
+				t := Ticket{arrayutils.MapToInt(strings.Split(s, ","))}
 				tickets = append(tickets, t)
 			}
 		}
@@ -112,7 +113,7 @@ func BuildFieldFilter(fields []Field, fieldNames ...string) []int {
 
 	if fieldNames != nil {
 		for _, field := range fields {
-			if utils.Index(fieldNames, field.Name) != -1 {
+			if arrayutils.Index(fieldNames, field.Name) != -1 {
 				filteredFields = append(filteredFields, field)
 			}
 		}
@@ -165,7 +166,7 @@ func FilterInvalidTickets(filter []int, tickets []Ticket) []Ticket {
 	filteredTickets := make([]Ticket, 0)
 
 	for _, ticket := range tickets {
-		hasEvery := utils.Every(ticket.Vals, func(v int) bool {
+		hasEvery := arrayutils.Every(ticket.Vals, func(v int, _ int) bool {
 			return v < flen && filter[v] != 0
 		})
 		if hasEvery {
@@ -194,7 +195,7 @@ func FindColumnsByFieldName(data Day, fieldName string) []int {
 		}
 	}
 
-	return utils.IndexesInt(idxs, 0)
+	return arrayutils.IndexesInt(idxs, 0)
 }
 
 func DiscoverColumns(cols map[string][]int) map[string]int {

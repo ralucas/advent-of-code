@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ralucas/advent-of-code/pkg/utils"
+	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
 )
 
 type Passport struct {
@@ -27,7 +27,7 @@ type Day struct {
 }
 
 func (d *Day) PrepareData(filepath string) {
-	data := utils.ReadFileToArray(filepath, "\n\n")
+	data := fileutils.ReadFileToArray(filepath, "\n\n")
 
 	var preparedData []Passport
 

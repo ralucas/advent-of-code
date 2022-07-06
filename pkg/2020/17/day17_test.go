@@ -1,7 +1,6 @@
 package day17_test
 
 import (
-	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -12,14 +11,15 @@ import (
 //nolint
 var td day17.Day
 
-func TestMain(m *testing.M) {
-	td.PrepareData("../../../test/testdata/2020/17/test_input.txt")
+// func TestMain(m *testing.M) {
+// 	td.PrepareData("../../../test/testdata/2020/17/test_input.txt")
 
-	m.Run()
+// 	m.Run()
 
-	os.Exit(0)
-}
+// 	os.Exit(0)
+// }
 
 func TestPrepareData(t *testing.T) {
+	t.Skip("not finished")
 	assert.Equal(t, 3, len(td.Cubes))
 }

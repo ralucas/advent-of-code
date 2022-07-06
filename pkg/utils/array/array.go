@@ -119,7 +119,7 @@ func FindIntIndexes(vi []int, f func(int) bool) []int {
 	return vim
 }
 
-func Every(vi []int, f func(int, int) bool) bool {
+func Every(vi []int, f func(value int, index int) bool) bool {
 	out := true
 
 	for i, v := range vi {

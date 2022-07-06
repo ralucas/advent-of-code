@@ -4,7 +4,9 @@ import (
 	"log"
 
 	day1 "github.com/ralucas/advent-of-code/pkg/2020/1"
-	"github.com/ralucas/advent-of-code/pkg/utils"
+
+	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
 )
 
 type Day struct {
@@ -15,9 +17,9 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := utils.ReadFileToArray(filepath, "\n")
+	data := fileutils.ReadFileToArray(filepath, "\n")
 
-	d.data = utils.MapToInt(data)
+	d.data = arrayutils.MapToInt(data)
 
 	return
 }

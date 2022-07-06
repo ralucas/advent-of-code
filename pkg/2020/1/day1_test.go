@@ -8,7 +8,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/ralucas/advent-of-code/pkg/utils"
+	sorting "github.com/ralucas/advent-of-code/pkg/utils/sort"
 )
 
 var td Day
@@ -38,7 +38,7 @@ func TestTwoSum(t *testing.T) {
 }
 
 func TestTwoSumSorted(t *testing.T) {
-	sData := utils.QSort(td.data)
+	sData := sorting.QSort(td.data)
 	dlen := len(td.data)
 
 	x, y := 0, 0
@@ -59,7 +59,7 @@ func TestTwoSumSorted(t *testing.T) {
 }
 
 func TestThreeSum(t *testing.T) {
-	sData := utils.QSort(td.data)
+	sData := sorting.QSort(td.data)
 	dlen := len(td.data)
 	x, y, z := 0, 0, 0
 

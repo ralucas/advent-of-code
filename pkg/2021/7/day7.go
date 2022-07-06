@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/ralucas/advent-of-code/pkg/utils"
 	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
 	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
 	mathutils "github.com/ralucas/advent-of-code/pkg/utils/math"
+	sortutils "github.com/ralucas/advent-of-code/pkg/utils/sort"
 )
 
 type Day struct {
@@ -34,7 +34,7 @@ func (d *Day) PrepareData(filepath string) {
 // there are also some general tips on the about page, or you can ask for hints on the subreddit.
 // Please wait one minute before trying again. (You guessed 268285.) [Return to Day 7]
 func (d *Day) Part1() interface{} {
-	sorted := utils.QSort(d.data)
+	sorted := sortutils.QSort(d.data)
 	min, max := sorted[0], sorted[len(sorted)-1]
 	avg := mathutils.Mean(sorted)
 	median := mathutils.Median(sorted)
@@ -58,7 +58,7 @@ func (d *Day) Part1() interface{} {
 }
 
 func (d *Day) Part2() interface{} {
-	sorted := utils.QSort(d.data)
+	sorted := sortutils.QSort(d.data)
 	min, max := sorted[0], sorted[len(sorted)-1]
 
 	ans := []int{mathutils.MaxInt, max}

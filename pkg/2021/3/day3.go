@@ -5,9 +5,9 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/ralucas/advent-of-code/pkg/utils"
 	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
 	bitutils "github.com/ralucas/advent-of-code/pkg/utils/bit"
+	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
 )
 
 type Day struct {
@@ -20,11 +20,11 @@ func (d *Day) PrepareData(filepath string) {
 		log.Fatalf("Missing input file")
 	}
 
-	data := utils.ReadFileToArray(filepath, "\n")
+	data := fileutils.ReadFileToArray(filepath, "\n")
 
 	for _, s := range data {
 		vs := strings.Split(s, "")
-		vi := utils.MapToInt(vs)
+		vi := arrayutils.MapToInt(vs)
 		d.data = append(d.data, vi)
 	}
 
@@ -138,6 +138,6 @@ func (d *Day) Part2() interface{} {
 	oxygenRating = d.filterRatings(counts, true)
 	co2Rating = d.filterRatings(counts, false)
 
-	return bitutils.Btoi(utils.MapIntToInt8(oxygenRating)) *
-		bitutils.Btoi(utils.MapIntToInt8(co2Rating))
+	return bitutils.Btoi(arrayutils.MapIntToInt8(oxygenRating)) *
+		bitutils.Btoi(arrayutils.MapIntToInt8(co2Rating))
 }

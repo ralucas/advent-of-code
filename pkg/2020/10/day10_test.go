@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/ralucas/advent-of-code/pkg/utils"
+	sortutils "github.com/ralucas/advent-of-code/pkg/utils/sort"
 )
 
 var td, td1 Day
@@ -18,7 +18,7 @@ func init() {
 func TestCountDiffs(t *testing.T) {
 
 	t.Run("has correct counts for 2nd input", func(t *testing.T) {
-		svi := utils.QSort(td1.data)
+		svi := sortutils.QSort(td1.data)
 		upd := insertOutletAndDevice(svi)
 		counts := CountDiffs(upd)
 
@@ -42,7 +42,7 @@ func TestCountDistinctArrangements(t *testing.T) {
 			{0, 1, 4, 7, 10, 12, 15, 16, 19, 22},
 		}
 
-		svi := utils.QSort(td.data)
+		svi := sortutils.QSort(td.data)
 		upd := insertOutletAndDevice(svi)
 		_, tcount := BuildTree(upd)
 		count := CountDistinctArrangements(upd)
@@ -61,7 +61,7 @@ func TestCountDistinctArrangements(t *testing.T) {
 	})
 
 	t.Run("has the correct count on input 2", func(t *testing.T) {
-		svi := utils.QSort(td1.data)
+		svi := sortutils.QSort(td1.data)
 		upd := insertOutletAndDevice(svi)
 		_, tcount := BuildTree(upd)
 		count := CountDistinctArrangements(upd)

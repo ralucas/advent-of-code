@@ -17,6 +17,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestPart1(t *testing.T) {
+	t.Skip("not started")
 	result := td.Part1()
 	expect := true
 	
@@ -24,6 +25,7 @@ func TestPart1(t *testing.T) {
 }
 
 func TestPart2(t *testing.T) {
+	t.Skip("not started")
 	result := td.Part2()
 	expect := true
 
