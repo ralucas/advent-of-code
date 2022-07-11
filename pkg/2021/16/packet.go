@@ -5,8 +5,15 @@ import bitutils "github.com/ralucas/advent-of-code/pkg/utils/bit"
 type TypeID int
 
 const (
-	Operator TypeID = 1
-	Literal  TypeID = 4
+	Operator    TypeID = -1
+	Sum         TypeID = 0
+	Product     TypeID = 1
+	Minimum     TypeID = 2
+	Maximum     TypeID = 3
+	Literal     TypeID = 4
+	GreaterThan TypeID = 5
+	LessThan    TypeID = 6
+	Equal       TypeID = 7
 )
 
 type Packet struct {
@@ -17,6 +24,7 @@ type Packet struct {
 	numChildren  int // operator only
 	children     []*Packet
 	parent       *Packet
+	value        int
 }
 
 func (p *Packet) AddChild() (child *Packet) {
@@ -33,6 +41,14 @@ func (p *Packet) Children() []*Packet {
 
 func (p *Packet) Parent() *Packet {
 	return p.parent
+}
+
+func (p *Packet) SetValue(val int) {
+	p.value = val
+}
+
+func (p *Packet) Value() int {
+	return p.value
 }
 
 func (p *Packet) SetVersion(bitarr []int8) {
@@ -58,12 +74,22 @@ func (p *Packet) SetLiteral(val int) {
 func (p *Packet) SetTypeID(bitarr []int8) {
 	val := bitutils.Btoi(bitarr)
 
-	if val == int(Literal) {
-		p.typeID = Literal
-		return
+	typeIDs := []TypeID{
+		Sum,
+		Product,
+		Minimum,
+		Maximum,
+		Literal,
+		GreaterThan,
+		LessThan,
+		Equal,
 	}
 
-	p.typeID = Operator
+	if val < len(typeIDs) {
+		p.typeID = typeIDs[val]
+	} else {
+		p.typeID = Operator
+	}
 }
 
 func (p *Packet) SetLengthTypeID(bit int8) {
@@ -72,4 +98,51 @@ func (p *Packet) SetLengthTypeID(bit int8) {
 
 func (p *Packet) LengthTypeID() LengthTypeID {
 	return p.lengthTypeID
+}
+
+func (p *Packet) Evaluate() {
+	switch p.typeID {
+	case Sum:
+		p.value = 0
+		for _, child := range p.children {
+			p.value += child.value
+		}
+	case Product:
+		p.value = 1
+		for _, child := range p.children {
+			p.value *= child.value
+		}
+	case Minimum:
+		p.value = p.children[0].value
+		for _, child := range p.children {
+			if child.value < p.value {
+				p.value = child.value
+			}
+		}
+	case Maximum:
+		p.value = p.children[0].value
+		for _, child := range p.children {
+			if child.value > p.value {
+				p.value = child.value
+			}
+		}
+	case GreaterThan:
+		if p.children[0].value > p.children[1].value {
+			p.value = 1
+		} else {
+			p.value = 0
+		}
+	case LessThan:
+		if p.children[0].value < p.children[1].value {
+			p.value = 1
+		} else {
+			p.value = 0
+		}
+	case Equal:
+		if p.children[0].value == p.children[1].value {
+			p.value = 1
+		} else {
+			p.value = 0
+		}
+	}
 }

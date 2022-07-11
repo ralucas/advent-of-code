@@ -36,7 +36,7 @@ func (pp *PacketParser) parseHeader(packet *Packet, bits []int8) (*Packet, error
 	packet.SetVersion(bits[:3])
 	packet.SetTypeID(bits[3:6])
 
-	if packet.TypeID() == Operator {
+	if packet.TypeID() != Literal {
 		packet.SetLengthTypeID(bits[6])
 	}
 
@@ -65,7 +65,7 @@ func (pp *PacketParser) parseLiteral(packet *Packet, bits []int8) (*Packet, []in
 		}
 	}
 
-	packet.SetLiteral(bitutils.Btoi(literalBits))
+	packet.SetValue(bitutils.Btoi(literalBits))
 
 	return packet, bits, nil
 }
@@ -89,6 +89,8 @@ func (pp *PacketParser) parseOperator(packet *Packet, bits []int8) (*Packet, []i
 			}
 		}
 
+		packet.Evaluate()
+
 		bits = bits[totalLength:]
 
 		return packet, bits, nil
@@ -106,6 +108,8 @@ func (pp *PacketParser) parseOperator(packet *Packet, bits []int8) (*Packet, []i
 			}
 		}
 
+		packet.Evaluate()
+
 		return packet, bits, nil
 	}
 
@@ -122,14 +126,13 @@ func (pp *PacketParser) parsePacket(packet *Packet, bits []int8) (*Packet, []int
 		return nil, nil, err
 	}
 
-	if packet.TypeID() == Literal {
+	switch packet.TypeID() {
+	case Literal:
 		_, bits, err = pp.parseLiteral(packet, bits[6:])
 		if err != nil {
 			return nil, nil, err
 		}
-	}
-
-	if packet.TypeID() == Operator {
+	default:
 		return pp.parseOperator(packet, bits[7:])
 	}
 
@@ -156,33 +159,7 @@ func (pp *PacketParser) Parse() (*Packet, error) {
 		return nil, err
 	}
 
+	pp.root.Evaluate()
+
 	return pp.root, nil
-}
-
-func trimTrailingZeros(bits []int8) []int8 {
-	count := 0
-
-	for i := len(bits) - 1; i >= 0; i-- {
-		if bits[i] == 0 {
-			count++
-		} else {
-			break
-		}
-	}
-
-	return bits[:len(bits)-count]
-}
-
-func trimLeadingZeros(bits []int8) []int8 {
-	count := 0
-
-	for i := 0; i < len(bits); i++ {
-		if bits[i] == 0 {
-			count++
-		} else {
-			break
-		}
-	}
-
-	return bits[count:]
 }

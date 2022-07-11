@@ -46,5 +46,12 @@ func (d *Day) Part1() interface{} {
 }
 
 func (d *Day) Part2() interface{} {
-	return nil
+	pp := NewPacketParser(d.data)
+	root, err := pp.Parse()
+
+	if err != nil {
+		log.Fatalf("error in part 2 %+v\n", err)
+	}
+
+	return root.Value()
 }
