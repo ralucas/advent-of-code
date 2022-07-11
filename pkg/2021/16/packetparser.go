@@ -17,14 +17,14 @@ const (
 
 type PacketParser struct {
 	raw          string
-	packets      []*Packet
+	root         *Packet
 	lengthTypeID LengthTypeID
 }
 
 func NewPacketParser(s string) *PacketParser {
 	return &PacketParser{
-		packets: []*Packet{},
-		raw:     s,
+		root: &Packet{},
+		raw:  s,
 	}
 }
 
@@ -50,7 +50,7 @@ func (pp *PacketParser) parseHeader(packet *Packet, bits []int8) (*Packet, error
 // group is prefixed by a 1 bit except the last group,
 // which is prefixed by a 0 bit. These groups of five
 // bits immediately follow the packet header.
-func (pp *PacketParser) parseLiteral(packet *Packet, bits []int8) error {
+func (pp *PacketParser) parseLiteral(packet *Packet, bits []int8) (*Packet, []int8, error) {
 	var literalBits []int8
 
 	for len(bits) > 0 {
@@ -65,16 +65,12 @@ func (pp *PacketParser) parseLiteral(packet *Packet, bits []int8) error {
 		}
 	}
 
-	packet.literal = bitutils.Btoi(literalBits)
+	packet.SetLiteral(bitutils.Btoi(literalBits))
 
-	if len(bits) == 0 || bitutils.Btoi(bits) == 0 {
-		return nil
-	}
-
-	return pp.parsePacket(bits)
+	return packet, bits, nil
 }
 
-func (pp *PacketParser) parseOperator(packet *Packet, bits []int8) error {
+func (pp *PacketParser) parseOperator(packet *Packet, bits []int8) (*Packet, []int8, error) {
 	if packet.LengthTypeID() == TotalBitLength {
 		totalLength := bitutils.Btoi(bits[:15])
 		bits = bits[15:]
@@ -83,59 +79,64 @@ func (pp *PacketParser) parseOperator(packet *Packet, bits []int8) error {
 			totalLength = len(bits)
 		}
 
-		return pp.parsePacket(bits[:totalLength])
+		measuredBits := bits[:totalLength]
+
+		for len(measuredBits) > 0 && bitutils.Btoi(measuredBits) != 0 {
+			var err error
+			_, measuredBits, err = pp.parsePacket(packet.AddChild(), measuredBits)
+			if err != nil {
+				return nil, nil, err
+			}
+		}
+
+		bits = bits[totalLength:]
+
+		return packet, bits, nil
 	}
 
 	if packet.LengthTypeID() == NumSubPackets {
 		n := bitutils.Btoi(bits[:11])
-		packet.numChildren = n	
 		bits = bits[11:]
-		// bits = trimLeadingZeros(bits)
-		bitslen := len(bits) / n
 
 		for i := 0; i < n; i++ {
-			start, end := i*bitslen, (i+1)*bitslen
-
-			err := pp.parsePacket(bits[start:end])
+			var err error
+			_, bits, err = pp.parsePacket(packet.AddChild(), bits)
 			if err != nil {
-				return err
+				return nil, nil, err
 			}
 		}
 
-		return nil
+		return packet, bits, nil
 	}
 
-	return errors.New("failed to parse operator")
+	return nil, nil, errors.New("failed to parse operator")
 }
 
-func (pp *PacketParser) parsePacket(bits []int8) error {
-	// create new packet on each call
-	packet := pp.newPacket()
+func (pp *PacketParser) parsePacket(packet *Packet, bits []int8) (*Packet, []int8, error) {
+	if bitutils.Btoi(bits) == 0 {
+		return nil, nil, errors.New("bits zero valued")
+	}
 
 	packet, err := pp.parseHeader(packet, bits[:7])
 	if err != nil {
-		return err
+		return nil, nil, err
 	}
 
 	if packet.TypeID() == Literal {
-		return pp.parseLiteral(packet, bits[6:])
+		_, bits, err = pp.parseLiteral(packet, bits[6:])
+		if err != nil {
+			return nil, nil, err
+		}
 	}
 
 	if packet.TypeID() == Operator {
 		return pp.parseOperator(packet, bits[7:])
 	}
 
-	return errors.New("failed to parse packet")
+	return packet, bits, nil
 }
 
-func (pp *PacketParser) newPacket() *Packet {
-	packet := new(Packet)
-	pp.packets = append(pp.packets, packet)
-
-	return packet
-}
-
-func (pp *PacketParser) Parse() ([]*Packet, error) {
+func (pp *PacketParser) Parse() (*Packet, error) {
 	var bits []int8
 	var err error
 
@@ -150,14 +151,12 @@ func (pp *PacketParser) Parse() ([]*Packet, error) {
 		bits = append(bits, bin...)
 	}
 
-	// bits = trimTrailingZeros(bits)
-
-	err = pp.parsePacket(bits)
+	_, _, err = pp.parsePacket(pp.root, bits)
 	if err != nil {
 		return nil, err
 	}
 
-	return pp.packets, nil
+	return pp.root, nil
 }
 
 func trimTrailingZeros(bits []int8) []int8 {

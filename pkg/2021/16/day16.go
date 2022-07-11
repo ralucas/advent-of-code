@@ -18,8 +18,6 @@ func (d *Day) PrepareData(filepath string) {
 	data := fileutils.ReadFile(filepath)
 
 	d.SetData(strings.TrimSpace(data))
-
-	return
 }
 
 func (d *Day) SetData(s string) {
@@ -28,16 +26,20 @@ func (d *Day) SetData(s string) {
 
 func (d *Day) Part1() interface{} {
 	pp := NewPacketParser(d.data)
-	packets, err := pp.Parse()
+	root, err := pp.Parse()
 
 	if err != nil {
 		log.Fatalf("error in part 1 %+v\n", err)
 	}
 
-	result := 0
+	result := root.Version()
 
-	for _, p := range packets {
+	children := root.children
+
+	for len(children) > 0 {
+		p := children[0]
 		result += p.Version()
+		children = append(children[1:], p.children...)
 	}
 
 	return result

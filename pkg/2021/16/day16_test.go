@@ -18,34 +18,34 @@ func TestMain(m *testing.M) {
 
 func TestLiteralPacketParser(t *testing.T) {
 	pp := day16.NewPacketParser("D2FE28")
-	packets, err := pp.Parse()
+	rootPacket, err := pp.Parse()
 
 	require.Nil(t, err)
 
-	assert.Equal(t, 2021, packets[0].Literal())
+	assert.Equal(t, 2021, rootPacket.Literal())
 }
 
 func TestOperatorPacketParserWithLength(t *testing.T) {
 	pp := day16.NewPacketParser("38006F45291200")
-	packets, err := pp.Parse()
+	root, err := pp.Parse()
 
 	require.Nil(t, err)
 
-	assert.Equal(t, 3, len(packets))
-	assert.Equal(t, 10, packets[1].Literal())
-	assert.Equal(t, 20, packets[2].Literal())
+	assert.Equal(t, 2, len(root.Children()))
+	assert.Equal(t, 10, root.Children()[0].Literal())
+	assert.Equal(t, 20, root.Children()[1].Literal())
 }
 
 func TestOperatorPacketParserWithNumPackets(t *testing.T) {
 	pp := day16.NewPacketParser("EE00D40C823060")
-	packets, err := pp.Parse()
+	root, err := pp.Parse()
 
 	require.Nil(t, err)
 
-	assert.Equal(t, 4, len(packets))
-	assert.Equal(t, 1, packets[1].Literal())
-	assert.Equal(t, 2, packets[2].Literal())
-	assert.Equal(t, 3, packets[3].Literal())
+	assert.Equal(t, 3, len(root.Children()))
+	assert.Equal(t, 1, root.Children()[0].Literal())
+	assert.Equal(t, 2, root.Children()[1].Literal())
+	assert.Equal(t, 3, root.Children()[2].Literal())
 }
 
 func TestPart1(t *testing.T) {
@@ -55,22 +55,22 @@ func TestPart1(t *testing.T) {
 		input  string
 		expect int
 	}{
-		// {
-		// 	input:  "8A004A801A8002F478",
-		// 	expect: 16,
-		// },
-		// {
-		// 	input:  "620080001611562C8802118E34",
-		// 	expect: 12,
-		// },
-		// {
-		// 	input:  "C0015000016115A2E0802F182340",
-		// 	expect: 23,
-		// },
-		// {
-		// 	input:  "A0016C880162017C3686B18A3D4780",
-		// 	expect: 31,
-		// },
+		{
+			input:  "8A004A801A8002F478",
+			expect: 16,
+		},
+		{
+			input:  "620080001611562C8802118E34",
+			expect: 12,
+		},
+		{
+			input:  "C0015000016115A2E0802F182340",
+			expect: 23,
+		},
+		{
+			input:  "A0016C880162017C3686B18A3D4780",
+			expect: 31,
+		},
 	}
 
 	for i, tc := range tests {
