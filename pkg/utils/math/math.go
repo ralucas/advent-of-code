@@ -14,6 +14,17 @@ func Sum(vi []int) int {
 	return sum
 }
 
+func Min(vi ...int) int {
+	min := MaxInt
+	for _, v := range vi {
+		if v < min {
+			min = v
+		}
+	}
+
+	return min
+}
+
 func Max(vi ...int) int {
 	max := MinInt
 	for _, v := range vi {

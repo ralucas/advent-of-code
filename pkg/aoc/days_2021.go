@@ -2,35 +2,29 @@ package aoc
 
 // vscode:ignore
 import (
-	day7 "github.com/ralucas/advent-of-code/pkg/2021/7"
-	day8 "github.com/ralucas/advent-of-code/pkg/2021/8"
-
-	day10 "github.com/ralucas/advent-of-code/pkg/2021/10"
-	day9 "github.com/ralucas/advent-of-code/pkg/2021/9"
-
-	day11 "github.com/ralucas/advent-of-code/pkg/2021/11"
-	day12 "github.com/ralucas/advent-of-code/pkg/2021/12"
-
-	day13 "github.com/ralucas/advent-of-code/pkg/2021/13"
-	day14 "github.com/ralucas/advent-of-code/pkg/2021/14"
-
-	day15 "github.com/ralucas/advent-of-code/pkg/2021/15"
-	day16 "github.com/ralucas/advent-of-code/pkg/2021/16"
-
-	day17 "github.com/ralucas/advent-of-code/pkg/2021/17"
-	day18 "github.com/ralucas/advent-of-code/pkg/2021/18"
-
-	day19 "github.com/ralucas/advent-of-code/pkg/2021/19"
-	day20 "github.com/ralucas/advent-of-code/pkg/2021/20"
-
-	//newdayimport
-
 	day1 "github.com/ralucas/advent-of-code/pkg/2021/1"
 	day2 "github.com/ralucas/advent-of-code/pkg/2021/2"
 	day3 "github.com/ralucas/advent-of-code/pkg/2021/3"
 	day4 "github.com/ralucas/advent-of-code/pkg/2021/4"
 	day5 "github.com/ralucas/advent-of-code/pkg/2021/5"
 	day6 "github.com/ralucas/advent-of-code/pkg/2021/6"
+	day7 "github.com/ralucas/advent-of-code/pkg/2021/7"
+	day8 "github.com/ralucas/advent-of-code/pkg/2021/8"
+	day9 "github.com/ralucas/advent-of-code/pkg/2021/9"
+	day10 "github.com/ralucas/advent-of-code/pkg/2021/10"
+	day11 "github.com/ralucas/advent-of-code/pkg/2021/11"
+	day12 "github.com/ralucas/advent-of-code/pkg/2021/12"
+	day13 "github.com/ralucas/advent-of-code/pkg/2021/13"
+	day14 "github.com/ralucas/advent-of-code/pkg/2021/14"
+	day15 "github.com/ralucas/advent-of-code/pkg/2021/15"
+	day16 "github.com/ralucas/advent-of-code/pkg/2021/16"
+	day17 "github.com/ralucas/advent-of-code/pkg/2021/17"
+	day18 "github.com/ralucas/advent-of-code/pkg/2021/18"
+	day19 "github.com/ralucas/advent-of-code/pkg/2021/19"
+	day20 "github.com/ralucas/advent-of-code/pkg/2021/20"
+
+	//newdayimport
+
 )
 
 var days2021 = []AOC{

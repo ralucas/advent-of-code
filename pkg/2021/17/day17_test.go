@@ -17,9 +17,8 @@ func TestMain(m *testing.M) {
 }
 
 func TestPart1(t *testing.T) {
-	t.Skip("not started")
 	result := td.Part1()
-	expect := true
+	expect := 45
 
 	assert.Equal(t, expect, result)
 }
