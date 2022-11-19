@@ -35,3 +35,9 @@ jobs:
 
       - name: Test current year
         run: make test-current-year
+
+      - name: Test all
+        run: |
+          if [ "12" -eq "$(date +%m)" ]; then
+              make test-all;
+          fi
