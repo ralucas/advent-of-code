@@ -5,9 +5,9 @@ import (
 	"strings"
 	"sync"
 
-	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
-	bitutils "github.com/ralucas/advent-of-code/pkg/utils/bit"
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
+	bitutil "github.com/ralucas/advent-of-code/pkg/util/bit"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 type Day struct {
@@ -20,11 +20,11 @@ func (d *Day) PrepareData(filepath string) {
 		log.Fatalf("Missing input file")
 	}
 
-	data := fileutils.ReadFileToArray(filepath, "\n")
+	data := fileutil.ReadFileToArray(filepath, "\n")
 
 	for _, s := range data {
 		vs := strings.Split(s, "")
-		vi := arrayutils.MapToInt(vs)
+		vi := arrayutil.MapToInt(vs)
 		d.data = append(d.data, vi)
 	}
 
@@ -74,7 +74,7 @@ func (d *Day) Part1() interface{} {
 		}
 	}
 
-	return bitutils.Btoi(gamma) * bitutils.Btoi(epsilon)
+	return bitutil.Btoi(gamma) * bitutil.Btoi(epsilon)
 }
 
 func maxIndex(vi []int) int {
@@ -104,7 +104,7 @@ func (d *Day) filterRatings(counts [][]int, max bool) []int {
 
 	for i := 0; i < len(counts); i++ {
 		m := maxIndex(counts[i])
-		newRatings := arrayutils.FilterInt2D(
+		newRatings := arrayutil.FilterInt2D(
 			ratings,
 			func(vi []int) bool {
 				if max {
@@ -138,6 +138,6 @@ func (d *Day) Part2() interface{} {
 	oxygenRating = d.filterRatings(counts, true)
 	co2Rating = d.filterRatings(counts, false)
 
-	return bitutils.Btoi(arrayutils.MapIntToInt8(oxygenRating)) *
-		bitutils.Btoi(arrayutils.MapIntToInt8(co2Rating))
+	return bitutil.Btoi(arrayutil.MapIntToInt8(oxygenRating)) *
+		bitutil.Btoi(arrayutil.MapIntToInt8(co2Rating))
 }

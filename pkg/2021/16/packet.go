@@ -1,6 +1,6 @@
 package day16
 
-import bitutils "github.com/ralucas/advent-of-code/pkg/utils/bit"
+import bitutil "github.com/ralucas/advent-of-code/pkg/util/bit"
 
 type TypeID int
 
@@ -52,7 +52,7 @@ func (p *Packet) Value() int {
 }
 
 func (p *Packet) SetVersion(bitarr []int8) {
-	p.version = bitutils.Btoi(bitarr)
+	p.version = bitutil.Btoi(bitarr)
 }
 
 func (p *Packet) Version() int {
@@ -72,7 +72,7 @@ func (p *Packet) SetLiteral(val int) {
 }
 
 func (p *Packet) SetTypeID(bitarr []int8) {
-	val := bitutils.Btoi(bitarr)
+	val := bitutil.Btoi(bitarr)
 
 	typeIDs := []TypeID{
 		Sum,

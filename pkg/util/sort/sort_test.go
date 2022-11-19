@@ -1,4 +1,4 @@
-package utils
+package sort_test
 
 import (
 	"math/rand"
@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+
+	sortutil "github.com/ralucas/advent-of-code/pkg/util/sort"
 )
 
 func TestQSort(t *testing.T) {
@@ -13,7 +15,7 @@ func TestQSort(t *testing.T) {
 		rand.Seed(time.Now().UnixNano())
 		n := 1000
 		testArr := rand.Perm(n)
-		sorted := QSort(testArr)
+		sorted := sortutil.QSort(testArr)
 		for x := 1; x < n; x++ {
 			assert.True(t, sorted[x-1] <= sorted[x])
 		}
@@ -25,7 +27,7 @@ func BenchmarkQSort(b *testing.B) {
 		rand.Seed(time.Now().UnixNano())
 		n := 1000
 		testArr := rand.Perm(n)
-		QSort(testArr)
+		sortutil.QSort(testArr)
 	}
 }
 
@@ -34,7 +36,7 @@ func TestMergeSort(t *testing.T) {
 		rand.Seed(time.Now().UnixNano())
 		n := 1000
 		testArr := rand.Perm(n)
-		sorted := MergeSort(testArr)
+		sorted := sortutil.MergeSort(testArr)
 		for x := 1; x < n; x++ {
 			assert.True(t, sorted[x-1] <= sorted[x])
 		}
@@ -46,6 +48,6 @@ func BenchmarkMergeSort(b *testing.B) {
 		rand.Seed(time.Now().UnixNano())
 		n := 1000
 		testArr := rand.Perm(n)
-		MergeSort(testArr)
+		sortutil.MergeSort(testArr)
 	}
 }

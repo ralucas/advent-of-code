@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	day13 "github.com/ralucas/advent-of-code/pkg/2021/13"
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 var td day13.Day
@@ -27,7 +27,7 @@ func TestPart1(t *testing.T) {
 
 func TestPart2(t *testing.T) {
 	result := td.Part2()
-	testResult := fileutils.ReadFile("../../../test/testdata/2021/13/test_result.txt")
+	testResult := fileutil.ReadFile("../../../test/testdata/2021/13/test_result.txt")
 	expect := fmt.Sprintf("\n%s\n", testResult[:len(testResult)-12])
 
 	assert.Equal(t, expect, result)

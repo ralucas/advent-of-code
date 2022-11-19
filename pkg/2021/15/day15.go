@@ -8,8 +8,8 @@ import (
 
 	"github.com/fatih/color"
 
-	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 type Day struct {
@@ -22,11 +22,11 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := fileutils.ReadFileToArray(filepath, "\n")
+	data := fileutil.ReadFileToArray(filepath, "\n")
 
 	gridData := make([][]int, 0)
 	for _, line := range data {
-		gridData = append(gridData, arrayutils.MapToInt(strings.Split(line, "")))
+		gridData = append(gridData, arrayutil.MapToInt(strings.Split(line, "")))
 	}
 
 	d.builder = NewGridBuilder(gridData)

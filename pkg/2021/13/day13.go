@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 type Day struct {
@@ -20,7 +20,7 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	file := fileutils.ReadFile(filepath)
+	file := fileutil.ReadFile(filepath)
 
 	spl := strings.Split(file, "\n\n")
 
@@ -29,12 +29,12 @@ func (d *Day) PrepareData(filepath string) {
 	coordLines := strings.Split(rawCoords, "\n")
 
 	for _, line := range coordLines {
-		s := arrayutils.MapToInt(strings.Split(line, ","))
+		s := arrayutil.MapToInt(strings.Split(line, ","))
 		pt := Point{s[0], s[1]}
 		d.coordinates = append(d.coordinates, pt)
 	}
 
-	dirLines := arrayutils.Filter(strings.Split(rawDirs, "\n"), func(s string) bool {
+	dirLines := arrayutil.Filter(strings.Split(rawDirs, "\n"), func(s string) bool {
 		return s != ""
 	})
 

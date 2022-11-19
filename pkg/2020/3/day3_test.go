@@ -8,7 +8,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 func TestPrepareData(t *testing.T) {
@@ -96,7 +96,7 @@ func TestIsTree(t *testing.T) {
 
 	var tests []test
 
-	data := fileutils.ReadFile("../../../test/testdata/2020/3/test-input.txt")
+	data := fileutil.ReadFile("../../../test/testdata/2020/3/test-input.txt")
 	lData := strings.Split(data, "\n")
 
 	lineLength := 0

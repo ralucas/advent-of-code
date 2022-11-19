@@ -4,8 +4,8 @@ import (
 	"log"
 	"strings"
 
-	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 type Day struct {
@@ -17,10 +17,10 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := fileutils.ReadFile(filepath)
+	data := fileutil.ReadFile(filepath)
 
-	d.data = arrayutils.MapToInt(
-		arrayutils.Filter(strings.Split(data, ","), func(s string) bool {
+	d.data = arrayutil.MapToInt(
+		arrayutil.Filter(strings.Split(data, ","), func(s string) bool {
 			return s != ""
 		}),
 	)
@@ -54,9 +54,10 @@ func initMap(vi []int) map[int][]int {
 // They begin by taking turns reading from a list of starting
 // numbers (your puzzle input). Then, each turn consists of
 // considering the most recently spoken number:
-//   If that was the first time the number has been spoken, the current player says 0.
-//   Otherwise, the number had been spoken before; the current player announces
-//     how many turns apart the number is from when it was previously spoken.
+//
+//	If that was the first time the number has been spoken, the current player says 0.
+//	Otherwise, the number had been spoken before; the current player announces
+//	  how many turns apart the number is from when it was previously spoken.
 func FindNumber(vi []int, searchTurn int) int {
 	nmap := initMap(vi)
 	curNum := 0

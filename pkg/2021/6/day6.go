@@ -3,8 +3,8 @@ package day6
 import (
 	"log"
 
-	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 type Day struct {
@@ -18,19 +18,17 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := fileutils.ReadFileToArray(filepath, ",")
+	data := fileutil.ReadFileToArray(filepath, ",")
 
-	d.data = arrayutils.MapToInt(data)
+	d.data = arrayutil.MapToInt(data)
 
 	return
 }
 
 func (d *Day) Part1() interface{} {
 	state := NewState(d.data)
-	// fmt.Printf("After %d days: %s\n", 0, state.Print())
 	for i := 0; i < d.Days1; i++ {
 		state.Day()
-		// fmt.Printf("After %d days: %s\n", i+1, state.Print())
 	}
 
 	return state.FishCount()

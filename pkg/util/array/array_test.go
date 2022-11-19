@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ralucas/advent-of-code/pkg/utils/array"
+	"github.com/ralucas/advent-of-code/pkg/util/array"
 )
 
 func TestMapTo2D(t *testing.T) {

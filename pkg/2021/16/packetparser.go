@@ -5,7 +5,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	bitutils "github.com/ralucas/advent-of-code/pkg/utils/bit"
+	bitutil "github.com/ralucas/advent-of-code/pkg/util/bit"
 )
 
 type LengthTypeID int
@@ -65,14 +65,14 @@ func (pp *PacketParser) parseLiteral(packet *Packet, bits []int8) (*Packet, []in
 		}
 	}
 
-	packet.SetValue(bitutils.Btoi(literalBits))
+	packet.SetValue(bitutil.Btoi(literalBits))
 
 	return packet, bits, nil
 }
 
 func (pp *PacketParser) parseOperator(packet *Packet, bits []int8) (*Packet, []int8, error) {
 	if packet.LengthTypeID() == TotalBitLength {
-		totalLength := bitutils.Btoi(bits[:15])
+		totalLength := bitutil.Btoi(bits[:15])
 		bits = bits[15:]
 
 		if totalLength > len(bits) {
@@ -81,7 +81,7 @@ func (pp *PacketParser) parseOperator(packet *Packet, bits []int8) (*Packet, []i
 
 		measuredBits := bits[:totalLength]
 
-		for len(measuredBits) > 0 && bitutils.Btoi(measuredBits) != 0 {
+		for len(measuredBits) > 0 && bitutil.Btoi(measuredBits) != 0 {
 			var err error
 			_, measuredBits, err = pp.parsePacket(packet.AddChild(), measuredBits)
 			if err != nil {
@@ -97,7 +97,7 @@ func (pp *PacketParser) parseOperator(packet *Packet, bits []int8) (*Packet, []i
 	}
 
 	if packet.LengthTypeID() == NumSubPackets {
-		n := bitutils.Btoi(bits[:11])
+		n := bitutil.Btoi(bits[:11])
 		bits = bits[11:]
 
 		for i := 0; i < n; i++ {
@@ -117,7 +117,7 @@ func (pp *PacketParser) parseOperator(packet *Packet, bits []int8) (*Packet, []i
 }
 
 func (pp *PacketParser) parsePacket(packet *Packet, bits []int8) (*Packet, []int8, error) {
-	if bitutils.Btoi(bits) == 0 {
+	if bitutil.Btoi(bits) == 0 {
 		return nil, nil, errors.New("bits zero valued")
 	}
 
@@ -146,7 +146,7 @@ func (pp *PacketParser) Parse() (*Packet, error) {
 	rawArr := strings.Split(pp.raw, "")
 
 	for _, char := range rawArr {
-		bin, err := bitutils.Htob(char)
+		bin, err := bitutil.Htob(char)
 		if err != nil {
 			return nil, err
 		}

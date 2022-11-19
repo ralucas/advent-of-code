@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"strings"
 
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
-	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
+	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 type Day struct {
@@ -26,7 +26,7 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := fileutils.ReadFileToArray(filepath, "\n")
+	data := fileutil.ReadFileToArray(filepath, "\n")
 
 	var err error
 	d.earliestTimestamp, err = strconv.Atoi(data[0])
@@ -39,11 +39,11 @@ func (d *Day) PrepareData(filepath string) {
 
 	d.bsMap = createScheduleMap(busSchedule)
 
-	filtered := arrayutils.Filter(busSchedule, func(s string) bool {
+	filtered := arrayutil.Filter(busSchedule, func(s string) bool {
 		return s != "x"
 	})
 
-	d.buses = arrayutils.MapToInt(filtered)
+	d.buses = arrayutil.MapToInt(filtered)
 }
 
 func createScheduleMap(vs []string) []map[int]int {

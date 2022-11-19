@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 type Instruction struct {
@@ -22,7 +22,7 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := fileutils.ReadFileToArray(filepath, "\n")
+	data := fileutil.ReadFileToArray(filepath, "\n")
 
 	var instructions []Instruction
 

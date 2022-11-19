@@ -3,8 +3,8 @@ package day3
 import (
 	"strings"
 
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
-	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
+	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 type SledState struct {
@@ -20,9 +20,9 @@ type Day struct {
 }
 
 func (d *Day) PrepareData(filepath string) {
-	data := fileutils.ReadFile(filepath)
+	data := fileutil.ReadFile(filepath)
 	var pData [][]string
-	splData := arrayutils.Filter(strings.Split(data, "\n"), func(in string) bool {
+	splData := arrayutil.Filter(strings.Split(data, "\n"), func(in string) bool {
 		return in != ""
 	})
 	for _, line := range splData {

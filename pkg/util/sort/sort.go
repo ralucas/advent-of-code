@@ -1,4 +1,4 @@
-package utils
+package sort
 
 func QSort(vi []int) []int {
 	vlen := len(vi)
@@ -42,7 +42,6 @@ func qsort(vi []int, lower int, upper int) {
 	qsort(vi, lower, i-1)
 	qsort(vi, i+1, upper)
 }
-
 
 func MergeSort(vi []int) []int {
 	vlen := len(vi)

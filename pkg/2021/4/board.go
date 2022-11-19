@@ -1,7 +1,7 @@
 package day4
 
 import (
-	arrayutil "github.com/ralucas/advent-of-code/pkg/utils/array"
+	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
 )
 
 type Board struct {

@@ -5,9 +5,9 @@ import (
 	"regexp"
 	"strings"
 
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
-	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
-	mathutils "github.com/ralucas/advent-of-code/pkg/utils/math"
+	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
+	mathutil "github.com/ralucas/advent-of-code/pkg/util/math"
 )
 
 type Day struct {
@@ -28,9 +28,9 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := fileutils.ReadFileToArray(filepath, "\n")
+	data := fileutil.ReadFileToArray(filepath, "\n")
 
-	d.numbers = arrayutils.MapToInt(strings.Split(data[0], ","))
+	d.numbers = arrayutil.MapToInt(strings.Split(data[0], ","))
 
 	d.boards = make([]*Board, 0)
 
@@ -41,7 +41,7 @@ func (d *Day) PrepareData(filepath string) {
 		boardVals[i%5] = make([]int, 5)
 		tl := strings.TrimSpace(line)
 		pl := re.ReplaceAll([]byte(tl), []byte(","))
-		boardVals[i%5] = arrayutils.MapToInt(strings.Split(string(pl), ","))
+		boardVals[i%5] = arrayutil.MapToInt(strings.Split(string(pl), ","))
 
 		if boardVals[4] != nil {
 			d.boards = append(d.boards, NewBoard(boardVals))
@@ -58,7 +58,7 @@ func (d *Day) Part1() interface{} {
 			bingo := board.Mark(n)
 			if bingo {
 				unmarked := board.UnmarkedValues()
-				s := mathutils.Sum(unmarked)
+				s := mathutil.Sum(unmarked)
 				return s * n
 			}
 		}
@@ -79,7 +79,7 @@ func (d *Day) Part2() interface{} {
 				bingo := board.Mark(n)
 				if bingo && len(boards)-nilCount == 1 {
 					unmarked := board.UnmarkedValues()
-					s := mathutils.Sum(unmarked)
+					s := mathutil.Sum(unmarked)
 					return s * n
 				}
 				if bingo {

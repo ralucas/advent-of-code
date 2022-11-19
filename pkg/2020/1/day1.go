@@ -4,9 +4,9 @@ import (
 	"log"
 	"strings"
 
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
-	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
-	sorting "github.com/ralucas/advent-of-code/pkg/utils/sort"
+	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
+	sorting "github.com/ralucas/advent-of-code/pkg/util/sort"
 )
 
 type Day struct {
@@ -14,12 +14,12 @@ type Day struct {
 }
 
 func (d *Day) PrepareData(filepath string) {
-	inputString := fileutils.ReadFile(filepath)
-	inputArr := arrayutils.Filter(strings.Split(inputString, "\n"), func(s string) bool {
+	inputString := fileutil.ReadFile(filepath)
+	inputArr := arrayutil.Filter(strings.Split(inputString, "\n"), func(s string) bool {
 		return s != ""
 	})
 
-	preparedData := arrayutils.MapToInt(inputArr)
+	preparedData := arrayutil.MapToInt(inputArr)
 
 	d.data = preparedData
 }

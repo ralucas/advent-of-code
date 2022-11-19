@@ -5,7 +5,7 @@ import (
 	"math"
 	"strings"
 
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 type Day struct {
@@ -19,7 +19,7 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := fileutils.ReadFile(filepath)
+	data := fileutil.ReadFile(filepath)
 
 	spl := strings.Split(data, "\n\n")
 

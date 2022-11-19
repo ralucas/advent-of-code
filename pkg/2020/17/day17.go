@@ -3,7 +3,7 @@ package day17
 import (
 	"log"
 
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 type Day struct {
@@ -15,7 +15,7 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := fileutils.ReadFileToArray(filepath, "\n")
+	data := fileutil.ReadFileToArray(filepath, "\n")
 
 	var err error
 	d.Cubes, err = InitializeCubes(len(data), len(data[0]))
@@ -54,10 +54,10 @@ func (d *Day) Part2() interface{} {
 }
 
 // During a cycle, all cubes simultaneously change their state according to the following rules:
-// 	 1. If a cube is active and exactly 2 or 3 of its neighbors are also active, the cube remains active.
-// 		Otherwise, the cube becomes inactive.
-//   2. If a cube is inactive but exactly 3 of its neighbors are active, the cube becomes active.
-//		Otherwise, the cube remains inactive.
+//  1. If a cube is active and exactly 2 or 3 of its neighbors are also active, the cube remains active.
+//     Otherwise, the cube becomes inactive.
+//  2. If a cube is inactive but exactly 3 of its neighbors are active, the cube becomes active.
+//     Otherwise, the cube remains inactive.
 func ApplyRules(cube *Cube, cubeState [][][]Cube) *Cube {
 	activeNeighborCount := 0
 

@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 type Day struct {
@@ -33,17 +33,17 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := fileutils.ReadFileToArray(filepath, "\n")
+	data := fileutil.ReadFileToArray(filepath, "\n")
 
 	for _, line := range data {
 		spl := strings.Split(line, "|")
 		sp, ov := spl[0], spl[1]
-		d.signalPatterns = append(d.signalPatterns, arrayutils.Map(
+		d.signalPatterns = append(d.signalPatterns, arrayutil.Map(
 			strings.Split(sp, " "), func(s string, i int) string {
 				return strings.TrimSpace(s)
 			}),
 		)
-		d.outputValues = append(d.outputValues, arrayutils.Map(
+		d.outputValues = append(d.outputValues, arrayutil.Map(
 			strings.Split(ov, " "), func(s string, i int) string {
 				return strings.TrimSpace(s)
 			}),
@@ -56,7 +56,7 @@ func (d *Day) PrepareData(filepath string) {
 func (d *Day) Part1() interface{} {
 	count := 0
 	for _, ovs := range d.outputValues {
-		f := arrayutils.Filter(ovs, func(s string) bool {
+		f := arrayutil.Filter(ovs, func(s string) bool {
 			return len(s) == 2 ||
 				len(s) == 3 ||
 				len(s) == 4 ||
@@ -70,7 +70,7 @@ func (d *Day) Part1() interface{} {
 }
 
 func (d *Day) Part2() interface{} {
-	// lens := arrayutils.MapToInt2(numsToLetters, func(s string, i int) int {
+	// lens := arrayutil.MapToInt2(numsToLetters, func(s string, i int) int {
 	// 	return len(s)
 	// })
 	var total int

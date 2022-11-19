@@ -4,9 +4,9 @@ import (
 	"log"
 	"strings"
 
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
-	mathutils "github.com/ralucas/advent-of-code/pkg/utils/math"
-	sortutils "github.com/ralucas/advent-of-code/pkg/utils/sort"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
+	mathutil "github.com/ralucas/advent-of-code/pkg/util/math"
+	sortutil "github.com/ralucas/advent-of-code/pkg/util/sort"
 )
 
 type Day struct {
@@ -20,7 +20,7 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := fileutils.ReadFileToArray(filepath, "\n")
+	data := fileutil.ReadFileToArray(filepath, "\n")
 
 	for _, line := range data {
 		d.data = append(d.data, strings.Split(line, ""))
@@ -110,7 +110,7 @@ func (d *Day) Part1() interface{} {
 		}
 	}
 
-	return mathutils.Sum(points)
+	return mathutil.Sum(points)
 }
 
 func (d *Day) Part2() interface{} {
@@ -135,14 +135,14 @@ func (d *Day) Part2() interface{} {
 	scores := make([]int, len(closers))
 
 	for i := range scores {
-		for j := len(closers[i])-1; j >= 0; j-- {
+		for j := len(closers[i]) - 1; j >= 0; j-- {
 			scores[i] *= 5
 			c := closers[i][j]
 			scores[i] += d.closingPoints2[c]
 		}
 	}
 
-	sorted := sortutils.QSort(scores)
+	sorted := sortutil.QSort(scores)
 
-	return mathutils.Median(sorted)
+	return mathutil.Median(sorted)
 }

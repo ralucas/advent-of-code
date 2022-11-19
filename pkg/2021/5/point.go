@@ -1,7 +1,7 @@
 package day5
 
 import (
-	mathutils "github.com/ralucas/advent-of-code/pkg/utils/math"
+	mathutil "github.com/ralucas/advent-of-code/pkg/util/math"
 )
 
 type Point struct {
@@ -60,7 +60,7 @@ func (l *LineBuilder) BuildLine() *Line {
 func (l *LineBuilder) Horizontal() *LineBuilder {
 	if l.start.x == l.end.x {
 		l.points = append(l.points, l.start)
-		diff := mathutils.Abs(l.end.y - l.start.y)
+		diff := mathutil.Abs(l.end.y - l.start.y)
 		y := l.start.y
 		for i := 0; i < diff-1; i++ {
 			if l.end.y > l.start.y {
@@ -80,7 +80,7 @@ func (l *LineBuilder) Horizontal() *LineBuilder {
 func (l *LineBuilder) Vertical() *LineBuilder {
 	if l.start.y == l.end.y {
 		l.points = append(l.points, l.start)
-		diff := mathutils.Abs(l.end.x - l.start.x)
+		diff := mathutil.Abs(l.end.x - l.start.x)
 		x := l.start.x
 		for i := 0; i < diff-1; i++ {
 			if l.end.x > l.start.x {
@@ -101,8 +101,8 @@ func (l *LineBuilder) Diagonal() *LineBuilder {
 	if l.start.x != l.end.x && l.start.y != l.end.y {
 		l.points = append(l.points, l.start)
 
-		diffX := mathutils.Abs(l.end.x - l.start.x)
-		diffY := mathutils.Abs(l.end.y - l.start.y)
+		diffX := mathutil.Abs(l.end.x - l.start.x)
+		diffY := mathutil.Abs(l.end.y - l.start.y)
 
 		// must be diagonal possible
 		if diffX == diffY {

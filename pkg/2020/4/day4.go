@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 type Passport struct {
@@ -27,7 +27,7 @@ type Day struct {
 }
 
 func (d *Day) PrepareData(filepath string) {
-	data := fileutils.ReadFileToArray(filepath, "\n\n")
+	data := fileutil.ReadFileToArray(filepath, "\n\n")
 
 	var preparedData []Passport
 
@@ -114,8 +114,10 @@ func isValid(p Passport) bool {
 // iyr (Issue Year) - four digits; at least 2010 and at most 2020.
 // eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
 // hgt (Height) - a number followed by either cm or in:
-//   If cm, the number must be at least 150 and at most 193.
-//   If in, the number must be at least 59 and at most 76.
+//
+//	If cm, the number must be at least 150 and at most 193.
+//	If in, the number must be at least 59 and at most 76.
+//
 // hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
 // ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
 // pid (Passport ID) - a nine-digit number, including leading zeroes.
@@ -137,8 +139,9 @@ func isValidStrict(p Passport) bool {
 
 // isValidHgt evaluates on
 // hgt (Height) - a number followed by either cm or in:
-//   If cm, the number must be at least 150 and at most 193.
-//   If in, the number must be at least 59 and at most 76.
+//
+//	If cm, the number must be at least 150 and at most 193.
+//	If in, the number must be at least 59 and at most 76.
 func isValidHgt(hgt int, uom string) bool {
 	validHgt := false
 	if uom == "cm" {

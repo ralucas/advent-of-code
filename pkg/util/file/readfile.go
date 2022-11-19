@@ -1,11 +1,11 @@
-package utils
+package file
 
 import (
 	"io/ioutil"
 	"log"
 	"strings"
 
-	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
+	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
 )
 
 func ReadFile(filepath string) string {
@@ -23,7 +23,7 @@ func ReadFileToArray(filepath string, sep string) []string {
 		log.Fatalf("Error reading in file %v", err)
 	}
 
-	return arrayutils.Filter(strings.Split(string(f), sep), func(v string) bool {
+	return arrayutil.Filter(strings.Split(string(f), sep), func(v string) bool {
 		return v != ""
 	})
 }

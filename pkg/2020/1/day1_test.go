@@ -8,7 +8,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	sorting "github.com/ralucas/advent-of-code/pkg/utils/sort"
+	sorting "github.com/ralucas/advent-of-code/pkg/util/sort"
 )
 
 var td Day

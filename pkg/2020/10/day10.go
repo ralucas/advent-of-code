@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
-	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
-	sortutils "github.com/ralucas/advent-of-code/pkg/utils/sort"
+	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
+	sortutil "github.com/ralucas/advent-of-code/pkg/util/sort"
 )
 
 type Day struct {
@@ -17,15 +17,15 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := fileutils.ReadFileToArray(filepath, "\n")
+	data := fileutil.ReadFileToArray(filepath, "\n")
 
-	d.data = arrayutils.MapToInt(data)
+	d.data = arrayutil.MapToInt(data)
 
 	return
 }
 
 func (d *Day) Part1() interface{} {
-	svi := sortutils.QSort(d.data)
+	svi := sortutil.QSort(d.data)
 	upd := insertOutletAndDevice(svi)
 
 	counts := CountDiffs(upd)
@@ -34,7 +34,7 @@ func (d *Day) Part1() interface{} {
 }
 
 func (d *Day) Part2() interface{} {
-	svi := sortutils.QSort(d.data)
+	svi := sortutil.QSort(d.data)
 	upd := insertOutletAndDevice(svi)
 
 	counts := CountDistinctArrangements(upd)

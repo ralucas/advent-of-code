@@ -6,8 +6,8 @@ import (
 	"strings"
 	"sync"
 
-	fileutils "github.com/ralucas/advent-of-code/pkg/utils/file"
-	arrayutils "github.com/ralucas/advent-of-code/pkg/utils/array"
+	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 type BoardingPass struct {
@@ -29,7 +29,7 @@ func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
-	data := fileutils.ReadFileToArray(filepath, "\n")
+	data := fileutil.ReadFileToArray(filepath, "\n")
 
 	prepared := make([][]string, len(data))
 
@@ -151,7 +151,7 @@ func findAvailableSeats(plane Plane) []BoardingPass {
 
 	for i, row := range plane.seating {
 		if plane.rows[i] < 8 {
-			availableSeats := arrayutils.FindIntIndexes(row, func(v int) bool { return v == 0 })
+			availableSeats := arrayutil.FindIntIndexes(row, func(v int) bool { return v == 0 })
 			if len(availableSeats) > 0 {
 				for _, as := range availableSeats {
 					bp := BoardingPass{
