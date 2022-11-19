@@ -27,8 +27,8 @@ test-current-year:
 	go test -v -cover -benchmem -bench=. ./pkg/$(YEAR)/...
 
 .PHONY: test-util
-test-utils:
-	go test -v -cover -benchmem -bench=. ./pkg/utils/...
+test-util:
+	go test -v -cover -benchmem -bench=. ./pkg/util/...
 
 .PHONY: lint
 lint:
