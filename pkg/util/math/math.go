@@ -5,8 +5,12 @@ const MinUint = 0
 const MaxInt = int(MaxUint >> 1)
 const MinInt = -MaxInt - 1
 
-func Sum(vi []int) int {
-	sum := 0
+type Number interface {
+	int | float32 | float64
+}
+
+func Sum[V Number](vi []V) V {
+	var sum V
 	for _, v := range vi {
 		sum += v
 	}

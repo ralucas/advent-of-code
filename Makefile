@@ -1,7 +1,7 @@
 # Simple Makefile for getting setup, testing, and running in a conventional manner
 
-DAY ?= $(shell date "+%-d")
-YEAR ?= $(shell [ "12" -eq "$$(date +%m)" ] && date "+%Y" || echo "$$(($$(date +%Y)-1))")
+DAY ?= $(shell TZ=America/New_York date "+%-d")
+YEAR ?= $(shell [ "12" -eq "$$(TZ=America/New_York date +%m)" ] && date "+%Y" || echo "$$(($$(date +%Y)-1))")
 
 .PHONY: all
 all: build test-all
@@ -34,6 +34,10 @@ test-util:
 lint:
 	golangci-lint run -v --enable-all ./pkg/$(YEAR)/$(DAY)
 
+.PHONY: lint-fix
+lint-fix:
+	golangci-lint run -v --enable-all --fix ./pkg/$(YEAR)/$(DAY)
+
 .PHONY: lint-all
 lint-all:
 	golangci-lint run -v --enable-all ./...
@@ -45,6 +49,7 @@ run:
 .PHONY: new
 new:
 	if [ ! -f ~/Downloads/input.txt ]; then echo "no input file"; exit 1; fi; \
+	if [ -d pkg/$(YEAR)/$(DAY) ]; then echo "already exists"; exit 1; fi; \
 	mkdir -p assets/$(YEAR)/$(DAY) && \
 		mv ~/Downloads/input.txt assets/$(YEAR)/$(DAY)/input.txt && \
 		touch assets/$(YEAR)/$(DAY)/instructions.md && \
@@ -65,4 +70,3 @@ clean:
 	trash assets/$(YEAR)/$(DAY) && \
 		trash pkg/$(YEAR)/$(DAY) && \
 		trash test/testdata/$(YEAR)/$(DAY)
-

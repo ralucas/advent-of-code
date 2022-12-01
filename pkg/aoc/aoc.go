@@ -14,6 +14,8 @@ func New(day int, year int) AOC {
 		return days2020[day-1]
 	case 2021:
 		return days2021[day-1]
+	case 2022:
+		return days2022[day-1]
 	default:
 		return &noop.Day{}
 	}
