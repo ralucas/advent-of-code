@@ -32,7 +32,7 @@ func run(runner aoc.AOC, inputFile string) {
 func main() {
 	flag.Parse()
 
-	fmt.Printf("\n\n================\n    Day %d\n================\n\n", *day)
+	fmt.Printf("\n\n================\n      Day %d\n================\n\n", *day)
 
 	run(aoc.New(*day, *year), *inputFile)
 

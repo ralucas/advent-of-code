@@ -3,7 +3,7 @@ package aoc
 import "github.com/ralucas/advent-of-code/pkg/noop"
 
 type AOC interface {
-	PrepareData(string)
+	PrepareData(filepath string)
 	Part1() interface{}
 	Part2() interface{}
 }
