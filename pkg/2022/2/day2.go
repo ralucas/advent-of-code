@@ -50,40 +50,6 @@ func (d *Day) Part1() interface{} {
 	return total
 }
 
-func score(opp, me Value) int {
-	switch opp {
-	case Rock:
-		switch me {
-		case Rock:
-			return 3
-		case Paper:
-			return 6
-		case Scissors:
-			return 0
-		}
-	case Paper:
-		switch me {
-		case Rock:
-			return 0
-		case Paper:
-			return 3
-		case Scissors:
-			return 6
-		}
-	case Scissors:
-		switch me {
-		case Rock:
-			return 6
-		case Paper:
-			return 0
-		case Scissors:
-			return 3
-		}
-	}
-
-	return 0
-}
-
 func (d *Day) Part2() interface{} {
 	scores := map[string]Value{
 		"A": Rock,
@@ -133,6 +99,18 @@ func winner(v Value) Value {
 		return Scissors
 	case Scissors:
 		return Rock
+	}
+
+	return 0
+}
+
+func score(opp, me Value) int {
+	if opp == me {
+		return 3
+	}
+
+	if winner(opp) == me {
+		return 6
 	}
 
 	return 0

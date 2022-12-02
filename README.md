@@ -9,3 +9,5 @@ This repository is for the exercises done for [Advent Of Code](https://adventofc
   - language: go
 - 2021
   - language: go
+- 2022
+  - language: go
