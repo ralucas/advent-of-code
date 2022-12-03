@@ -18,9 +18,11 @@ type Day struct {
 	buses             []int
 }
 
-const MaxUint64 uint64 = 1<<64 - 1
-const MinInt64 int64 = 100000000000000
-const MaxInt64 int64 = (1<<48 - 1)
+const (
+	MaxUint64 uint64 = 1<<64 - 1
+	MinInt64  int64  = 100000000000000
+	MaxInt64  int64  = (1<<48 - 1)
+)
 
 func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
@@ -288,7 +290,6 @@ func findLowestCommonNumerator(
 	remainders []int64,
 	buses []int64,
 ) {
-
 	x := start / bus
 	if x < 1 {
 		x = 1

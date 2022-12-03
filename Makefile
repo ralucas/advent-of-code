@@ -70,4 +70,5 @@ new:
 clean:
 	trash assets/$(YEAR)/$(DAY) && \
 		trash pkg/$(YEAR)/$(DAY) && \
-		trash test/testdata/$(YEAR)/$(DAY)
+		trash test/testdata/$(YEAR)/$(DAY) && \
+		trash bin/

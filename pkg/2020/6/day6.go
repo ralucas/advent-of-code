@@ -58,7 +58,7 @@ func GroupCount(vs []string) int {
 }
 
 func AllYesCount(vs []string) int {
-	alphaMap := make(map[int32]int)
+	alphaMap := make(map[rune]int)
 
 	count := 0
 

@@ -16,45 +16,11 @@ func TestPrepareData(t *testing.T) {
 	})
 
 	t.Run("has items", func(t *testing.T) {
-		assert.Equal(t, 255, len(d.data))
-	})
-
-	t.Run("is a matching passport", func(t *testing.T) {
-		testPass := Passport{
-			hgt:    176,
-			huom:   "cm",
-			og_hgt: "176cm",
-			iyr:    2013,
-			hcl:    "#fffffd",
-			ecl:    "amb",
-			byr:    2000,
-			eyr:    2034,
-			cid:    "89",
-			pid:    "934693255",
-		}
-
-		assert.Equal(t, testPass, d.data[0])
-	})
-
-	t.Run("is another matching passport", func(t *testing.T) {
-		testPass := Passport{
-			iyr:    2010,
-			pid:    "623705680",
-			ecl:    "hzl",
-			hgt:    181,
-			huom:   "cm",
-			og_hgt: "181cm",
-			byr:    1980,
-			hcl:    "#341e13",
-			eyr:    2028,
-		}
-
-		assert.Equal(t, testPass, d.data[len(d.data)-1])
+		assert.Equal(t, 280, len(d.data))
 	})
 }
 
 func TestIsValidPassport(t *testing.T) {
-
 	t.Run("is not a valid passport", func(t *testing.T) {
 		testPassports := []Passport{
 			{pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1980, hcl: "#341e13", eyr: 2028, cid: "test"},
@@ -196,7 +162,6 @@ func TestIsValidPid(t *testing.T) {
 }
 
 func TestIsValidPassportStrict(t *testing.T) {
-
 	t.Run("is not a valid passport", func(t *testing.T) {
 		testPassports := []Passport{
 			{iyr: 2010, pid: "623705680", ecl: "hzl", hgt: 181, huom: "cm", byr: 1919, hcl: "#341e13", eyr: 2028, cid: "test"},
@@ -246,11 +211,9 @@ func TestIsValidPassportStrict(t *testing.T) {
 			assert.True(t, isValidStrict(testPass), fmt.Sprintf("Failing Passport: %+v\n", testPass))
 		}
 	})
-
 }
 
 func TestIntegrationTotalValidity(t *testing.T) {
-
 	t.Run("is a not valid passport from file", func(t *testing.T) {
 		d := Day{}
 		d.PrepareData("../../../test/testdata/2020/4/invalid.txt")
@@ -268,7 +231,6 @@ func TestIntegrationTotalValidity(t *testing.T) {
 			assert.True(t, valid)
 		}
 	})
-
 }
 
 func TestCountValidPassports(t *testing.T) {

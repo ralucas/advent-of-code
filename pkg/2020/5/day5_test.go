@@ -68,11 +68,3 @@ func TestNewPlane(t *testing.T) {
 		}
 	})
 }
-
-func TestFindAvailableSeats(t *testing.T) {
-	totalSeats := 128 * 8
-
-	p := NewPlane(td.data)
-	as := findAvailableSeats(p)
-	assert.Equal(t, totalSeats-4, len(as))
-}
