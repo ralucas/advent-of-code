@@ -3,8 +3,8 @@ package day2
 import (
 	"log"
 
-	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 	arrayutil "github.com/ralucas/advent-of-code/pkg/util/array"
+	fileutil "github.com/ralucas/advent-of-code/pkg/util/file"
 )
 
 type Day struct {
@@ -19,15 +19,22 @@ const (
 	Scissors Value = 3
 )
 
+type Result int
+
+const (
+	Won  Result = 6
+	Lost Result = 0
+	Draw Result = 3
+)
+
 func (d *Day) PrepareData(filepath string) {
 	if filepath == "" {
 		log.Fatalf("Missing input file")
 	}
+
 	data := fileutil.ReadFileToArray(filepath, "\n")
 
 	d.data = arrayutil.MapTo2D(data, " ")
-
-	return
 }
 
 func (d *Day) Part1() interface{} {
@@ -41,10 +48,11 @@ func (d *Day) Part1() interface{} {
 	}
 
 	total := 0
+
 	for _, game := range d.data {
 		opp, me := game[0], game[1]
 		total += int(scores[me])
-		total += score(scores[opp], scores[me])
+		total += int(score(scores[opp], scores[me]))
 	}
 
 	return total
@@ -68,10 +76,10 @@ func (d *Day) Part2() interface{} {
 			total += int(me)
 		case "Y":
 			me := scores[opp]
-			total += int(me) + 3
+			total += int(me) + int(Draw)
 		case "Z":
 			me := winner(scores[opp])
-			total += int(me) + 6
+			total += int(me) + int(Won)
 		}
 	}
 
@@ -104,14 +112,14 @@ func winner(v Value) Value {
 	return 0
 }
 
-func score(opp, me Value) int {
+func score(opp, me Value) Result {
 	if opp == me {
-		return 3
+		return Draw
 	}
 
 	if winner(opp) == me {
-		return 6
+		return Won
 	}
 
-	return 0
+	return Lost
 }

@@ -8,16 +8,24 @@ import (
 	"github.com/ralucas/advent-of-code/pkg/aoc"
 )
 
-var inputFile = flag.String("input", "", "Input file")
-var day = flag.Int("day", getDay(), "Day to run")
-var year = flag.Int("year", getYear(), "Year to run")
+var (
+	inputFile = flag.String("input", getFile(), "Input file")
+	day       = flag.Int("day", getDay(), "Day to run")
+	year      = flag.Int("year", getYear(), "Year to run")
+)
 
 func getDay() int {
-	return time.Now().Day()
+	loc, _ := time.LoadLocation("America/New_York")
+	return time.Now().In(loc).Day()
 }
 
 func getYear() int {
-	return time.Now().Year()
+	loc, _ := time.LoadLocation("America/New_York")
+	return time.Now().In(loc).Year()
+}
+
+func getFile() string {
+	return fmt.Sprintf("../assets/%d/%d/input.txt", getYear(), getDay())
 }
 
 func run(runner aoc.AOC, inputFile string) {
@@ -32,7 +40,7 @@ func run(runner aoc.AOC, inputFile string) {
 func main() {
 	flag.Parse()
 
-	fmt.Printf("\n\n================\n      Day %d\n================\n\n", *day)
+	fmt.Printf("\n\n================\n  Day %d - %d\n================\n\n", *day, *year)
 
 	run(aoc.New(*day, *year), *inputFile)
 

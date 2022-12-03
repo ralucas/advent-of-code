@@ -149,8 +149,14 @@ func (p *Plane) Print() {
 func findAvailableSeats(plane Plane) []BoardingPass {
 	possibleSeats := []BoardingPass{}
 
+	check := false
+
 	for i, row := range plane.seating {
-		if plane.rows[i] < 8 {
+		if !check {
+			check = arrayutil.Every(row, func(v int, _ int) bool { return v == 1 })
+		}
+
+		if check && plane.rows[i] < 8 {
 			availableSeats := arrayutil.FindIntIndexes(row, func(v int) bool { return v == 0 })
 			if len(availableSeats) > 0 {
 				for _, as := range availableSeats {
@@ -173,8 +179,6 @@ func FindSeat(ss [][]string) BoardingPass {
 
 	availSeats := findAvailableSeats(plane)
 
-	var mySeat BoardingPass
-
 	for _, seat := range availSeats {
 		if seat.Row != 0 && seat.Row != 127 {
 			// After first match, let's call it the seat
@@ -182,5 +186,5 @@ func FindSeat(ss [][]string) BoardingPass {
 		}
 	}
 
-	return mySeat
+	return BoardingPass{}
 }

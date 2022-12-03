@@ -8,7 +8,8 @@ all: build test-all
 
 .PHONY: build
 build:
-	go build -v ./...
+	mkdir -p bin
+	go build -o bin/ -v ./...
 
 .PHONY: test
 test:
