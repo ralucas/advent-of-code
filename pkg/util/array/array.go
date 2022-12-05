@@ -7,6 +7,10 @@ import (
 	"strings"
 )
 
+type Any interface {
+	string | int
+}
+
 func Map(vs []string, cb func(string, int) string) []string {
 	m := make([]string, len(vs))
 
@@ -34,6 +38,15 @@ func MapTo2D(vs []string, sep string) [][]string {
 	}
 
 	return vsm
+}
+
+func MapTo2DGen[A Any](vs []string, cb func(s string, i int) []A) [][]A {
+	va := make([][]A, len(vs))
+	for i, v := range vs {
+		va[i] = cb(v, i)
+	}
+
+	return va
 }
 
 func MapToInt(vs []string) []int {

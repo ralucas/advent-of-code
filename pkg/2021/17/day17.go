@@ -2,6 +2,7 @@ package day17
 
 import (
 	"log"
+	"math"
 	"regexp"
 	"strings"
 
@@ -44,27 +45,40 @@ func (d *Day) PrepareData(filepath string) {
 func (d *Day) Part1() interface{} {
 	xmax := mathutil.Max(d.xrange...)
 
-	hx := xmax / 2
+	hx := xmax
 
 	xsteps := 0
 
 	x := 0
 
-	for hx > 0 {
+	for (hx - x) > 0 {
 		x += 1
 		hx -= x
 		xsteps += 1
 	}
 
-	ymax := mathutil.Max(d.yrange...)
+	height := math.Abs(math.Abs(float64(d.yrange[1])) - math.Abs(float64(d.yrange[0])))
 
-	y := ymax
+	lasty := mathutil.Max(d.yrange...) + 1
+
+	ypos := lasty
+	ymove := int(height)
+
+	ysteps := 1
+
+	for ymove > 0 {
+		ypos = ypos + ymove
+		ymove -= 1
+		ysteps += 1
+	}
+
+	// y := ymax
 
 	// start := 0
 
 	// height := y + (x-1) + (x-2) + (x-3)...(x-steps)
 
-	return y
+	return ypos
 }
 
 func (d *Day) Part2() interface{} {
