@@ -7,6 +7,7 @@ import (
 	day3 "github.com/ralucas/advent-of-code/pkg/2022/3"
 	day4 "github.com/ralucas/advent-of-code/pkg/2022/4"
 	day5 "github.com/ralucas/advent-of-code/pkg/2022/5"
+	day6 "github.com/ralucas/advent-of-code/pkg/2022/6"
 	// newdayimport
 )
 
@@ -16,6 +17,7 @@ var days2022 = []AOC{
 	&day3.Day{},
 	&day4.Day{},
 	&day5.Day{},
+	&day6.Day{},
 	// newdaystruct
 
 }
