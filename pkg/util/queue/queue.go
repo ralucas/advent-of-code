@@ -3,11 +3,12 @@ package queue
 import (
 	"errors"
 	"fmt"
+	"reflect"
 	"strings"
 )
 
 type Any interface {
-	string | rune | byte | int | float32 | float64
+	string | rune | byte | int | float32 | float64 | []int | []string
 }
 
 type Queue[T Any] struct {
@@ -90,7 +91,7 @@ func (q *Queue[T]) Peek() T {
 // and its first found index
 func (q *Queue[T]) Has(element T) (exists bool, index int) {
 	for i, v := range q.values {
-		if v == element {
+		if reflect.DeepEqual(v, element) {
 			return true, i
 		}
 	}
