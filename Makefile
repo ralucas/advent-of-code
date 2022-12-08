@@ -52,7 +52,8 @@ new:
 	if [ ! -f ~/Downloads/input.txt ]; then echo "no input file"; exit 1; fi; \
 	if [ -d pkg/$(YEAR)/$(DAY) ]; then echo "already exists"; exit 1; fi; \
 	mkdir -p assets/$(YEAR)/$(DAY) && \
-		mv ~/Downloads/input.txt assets/$(YEAR)/$(DAY)/input.txt && \
+		ghead -n -1 ~/Downloads/input.txt > assets/$(YEAR)/$(DAY)/input.txt && \
+		trash ~/Downloads/input.txt && \
 		touch assets/$(YEAR)/$(DAY)/instructions.md && \
 		mkdir -p pkg/$(YEAR)/$(DAY) && \
 		cp tools/boilerplate/DAYX.gotpl pkg/$(YEAR)/$(DAY)/day$(DAY).go && \
