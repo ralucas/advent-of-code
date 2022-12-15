@@ -18,14 +18,21 @@ func TestMain(m *testing.M) {
 
 func TestPart1(t *testing.T) {
 	result := td.Part1()
-	expect := true
-	
+	expect := 13140
+
 	assert.Equal(t, expect, result)
 }
 
 func TestPart2(t *testing.T) {
 	result := td.Part2()
-	expect := true
+	expect := []string{
+		"##..##..##..##..##..##..##..##..##..##..",
+		"###...###...###...###...###...###...###.",
+		"####....####....####....####....####....",
+		"#####.....#####.....#####.....#####.....",
+		"######......######......######......####",
+		"#######.......#######.......#######.....",
+	}
 
 	assert.Equal(t, expect, result)
 }
