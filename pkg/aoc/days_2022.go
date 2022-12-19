@@ -4,6 +4,8 @@ package aoc
 import (
 	day1 "github.com/ralucas/advent-of-code/pkg/2022/1"
 	day10 "github.com/ralucas/advent-of-code/pkg/2022/10"
+	day11 "github.com/ralucas/advent-of-code/pkg/2022/11"
+	day12 "github.com/ralucas/advent-of-code/pkg/2022/12"
 	day2 "github.com/ralucas/advent-of-code/pkg/2022/2"
 	day3 "github.com/ralucas/advent-of-code/pkg/2022/3"
 	day4 "github.com/ralucas/advent-of-code/pkg/2022/4"
@@ -26,6 +28,8 @@ var days2022 = []AOC{
 	&day8.Day{},
 	&day9.Day{},
 	&day10.Day{},
+	&day11.Day{},
+	&day12.Day{},
 	// newdaystruct
 
 }

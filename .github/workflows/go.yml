@@ -38,6 +38,6 @@ jobs:
 
       - name: Test all
         run: |
-          if [ "12" -eq "$(date +%m)" ]; then
+          if [ "12" -ne "$(date +%m)" ]; then
               make test-all;
           fi
