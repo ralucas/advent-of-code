@@ -1,29 +1,25 @@
 package day11
 
-import (
-	"math/big"
-)
-
 type MonkeyTest struct {
-	DivisibleBy    *big.Int
+	DivisibleBy    int
 	IfTrueThrowTo  int
 	IfFalseThrowTo int
 }
 
 type MonkeyOperation struct {
 	Op       string
-	Constant *big.Int
+	Constant int
 }
 
 type Monkey struct {
 	Id              int
-	StartingItems   []*big.Int
+	StartingItems   []int
 	Operation       MonkeyOperation
 	Test            MonkeyTest
 	InspectionCount int
 }
 
-func (m *Monkey) Inspect() *big.Int {
+func (m *Monkey) Inspect() int {
 	item := m.StartingItems[0]
 	m.StartingItems = m.StartingItems[1:]
 	m.InspectionCount += 1
@@ -31,37 +27,33 @@ func (m *Monkey) Inspect() *big.Int {
 	return item
 }
 
-type OperationConstant func(*big.Int, *Monkey) *big.Int
+type OperationConstant func(int, *Monkey) int
 
-func (m *Monkey) Operate(item, worryLevel *big.Int, fn OperationConstant) *big.Int {
+func (m *Monkey) Operate(item, worryLevel int, fn OperationConstant) int {
+	ans := 0
+
 	constant := fn(item, m)
 
 	switch m.Operation.Op {
 	case "+":
-		item.Add(item, constant)
+		ans = item + constant
 	case "-":
-		item.Sub(item, constant)
+		ans = item - constant
 	case "*":
-		if item.Cmp(constant) == 0 {
-			item.Exp(item, big.NewInt(2), nil)
-		} else {
-			item.Mul(item, constant)
-		}
+		ans = item * constant
 	case "/":
-		item.Div(item, constant)
+		ans = item / constant
 	}
 
-	if worryLevel.Cmp(big.NewInt(1)) == 0 {
-		return item
+	if worryLevel == 1 {
+		return ans
 	}
 
-	return item.Div(item, worryLevel)
+	return ans / worryLevel
 }
 
-func (m *Monkey) RunTest(val *big.Int) (monkeyId int) {
-	z := new(big.Int)
-	z.Mod(val, m.Test.DivisibleBy)
-	if z.Cmp(big.NewInt(0)) == 0 {
+func (m *Monkey) RunTest(val int) (monkeyId int) {
+	if val%m.Test.DivisibleBy == 0 {
 		return m.Test.IfTrueThrowTo
 	}
 

@@ -9,9 +9,9 @@ import (
 )
 
 var (
-	inputFile = flag.String("input", getFile(), "Input file")
 	day       = flag.Int("day", getDay(), "Day to run")
 	year      = flag.Int("year", getYear(), "Year to run")
+	inputFile = flag.String("input", getFile(), "Input file")
 )
 
 func getDay() int {
@@ -25,7 +25,7 @@ func getYear() int {
 }
 
 func getFile() string {
-	return fmt.Sprintf("../assets/%d/%d/input.txt", getYear(), getDay())
+	return fmt.Sprintf("../assets/%d/%d/input.txt", *year, *day)
 }
 
 func run(runner aoc.AOC, inputFile string) {

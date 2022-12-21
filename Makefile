@@ -47,6 +47,10 @@ lint-all:
 run:
 	go run ./cmd/main.go --input "assets/$(YEAR)/$(DAY)/input.txt" --day "$(DAY)" --year "$(YEAR)"
 
+.PHONY: build-run
+build-run: build
+	./bin/cmd --input "assets/$(YEAR)/$(DAY)/input.txt" --day "$(DAY)" --year "$(YEAR)"
+
 .PHONY: new
 new:
 	if [ ! -f ~/Downloads/input.txt ]; then echo "no input file"; exit 1; fi; \

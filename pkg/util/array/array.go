@@ -8,7 +8,7 @@ import (
 )
 
 type Any interface {
-	string | int
+	string | int | byte
 }
 
 func Map(vs []string, cb func(string, int) string) []string {

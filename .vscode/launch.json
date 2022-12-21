@@ -21,7 +21,7 @@
             "mode": "debug",
             "program": "${workspaceFolder}/cmd/main.go",
             "env": {},
-            "args": [],
+            "args": ["--day", "12"],
             "showLog": true
         }
     ]

@@ -6,18 +6,14 @@ import (
 	"strings"
 )
 
-type Any interface {
-	string | int | float32 | float64
-}
-
-type Stack[T Any] struct {
+type Stack[T comparable] struct {
 	values []T
 	ptr    int
 	size   int
 }
 
 // New creates a new Stack with the given values.
-func New[T Any](ss ...T) *Stack[T] {
+func New[T comparable](ss ...T) *Stack[T] {
 	return &Stack[T]{
 		values: ss,
 		size:   len(ss),

@@ -3,7 +3,6 @@ package day11
 import (
 	"fmt"
 	"log"
-	"math/big"
 	"regexp"
 	"strconv"
 	"strings"
@@ -44,7 +43,7 @@ func (d *Day) PrepareData(filepath string) {
 				}
 				monkey.Id = id
 			case 1:
-				startingItems := make([]*big.Int, 0)
+				startingItems := make([]int, 0)
 
 				items := strings.Split(sline[1], ",")
 				for _, item := range items {
@@ -52,7 +51,7 @@ func (d *Day) PrepareData(filepath string) {
 					if err != nil {
 						log.Fatal(err)
 					}
-					startingItems = append(startingItems, big.NewInt(int64(iitem)))
+					startingItems = append(startingItems, iitem)
 				}
 
 				monkey.StartingItems = startingItems
@@ -73,11 +72,11 @@ func (d *Day) PrepareData(filepath string) {
 					}
 				}
 
-				monkey.Operation = MonkeyOperation{Op: op, Constant: big.NewInt(int64(iconstant))}
+				monkey.Operation = MonkeyOperation{Op: op, Constant: iconstant}
 			case 3:
 				ss := strings.Split(sline[1], " ")
 				divisibleBy, err := strconv.Atoi(ss[len(ss)-1])
-				monkey.Test.DivisibleBy = big.NewInt(int64(divisibleBy))
+				monkey.Test.DivisibleBy = divisibleBy
 				if err != nil {
 					log.Fatal(err)
 				}
@@ -102,65 +101,65 @@ func (d *Day) PrepareData(filepath string) {
 	return
 }
 
-type PreOperateFunc func(item *big.Int, monkey *Monkey) *big.Int
+type PreOperateFunc func(item int, monkey *Monkey) int
 
-func identity(item *big.Int, _ *Monkey) *big.Int {
+func identity(item int, _ *Monkey) int {
 	return item
 }
 
-// func popFn(item int, m *Monkey) int {
-// 	if item < m.Test.DivisibleBy {
-// 		return item
-// 	}
+func popFn(item int, m *Monkey) int {
+	if item < m.Test.DivisibleBy {
+		return item
+	}
 
-// 	if m.Operation.Op != "*" {
-// 		return item
-// 	}
+	if m.Operation.Op != "*" {
+		return item
+	}
 
-// 	rem := item % m.Test.DivisibleBy
-// 	return m.Test.DivisibleBy + rem
-// }
+	rem := item % m.Test.DivisibleBy
+	return m.Test.DivisibleBy + rem
+}
 
-// func mod(item int, _ *Monkey) int {
-// 	return item % 100000000
-// }
+func mod(item int, _ *Monkey) int {
+	return item % 100000000
+}
 
-// func onlyDbl(item int, m *Monkey) int {
-// 	if m.Operation.Constant == -1 {
-// 		rem := item % m.Test.DivisibleBy
-// 		return m.Test.DivisibleBy + rem
-// 	}
+func onlyDbl(item int, m *Monkey) int {
+	if m.Operation.Constant == -1 {
+		rem := item % m.Test.DivisibleBy
+		return m.Test.DivisibleBy + rem
+	}
 
-// 	return item
-// }
+	return item
+}
 
-func stdOperationConstant(item *big.Int, m *Monkey) *big.Int {
-	if m.Operation.Constant.Cmp(big.NewInt(-1)) == 0 {
+func stdOperationConstant(item int, m *Monkey) int {
+	if m.Operation.Constant == -1 {
 		return item
 	}
 
 	return m.Operation.Constant
 }
 
-// func remOpConst(item int, m *Monkey) int {
-// 	rem := item % m.Test.DivisibleBy
+func remOpConst(item int, m *Monkey) int {
+	rem := item % m.Test.DivisibleBy
 
-// 	if m.Operation.Constant == -1 {
-// 		return m.Test.DivisibleBy + rem
-// 	}
+	if m.Operation.Constant == -1 {
+		return m.Test.DivisibleBy + rem
+	}
 
-// 	return rem
-// }
+	return rem
+}
 
-// func dblOpConst(item int, m *Monkey) int {
-// 	if m.Operation.Constant == -1 {
-// 		return 1
-// 	}
+func dblOpConst(item int, m *Monkey) int {
+	if m.Operation.Constant == -1 {
+		return 1
+	}
 
-// 	return m.Operation.Constant
-// }
+	return m.Operation.Constant
+}
 
-func (d *Day) RunRound(monkeyId int, worryLevel *big.Int, _ PreOperateFunc, opConstFn OperationConstant) error {
+func (d *Day) RunRound(monkeyId int, worryLevel int, preOpFn PreOperateFunc, opConstFn OperationConstant) error {
 	monkey := d.monkeys[monkeyId]
 
 	mlen := len(monkey.StartingItems)
@@ -172,15 +171,19 @@ func (d *Day) RunRound(monkeyId int, worryLevel *big.Int, _ PreOperateFunc, opCo
 	for i := 0; i < mlen; i++ {
 		wg.Add(1)
 		v := monkey.Inspect()
-		go func(item *big.Int, m *Monkey, wlvl *big.Int, fn OperationConstant) {
-			// item = fn(item, monkey)
+		go func(item int, m *Monkey, wlvl int, preopFn PreOperateFunc, ocFn OperationConstant) {
+			item = preopFn(item, monkey)
 			defer wg.Done()
 
-			newVal := m.Operate(item, wlvl, fn)
+			if wlvl == -1 {
+				wlvl = m.Test.DivisibleBy
+			}
 
-			// if newVal < 0 {
-			// 	return fmt.Errorf("overflow detected for id [%d] %d", monkeyId, newVal)
-			// }
+			newVal := m.Operate(item, wlvl, ocFn)
+
+			if newVal < 0 {
+				log.Fatalf("overflow detected for id [%d] %d", monkeyId, newVal)
+			}
 
 			throwToMonkeyId := m.RunTest(newVal)
 
@@ -191,7 +194,7 @@ func (d *Day) RunRound(monkeyId int, worryLevel *big.Int, _ PreOperateFunc, opCo
 
 			d.monkeys[throwToMonkeyId] = throwToMonkey
 			mu.Unlock()
-		}(v, monkey, worryLevel, opConstFn)
+		}(v, monkey, worryLevel, preOpFn, opConstFn)
 	}
 
 	wg.Wait()
@@ -203,11 +206,9 @@ func (d *Day) RunRound(monkeyId int, worryLevel *big.Int, _ PreOperateFunc, opCo
 func (d *Day) Part1() interface{} {
 	rounds := 20
 
-	worryLevel := big.NewInt(int64(3))
-
 	for round := 0; round < rounds; round++ {
 		for id := range d.monkeys {
-			d.RunRound(id, worryLevel, identity, stdOperationConstant)
+			d.RunRound(id, 3, identity, stdOperationConstant)
 		}
 	}
 
@@ -222,14 +223,12 @@ func (d *Day) Part1() interface{} {
 }
 
 func (d *Day) Part2() interface{} {
-	rounds := 800
-
-	worryLevel := big.NewInt(int64(1))
+	rounds := 10000
 
 	for round := 0; round < rounds; round++ {
 		for id := range d.monkeys {
 			// d.printRoundState(round + 1)
-			err := d.RunRound(id, worryLevel, identity, stdOperationConstant)
+			err := d.RunRound(id, -1, identity, stdOperationConstant)
 			if err != nil {
 				log.Fatalf("round %d: %+v", round, err)
 			}
