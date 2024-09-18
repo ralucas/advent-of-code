@@ -6,15 +6,15 @@ import (
 )
 
 type Set[T comparable] struct {
-	values map[T]bool
+	values map[T]struct{}
 	size   int
 }
 
 func New[T comparable](ss ...T) *Set[T] {
-	values := make(map[T]bool)
+	values := make(map[T]struct{})
 
 	for _, item := range ss {
-		values[item] = true
+		values[item] = struct{}{}
 	}
 
 	return &Set[T]{
@@ -33,14 +33,18 @@ func (s *Set[T]) Size() int {
 	return s.size
 }
 
-func (s *Set[T]) Remove(val T) (removed bool) {
+func (s *Set[T]) Remove(val T) {
 	if s.Empty() {
-		return false
+		return
 	}
 
 	_, ok := s.values[val]
+	if ok {
+		delete(s.values, val)
+		s.size -= 1
+	}
 
-	return ok
+	return
 }
 
 func (s *Set[T]) Add(vals ...T) {
@@ -48,7 +52,7 @@ func (s *Set[T]) Add(vals ...T) {
 
 	for _, val := range vals {
 		if _, ok := s.values[val]; !ok {
-			s.values[val] = true
+			s.values[val] = struct{}{}
 			count += 1
 		}
 	}
